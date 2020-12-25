@@ -1,1 +1,25 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /anneng
+
+spring:
+  datasource:
+    name: test
+    url: jdbc:mysql://127.0.0.1:3306/ane?serverTimezone=Hongkong
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    port: 6379
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 200
+        max-idle: 200
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.yidu.entity
 
