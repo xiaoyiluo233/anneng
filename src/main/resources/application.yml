@@ -18,7 +18,10 @@ spring:
         max-active: 200
         max-wait: 200
         max-idle: 200
-
+  mvc:
+    view:
+      prefix: /
+      suffix: .jsp
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.yidu.entity
