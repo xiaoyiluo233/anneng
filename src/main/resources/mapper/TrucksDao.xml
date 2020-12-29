@@ -14,20 +14,8 @@
     <select id="count" resultType="int">
         select count(1) from ane.trucks
         <where>
-            <if test="tid != null">
-                and tid = #{tid}
-            </if>
-            <if test="tnumber != null and tnumber != ''">
-                and tnumber = #{tnumber}
-            </if>
-            <if test="eid != null">
-                and eid = #{eid}
-            </if>
-            <if test="parcelid != null">
-                and parcelId = #{parcelid}
-            </if>
-            <if test="state != null">
-                and state = #{state}
+            <if test="tnumbers != null and tnumbers != ''">
+                and tnumber like '%${tnumbers}%'
             </if>
         </where>
     </select>
@@ -46,20 +34,8 @@
           tid, tnumber, eid, parcelId, state
         from ane.trucks
         <where>
-            <if test="trucks.tid != null">
-                and tid = #{trucks.tid}
-            </if>
-            <if test="trucks.tnumber != null and trucks.tnumber != ''">
-                and tnumber = #{trucks.tnumber}
-            </if>
-            <if test="trucks.eid != null">
-                and eid = #{trucks.eid}
-            </if>
-            <if test="trucks.parcelid != null">
-                and parcelId = #{trucks.parcelid}
-            </if>
-            <if test="trucks.state != null">
-                and state = #{trucks.state}
+            <if test="tnumbers != null and tnumbers != ''">
+                and tnumber like '%${tnumbers}%'
             </if>
         </where>
         limit #{offset}, #{limit}

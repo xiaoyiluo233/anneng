@@ -25,22 +25,38 @@ public class TrucksController {
     @Autowired
     private TrucksServiceImpl trucksService;
 
-    @RequestMapping("trucks_insert")
+    @RequestMapping(value = "trucks_delete",produces = {("application/json;charset=utf-8")})
+    @ResponseBody
+    public String delete(String tids){
+        //调用删除的方法
+        String deleteById = trucksService.deleteById(tids);
+        return deleteById;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "trucks_update",produces = {("application/json;charset=utf-8")})
+    public String update(Trucks trucks){
+        //调用修改的方法
+        String update = trucksService.update(trucks);
+        return update;
+    }
+
+    @RequestMapping(value = "trucks_insert",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String insert(Trucks trucks){
-        System.out.println("trucks = " + trucks);
-        return "ok";
+        //调用新增的方法
+        String insert = trucksService.insert(trucks);
+        return insert;
     }
 
     /**
      * 根据条件查询所有货车
-     * @param trucks 货车实体
      * @return 货车集合
      */
     @ResponseBody
     @RequestMapping("trucks_queryAll")
-    public HashMap<String,Object> queryAllByLimit(Integer offset, Integer pageNumber,Trucks trucks){
-        return trucksService.queryAllByLimit(offset, pageNumber, trucks);
+    public HashMap<String,Object> queryAllByLimit(Integer offset, Integer pageNumber,String tnumbers){
+        return trucksService.queryAllByLimit(offset, pageNumber, tnumbers);
     }
 
     /**

@@ -34,7 +34,7 @@ public class TrucksServiceImpl implements TrucksService {
         //添加行数据
         map.put("rows",trucksDao.queryAll(trucks));
         //添加总行数
-        map.put("total",trucksDao.count(trucks));
+        map.put("total",trucksDao.count(null));
         //返回map集合
         return map;
     }
@@ -57,13 +57,13 @@ public class TrucksServiceImpl implements TrucksService {
      * @return 对象列表
      */
     @Override
-    public HashMap<String,Object> queryAllByLimit(Integer offset, Integer limit,Trucks trucks) {
+    public HashMap<String,Object> queryAllByLimit(Integer offset, Integer limit,String tnumbers) {
         //创建map集合
         HashMap<String,Object> map=new HashMap<>();
         //添加行数据
-        map.put("rows",trucksDao.queryAllByLimit(offset, limit, trucks));
+        map.put("rows",trucksDao.queryAllByLimit(offset, limit, tnumbers));
         //添加总行数
-        map.put("total",trucksDao.count(trucks));
+        map.put("total",trucksDao.count(tnumbers));
         //返回map集合
         return map;
     }
@@ -75,9 +75,18 @@ public class TrucksServiceImpl implements TrucksService {
      * @return 实例对象
      */
     @Override
-    public Trucks insert(Trucks trucks) {
-        //this.trucksDao.insert(trucks);
-        return trucks;
+    public String insert(Trucks trucks) {
+        //申明变量用于返回值
+        String result="添加失败！";
+        //设置车辆状态
+        trucks.setState(0);
+        //新增车辆
+        int insert = this.trucksDao.insert(trucks);
+        //判断是否新增成功
+        if (insert>0){
+            result="添加成功！";
+        }
+        return result;
     }
 
     /**
@@ -87,19 +96,42 @@ public class TrucksServiceImpl implements TrucksService {
      * @return 实例对象
      */
     @Override
-    public Trucks update(Trucks trucks) {
-        this.trucksDao.update(trucks);
-        return this.queryById(trucks.getTid());
+    public String update(Trucks trucks) {
+        //申明变量用于返回值
+        String result="修改失败！";
+        //新增车辆
+        int update = this.trucksDao.update(trucks);
+        //判断是否新增成功
+        if (update>0){
+            result="修改成功！";
+        }
+        return result;
     }
 
     /**
      * 通过主键删除数据
-     *
-     * @param tid 主键
+     * @param tids id
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer tid) {
-        return this.trucksDao.deleteById(tid) > 0;
+    public String deleteById(String tids) {
+        //申明变量用于返回值
+        int result=0;
+        //根据,截取id
+        String[] split = tids.split(",");
+        //循环出所有的id
+        for (int i = 0; i < split.length; i++) {
+            //调用删除的方法
+            int deleteById = trucksDao.deleteById(Integer.parseInt(split[i]));
+            if (deleteById>0){
+                result++;
+            }
+        }
+        //判断是否删除成功
+        if (result==split.length){
+            return "删除成功！";
+        }else {
+            return "删除失败！";
+        }
     }
 }

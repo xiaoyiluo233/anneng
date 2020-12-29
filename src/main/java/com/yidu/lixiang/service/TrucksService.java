@@ -36,7 +36,7 @@ public interface TrucksService {
      * @param trucks 货车实体
      * @return 对象列表
      */
-    HashMap<String,Object> queryAllByLimit(Integer offset, Integer limit, Trucks trucks);
+    HashMap<String,Object> queryAllByLimit(Integer offset, Integer limit, String tnumbers);
 
     /**
      * 新增数据
@@ -44,7 +44,7 @@ public interface TrucksService {
      * @param trucks 实例对象
      * @return 实例对象
      */
-    Trucks insert(Trucks trucks);
+    String insert(Trucks trucks);
 
     /**
      * 修改数据
@@ -52,14 +52,14 @@ public interface TrucksService {
      * @param trucks 实例对象
      * @return 实例对象
      */
-    Trucks update(Trucks trucks);
+    String update(Trucks trucks);
 
     /**
      * 通过主键删除数据
      *
-     * @param tid 主键
+     * @param tids 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer tid);
+    String deleteById(String tids);
 
 }
