@@ -14,6 +14,46 @@
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
 </head>
 <body>
+    <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document"style="margin-top:10%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lookModalLabel">查看</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <th>车辆id</th>
+                            <th><span id="tids">1</span></th>
+                        </tr>
+                        <tr>
+                            <th>车牌号</th>
+                            <th><span id="tnumbers">admin</span></th>
+                        </tr>
+                        <tr>
+                            <th>车辆驾驶员</th>
+                            <th><span id="eids">123</span></th>
+                        </tr>
+                        <tr>
+                            <th>包裹id</th>
+                            <th><span id="parcelids">123</span></th>
+                        </tr>
+                        <tr>
+                            <th>车辆状态</th>
+                            <th><span id="states">123</span></th>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="toolbar" class="btn-group">
         <button id="btn_add" type="button" class="btn btn-default">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -40,50 +80,50 @@
                     <form id="add_form_modal" class="form-horizontal">
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label" for="uid">车辆id</label>
+                                <label class="control-label" for="tid">车辆id</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text" name="tid" class="form-control" id="uid" placeholder="车辆id自动生成" readonly>
+                                <input type="text" name="tid" class="form-control" id="tid" placeholder="车辆id自动生成" readonly>
                             </div>
                             <label class="err-info-modal"></label>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label" for="uname">车牌号</label>
+                                <label class="control-label" for="tnumber">车牌号</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="tnumber"class="form-control" placeholder="车牌号" id="uname">
+                                <input type="text"name="tnumber"class="form-control" placeholder="车牌号" id="tnumber">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="upass">员工id</label>
+                                <label class="control-label"for="eid">员工id</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="eid"class="form-control" placeholder="员工id" id="upass">
+                                <input type="text"name="eid"class="form-control" placeholder="员工id" id="eid">
                             </div>
                             <label class="err-info-modal"></label>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="headimg">包裹id</label>
+                                <label class="control-label" for="parcelid">包裹id</label>
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="parcelid"class="form-control" placeholder="包裹id" id="headimg">
+                                <input type="text"name="parcelid"class="form-control" placeholder="包裹id" id="parcelid">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="headimg">车辆状态</label>
+                                <label class="control-label" for="state">车辆状态</label>
                             </div>
-                            <select class="form-control" style="width: 180px">
+                            <select class="form-control" style="width: 180px;margin-left: 164px" id="state" name="state">
                                 <option value="0">未发车</option>
                                 <option value="1">已发车</option>
                                 <option value="2">已到达终点</option>
@@ -173,7 +213,7 @@
                 var temp = {
                     offset :params.offset + 0,// SQL语句起始索引
                     pageNumber : params.limit,  // 每页显示数量
-                    uname:params.search //搜索参数
+                    tnumbers:params.search //搜索参数
                 };
                 return temp;
             },columns : [ {
@@ -247,13 +287,39 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.uid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.tid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
     })
+
+    // 当点击【修改】按钮后，把模态框弹出来
+    $("#btn_edit").on("click",function (){
+        url="trucks_update";
+        //选中的数据
+        var data = JSON.stringify($table.bootstrapTable('getSelections'));
+        var data_obj = JSON.parse(data);
+        $("#state").attr("disabled",false);
+        if(data_obj.length>1){
+            alert("目前不支持编辑多行数据");
+        }else if(data_obj==0){
+            alert("请选择一行");
+        }else{
+            $("#tid").val(data_obj[0].tid);
+            $("#tnumber").val(data_obj[0].tnumber);
+            $("#eid").val(data_obj[0].eid);
+            $("#parcelid").val(data_obj[0].parcelid);
+            $("#state").val(data_obj[0].state);
+            $("#addModal").modal({
+                keyboard: true
+            });
+            //$('#addModal').modal('show')
+        }
+    });
+
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
+        $("#state").attr("disabled","disabled");
         url="trucks_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
@@ -270,18 +336,101 @@
 
     // 当点击【保存】按钮后，将表单中的数据提交到后台
     $("#btn_add_submit").on("click",function (){
-        var value=$("#add_form_modal").serializeArray();
-        alert(value);
         $.ajax({
             type: "post",       //请求类型
             url: "../../"+url,     //url
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
-            dataType: "json",    //参数返回类型
-            success: function (obj){
-                alert(obj.success);     //返回信息
+            dataType: "text",    //参数返回类型
+            success: function (msg){
+                alert(msg);     //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
     });
+
+    /**
+     * 列的格式化函数 在数据从服务端返回装载前进行处理
+     * @param  {[type]} value [description]
+     * @param  {[type]} row   [description]
+     * @param  {[type]} index [description]
+     * @return {[type]}       [description]
+     */
+    // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
+    function EditViewById(row, index){
+        url="trucks_update";
+        var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        // {#var data_json2 = eval("(" + data+ ")"); #}
+        //console.log(data_json);
+        //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
+        //alert(data_json[0]);
+        //根据index找到对应行数据，填充数据到修改模态框
+        $("#tid").val(data_json[index].tid);
+        $("#tnumber").val(data_json[index].tnumber);
+        $("#eid").val(data_json[index].eid);
+        $("#parcelid").val(data_json[index].parcelid);
+        $("#state").val(data_json[index].state);
+        $("#addModalLabel").text("修改");
+        //弹出修改模态框，非新增模态框
+        $('#addModal').modal('show')
+    }
+
+
+    function LookViewById(row, index){
+        var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        $("#tids").text(data_json[index].tid);
+        $("#tnumbers").text(data_json[index].tnumber);
+        $("#eids").text(data_json[index].eid);
+        $("#parcelids").text(data_json[index].parcelid);
+        if (data_json[index].state==0){
+            $("#states").text('未发车');
+        }else if (data_json[index].state==1){
+            $("#states").text('已发车');
+        }else if (data_json[index].state==2){
+            $("#states").text('已到达终点');
+        }
+        //弹出修改模态框，非新增模态框
+        $('#lookModal').modal('show')
+    }
+    //当前列删除
+    function DeleteByIds(id) {
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../trucks_delete",     //url
+            data: "tids="+id,     // 收集表单中的数据
+            dataType: "text",    //参数返回类型
+            success: function (obj){
+                alert(obj);     //返回信息
+                $table.bootstrapTable('refresh');    //刷新表格
+            }
+        });
+    }
+
+
+    // 当点击【删除】按钮后，拼接选中的id
+    $("#btn_delete").on("click",function (){
+        url="trucks_delete";
+        //选中的ids
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.tid
+        })
+        if(ids==""){
+            alert("至少选中一行");
+        } else {
+            //alert(ids);
+            $.ajax({
+                type: "post",       //请求类型
+                url: "../../"+url,     //url
+                data: "tids="+ids,     // 收集表单中的数据
+                dataType: "text",    //参数返回类型
+                success: function (obj){
+                    alert(obj);     //返回信息
+                    $table.bootstrapTable('refresh');    //刷新表格
+                }
+            });
+        }
+    });
+
 </script>
 </html>

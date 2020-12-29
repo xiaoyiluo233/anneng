@@ -18,10 +18,9 @@ import java.util.List;
 public interface TrucksDao {
     /**
      * 根据条件查询总行数
-     * @param trucks 货车实体
      * @return 总行数
      */
-    int count(Trucks trucks);
+    int count(String tnumbers);
 
     /**
      * 通过ID查询单条数据
@@ -38,7 +37,7 @@ public interface TrucksDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Trucks> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("trucks") Trucks trucks);
+    List<Trucks> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("tnumbers")String tnumbers);
 
 
     /**
