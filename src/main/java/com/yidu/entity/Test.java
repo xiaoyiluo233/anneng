@@ -2,9 +2,9 @@ package com.yidu.entity;
 
 /**
  * @description:
- * @author:lixiang
+ * @author: lixiang
  * @date: 2020/12/25 15:24
- * @vesion:1.0
+ * @version 1.0
  */
 public class Test {
     public static void main(String[] args) {

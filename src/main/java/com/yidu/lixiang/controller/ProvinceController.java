@@ -1,7 +1,7 @@
 package com.yidu.lixiang.controller;
 
-import com.yidu.entity.Station;
-import com.yidu.lixiang.service.StationService;
+import com.yidu.entity.Province;
+import com.yidu.lixiang.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 /**
- * @description: 中转站表控制层
+ * @description: 省级表控制层
  * @author: lixiang
- * @date: 2020-12-28 15:00:00
+ * @date: 2020/12/30 15:10
  * @version 1.0
  */
 @Controller
-public class StationController {
+public class ProvinceController {
     /**
      * 服务对象
      */
     @Autowired
-    private StationService stationService;
+    private ProvinceService provinceService;
 
     /**
      * 通过主键查询单条数据
@@ -28,10 +28,10 @@ public class StationController {
      * @param id 主键
      * @return 单条数据
      */
-    @RequestMapping("station_selectOne")
+    @RequestMapping("province_selectOne")
     @ResponseBody
-    public Station selectOne(Integer id) {
-        return this.stationService.queryById(id);
+    public Province selectOne(Integer id) {
+        return this.provinceService.queryById(id);
     }
 
 }

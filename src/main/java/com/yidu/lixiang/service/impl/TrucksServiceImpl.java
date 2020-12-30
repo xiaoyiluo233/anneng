@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * (Trucks)表服务实现类
- *
- * @author lixiang
- * @since 2020-12-29 10:32:52
+ * @description: 车辆表业务接口层
+ * @author: lixiang
+ * @date: 2020/12/30 15:08
+ * @version 1.0
  */
 @Service
 public class TrucksServiceImpl implements TrucksService {

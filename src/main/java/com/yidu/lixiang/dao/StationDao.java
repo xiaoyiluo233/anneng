@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * (Station)表数据库访问层
- *
- * @author lixiang
- * @since 2020-12-28 14:59:58
+ * @description: 中转站持久层
+ * @author: lixiang
+ * @date: 2020-12-28 14:59:58
+ * @version 1.0
  */
 @Repository
 @Mapper

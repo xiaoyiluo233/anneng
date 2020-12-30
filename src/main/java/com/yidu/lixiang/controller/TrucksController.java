@@ -12,10 +12,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * (Trucks)表控制层
- *
- * @author lixiang
- * @since 2020-12-29 10:32:52
+ * @description: 车辆表控制层
+ * @author: lixiang
+ * @date: 2020-12-29 10:32:52
+ * @version 1.0
  */
 @Controller
 public class TrucksController {

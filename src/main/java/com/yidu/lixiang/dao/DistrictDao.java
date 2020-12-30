@@ -1,6 +1,6 @@
 package com.yidu.lixiang.dao;
 
-import com.yidu.entity.Trucks;
+import com.yidu.entity.District;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,27 +8,29 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @description: 车辆表持久层
+ * @description: 县级表持久层
  * @author: lixiang
- * @date: 2020-12-29 10:32:52
+ * @date: 2020/12/30 15:46
  * @version 1.0
  */
 @Repository
 @Mapper
-public interface TrucksDao {
+public interface DistrictDao {
+
     /**
-     * 根据条件查询总行数
-     * @return 总行数
+     * 市级与县级的一对一关系映射的查询所有
+     * @param district 县级表实体类
+     * @return 县级表集合
      */
-    int count(String tnumbers);
+    List<District> getCity(District district);
 
     /**
      * 通过ID查询单条数据
      *
-     * @param tid 主键
+     * @param districtid 主键
      * @return 实例对象
      */
-    Trucks queryById(Integer tid);
+    District queryById(Integer districtid);
 
     /**
      * 查询指定行数据
@@ -37,39 +39,39 @@ public interface TrucksDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Trucks> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("tnumbers")String tnumbers);
+    List<District> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param trucks 实例对象
+     * @param district 实例对象
      * @return 对象列表
      */
-    List<Trucks> queryAll(Trucks trucks);
+    List<District> queryAll(District district);
 
     /**
      * 新增数据
      *
-     * @param trucks 实例对象
+     * @param district 实例对象
      * @return 影响行数
      */
-    int insert(Trucks trucks);
+    int insert(District district);
 
     /**
      * 修改数据
      *
-     * @param trucks 实例对象
+     * @param district 实例对象
      * @return 影响行数
      */
-    int update(Trucks trucks);
+    int update(District district);
 
     /**
      * 通过主键删除数据
      *
-     * @param tid 主键
+     * @param districtid 主键
      * @return 影响行数
      */
-    int deleteById(Integer tid);
+    int deleteById(Integer districtid);
 
 }

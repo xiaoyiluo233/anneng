@@ -1,23 +1,23 @@
 package com.yidu.lixiang.service;
 
-import com.yidu.entity.Station;
+import com.yidu.entity.Province;
 import java.util.List;
 
 /**
- * @description: 中转站业务层
+ * @description: 省级表业务层
  * @author: lixiang
- * @date: 2020-12-28 14:59:59
+ * @date: 2020/12/30 15:11
  * @version 1.0
  */
-public interface StationService {
+public interface ProvinceService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param stationid 主键
+     * @param provinceid 主键
      * @return 实例对象
      */
-    Station queryById(Integer stationid);
+    Province queryById(Integer provinceid);
 
     /**
      * 查询多条数据
@@ -26,30 +26,30 @@ public interface StationService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Station> queryAllByLimit(int offset, int limit);
+    List<Province> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param station 实例对象
+     * @param province 实例对象
      * @return 实例对象
      */
-    Station insert(Station station);
+    Province insert(Province province);
 
     /**
      * 修改数据
      *
-     * @param station 实例对象
+     * @param province 实例对象
      * @return 实例对象
      */
-    Station update(Station station);
+    Province update(Province province);
 
     /**
      * 通过主键删除数据
      *
-     * @param stationid 主键
+     * @param provinceid 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer stationid);
+    boolean deleteById(Integer provinceid);
 
 }
