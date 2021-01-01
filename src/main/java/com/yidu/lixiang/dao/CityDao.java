@@ -16,6 +16,12 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CityDao {
+    /**
+     * 根据城市名查出城市id
+     * @param cityname 城市名
+     * @return 城市id
+     */
+    int getCityIdByCityName(String cityname);
 
     /**
      * 一对一关系映射的查询所有

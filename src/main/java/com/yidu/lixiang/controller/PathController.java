@@ -22,6 +22,12 @@ public class PathController {
     @Autowired
     private PathService pathService;
 
+    @RequestMapping("path_queryStation")
+    @ResponseBody
+    public String[] queryStation(String cityName){
+        return pathService.queryStation(cityName);
+    }
+
     @ResponseBody
     @RequestMapping("path_queryAll")
     public HashMap<String,Object> queryAll(Path path){

@@ -19,6 +19,10 @@
         </association>
     </resultMap>
 
+    <select id="getCityIdByCityName" parameterType="String" resultType="int">
+        select cityId from city where cityName=#{cityname}
+    </select>
+    <!-- 根据城市名查出城市id -->
     <select id="getProvince" resultMap="getProvinceMapper">
         SELECT * FROM city c1,province p1
         <where>

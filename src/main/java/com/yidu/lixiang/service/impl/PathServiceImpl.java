@@ -3,13 +3,13 @@ package com.yidu.lixiang.service.impl;
 import com.yidu.entity.Path;
 import com.yidu.entity.Station;
 import com.yidu.entity.StationMain;
+import com.yidu.lixiang.dao.CityDao;
 import com.yidu.lixiang.dao.PathDao;
 import com.yidu.lixiang.dao.StationDao;
 import com.yidu.lixiang.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +26,35 @@ public class PathServiceImpl implements PathService {
     private PathDao pathDao;
     @Autowired
     private StationDao stationDao;
+    @Autowired
+    private CityDao cityDao;
+    @Autowired
+    private Station station;
+
+    @Override
+    public String[] queryStation(String cityName) {
+        try {
+            //调用查询城市id的方法
+            int cityIdByCityName = cityDao.getCityIdByCityName(cityName);
+            //设置城市id
+            station.setCityid(cityIdByCityName);
+            //调用查询中转站的方法
+            List<Station> stations = stationDao.queryAll(station);
+            //申明一个数组用于存储中转站
+            String[] stationName=new String[stations.size()];
+            //循环取出中转站实体类
+            for (int i = 0; i < stations.size(); i++) {
+                //得到中转站名
+                String stationname = stations.get(i).getStationname();
+                //存进中转站数组中
+                stationName[i]=stationname;
+            }
+            //返回中转站数组
+            return stationName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     @Override
     public HashMap<String, Object> queryAll(Path path) {
@@ -50,7 +79,7 @@ public class PathServiceImpl implements PathService {
             //设置终点中转站
             stationMain.setDestinationName(destination.get(i));
             //查询出所有经过的中转站的id
-            List<Path> paths = pathDao.queryAll(null);
+            List<Path> paths = pathDao.queryAll(path);
             //得到经过的中转站的id
             String stationids = paths.get(i).getStationids();
             //截取id
@@ -76,7 +105,7 @@ public class PathServiceImpl implements PathService {
             list.add(stationMain);
         }
         resultMap.put("rows",list);
-        resultMap.put("total",pathDao.count());
+        resultMap.put("total",pathDao.count(path));
         return resultMap;
     }
 

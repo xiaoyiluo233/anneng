@@ -13,6 +13,13 @@ import java.util.List;
  */
 public interface PathService {
     /**
+     * 查询出中转站
+     * @param cityName 市级名
+     * @return 中转站数组
+     */
+    public String[] queryStation(String cityName);
+
+    /**
      * 查询所有
      * @param path 线路实体类
      * @return 线路集合
