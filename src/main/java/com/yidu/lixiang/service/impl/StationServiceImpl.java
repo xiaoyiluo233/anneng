@@ -20,6 +20,11 @@ public class StationServiceImpl implements StationService {
     @Autowired
     private StationDao stationDao;
 
+    @Override
+    public List<Station> stationAndCity(Station station) {
+        return stationDao.stationAndCity(station);
+    }
+
     /**
      * 通过ID查询单条数据
      *

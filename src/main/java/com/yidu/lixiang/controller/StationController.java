@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description: 中转站表控制层
@@ -21,6 +22,12 @@ public class StationController {
      */
     @Autowired
     private StationService stationService;
+
+    @ResponseBody
+    @RequestMapping("station_stationAndCity")
+    public List<Station> stationAndCity(){
+        return stationService.stationAndCity(null);
+    }
 
     /**
      * 通过主键查询单条数据

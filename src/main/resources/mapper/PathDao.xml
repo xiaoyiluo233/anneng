@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lixiang.dao.PathDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Path">
+        <!--@Table path-->
+        <result property="pathid" column="pathId" jdbcType="INTEGER"/>
+        <result property="startstation" column="startStation" jdbcType="INTEGER"/>
+        <result property="stationids" column="stationIds" jdbcType="VARCHAR"/>
+        <result property="destination" column="destination" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="getStation" type="com.yidu.entity.Path">
+        <result property="pathid" column="pathId" jdbcType="INTEGER"/>
+        <result property="startstation" column="startStation" jdbcType="INTEGER"/>
+        <result property="stationids" column="stationIds" jdbcType="VARCHAR"/>
+        <result property="destination" column="destination" jdbcType="INTEGER"/>
+        <association property="station" javaType="com.yidu.entity.Station">
+            <result property="stationid" column="stationId" jdbcType="INTEGER"/>
+            <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+            <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+    <!--得到终点中转站-->
+    <select id="getDestination" resultType="String">
+        SELECT s1.`stationName` FROM station s1,path p1 WHERE stationId=p1.`destination`
+    </select>
+    <!-- 得到起点中转站 -->
+    <select id="getStartStation" resultType="String">
+        SELECT s1.`stationName` FROM station s1,path p1 WHERE stationId=p1.`startStation`
+    </select>
+    <!-- 统计行数 -->
+    <select id="count" resultType="int">
+        select count(1) from ane.path
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          pathId, startStation, stationIds, destination
+        from ane.path
+        where pathId = #{pathid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          pathId, startStation, stationIds, destination
+        from ane.path
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          pathId, startStation, stationIds, destination
+        from ane.path
+        <where>
+            <if test="pathid != null">
+                and pathId = #{pathid}
+            </if>
+            <if test="startstation != null">
+                and startStation = #{startstation}
+            </if>
+            <if test="stationids != null and stationids != ''">
+                and stationIds = #{stationids}
+            </if>
+            <if test="destination != null">
+                and destination = #{destination}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pathid" useGeneratedKeys="true">
+        insert into ane.path(startStation, stationIds, destination)
+        values (#{startstation}, #{stationids}, #{destination})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.path
+        <set>
+            <if test="startstation != null">
+                startStation = #{startstation},
+            </if>
+            <if test="stationids != null and stationids != ''">
+                stationIds = #{stationids},
+            </if>
+            <if test="destination != null">
+                destination = #{destination},
+            </if>
+        </set>
+        where pathId = #{pathid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.path where pathId = #{pathid}
+    </delete>
+
+</mapper>

@@ -12,6 +12,13 @@ import java.util.List;
 public interface StationService {
 
     /**
+     * 中转站与市级表的一对一关系的查询所有
+     * @param station 中转站实体类
+     * @return 中转站集合
+     */
+    List<Station> stationAndCity(Station station);
+
+    /**
      * 通过ID查询单条数据
      *
      * @param stationid 主键
