@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.ljj.dao.ProducttypeDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Producttype">
+        <!--@Table producttype-->
+        <result property="ptid" column="ptid" jdbcType="INTEGER"/>
+        <result property="ptype" column="ptype" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.producttype
+        <where>
+            <if test="text!=null and text != ''">
+                    ptype like '%#{text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          ptid, ptype
+        from ane.producttype
+        where ptid = #{ptid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          ptid, ptype
+        from ane.producttype
+        limit #{offset}, #{limit}
+        <where>
+            <if test="text!=null and text != ''">
+                ptype like '%#{text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          ptid, ptype
+        from ane.producttype
+        <where>
+            <if test="ptid != null">
+                and ptid = #{ptid}
+            </if>
+            <if test="ptype != null and ptype != ''">
+                and ptype = #{ptype}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into ane.producttype(ptid, ptype)
+        values (#{ptid}, #{ptype})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.producttype
+        <set>
+            <if test="ptid != null">
+                ptid = #{ptid},
+            </if>
+            <if test="ptype != null and ptype != ''">
+                ptype = #{ptype},
+            </if>
+        </set>
+        where ptid = #{ptid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.producttype where ptid = #{ptid}
+    </delete>
+
+</mapper>
