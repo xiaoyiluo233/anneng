@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>线路规划</title>
+    <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../../assets/dist/bootstrap-table.js"></script>
+    <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+</head>
+<body>
+    <table id="mytable"></table>
+</body>
+<script type="text/javascript">
+    //根据窗口调整表格高度
+    $(window).resize(function() {
+        $('#mytable').bootstrapTable('resetView', {
+            height: tableHeight()
+        })
+    });
+    //窗口高度减50
+    function tableHeight() {
+        return $(window).height() - 50;
+    }
+    //表格选择器
+    $table= $("#mytable");
+    //新增修改url
+    var url="";
+    $(document).ready(function () {
+        $table.bootstrapTable({
+            url:"../../path_queryAll",   //请求地址
+            height: tableHeight(),//高度调整
+            //cardView:true,//卡视图
+            search: true,//是否搜索
+            pagination: true,//是否分页
+            pageSize: 5,//单页记录数
+            pageList: [5, 10, 20, 50],//分页步进值
+            sidePagination: "server",//服务端分页
+            contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+            dataType: "json",//期待返回数据类型
+            // ajax:function ajaxRequest(params) {
+            //     var url = 'user/selectAll'
+            //     $.get(url + '?' + $.param(params.data)).then(function (res) {
+            //         params.success(res)
+            //     })
+            // },//ajax
+            toggle:"mytable",
+            method: "post",//请求方式
+            searchAlign: "left",//查询框对齐方式
+            queryParamsType: "limit",//查询参数组织方式
+            /*queryParams: function getParams(params) {
+                //params obj
+                params.other = "otherInfo";
+                return params;
+            },*/
+            clickToSelect:true,//单击选中
+            theadClasses: "thead-light",
+            detailFormatters: "detailFormatter",//数据格式化
+            searchOnEnterKey: false,//回车搜索
+            showColumnsToggleAll: true, //列按钮
+            showRefresh: true,//刷新按钮
+            showColumns: true,//列选择按钮
+            showToggle: true,//切换视图按钮
+            showSearchButton: true,//搜索显示图标
+            showExport: true,
+            buttonsAlign: "right",//按钮对齐方式
+            toolbar: "#toolbar",//指定工具栏
+
+            // toolbarAlign: "right",//工具栏对齐方式
+            searchAlign:"right",
+            showFullscreen: true,//放大
+            showPaginationSwitch: true, //收起
+            bubbles:"btnAdd",//自定义按钮
+            queryParams : function(params) {//上传服务器的参数
+                var temp = {
+                    offset :params.offset + 0,// SQL语句起始索引
+                    pageNumber : params.limit,  // 每页显示数量
+                    tnumbers:params.search //搜索参数
+                };
+                return temp;
+            },columns : [ {
+                checkbox:true  //第一列显示复选框
+            },{
+                title : '线路id',
+                field : 'pathId',
+                sortable : true
+            }, {
+                title : '发车中转站id',
+                field : 'startStation',
+                sortable : true
+            }, {
+                title : '经过的中转站id',
+                field : 'stationsCenter',
+                sortable : true
+            },{
+                title : '终点中转站id',
+                field : 'destinationName',
+                sortable : true,
+                /*//value代表当前单元格中的值，row代表当前行数据，index表示当前行的下标
+                formatter:function (value,row,index) {
+                    return '<img src="img/'+value+'" width="20px" class="img-rounded"/>';
+                }*/
+            },{
+                field: 'operate',
+                title: '操作',
+                width: 120,
+                align: 'center',
+                // valign: 'middle',
+                formatter: actionFormatter,//对本列数据做格式化
+            }],
+            onClickRow: function(row, $element) {
+                //$element是当前tr的jquery对象
+                //$element.css("background-color", "green");
+            },//单击row事件
+            locale: "zh-CN", //中文支持
+            detailView: true, //是否显示详情折叠  会导致表格最开头多出一列
+            detailFormatter: function(index, row, element) {
+                var html = '';
+                $.each(row, function(key, val){
+                    html += "<p>" + key + ":" + val +  "</p>"
+                });
+                return html;
+            }
+        });
+        //语言环境切换
+        $('#locale').change(function () {
+            alert(1);
+            $table.bootstrapTable('refreshOptions', {
+                locale: $(this).val()
+            })
+        })
+        //操作栏的格式化,value代表当前单元格中的值，row代表当前行数据，index表示当前行的下标
+        function actionFormatter(value, row, index) {
+            var id = index;
+            var data = JSON.stringify(row);
+            var result = "";
+            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.tid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            return result;
+
+        }
+    })
+</script>
+</html>

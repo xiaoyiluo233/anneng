@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * (Trucks)表服务接口
- *
- * @author lixiang
- * @since 2020-12-29 10:32:52
+ * @description: 车辆表业务层
+ * @author: lixiang
+ * @date: 2020-12-29 10:32:52
+ * @version 1.0
  */
 public interface TrucksService {
 

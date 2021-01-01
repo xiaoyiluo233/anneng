@@ -4,12 +4,19 @@ import com.yidu.entity.Station;
 import java.util.List;
 
 /**
- * (Station)表服务接口
- *
- * @author lixiang
- * @since 2020-12-28 14:59:59
+ * @description: 中转站业务层
+ * @author: lixiang
+ * @date: 2020-12-28 14:59:59
+ * @version 1.0
  */
 public interface StationService {
+
+    /**
+     * 中转站与市级表的一对一关系的查询所有
+     * @param station 中转站实体类
+     * @return 中转站集合
+     */
+    List<Station> stationAndCity(Station station);
 
     /**
      * 通过ID查询单条数据

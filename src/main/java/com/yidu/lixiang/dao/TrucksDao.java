@@ -8,10 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * (Trucks)表数据库访问层
- *
- * @author lixiang
- * @since 2020-12-29 10:32:52
+ * @description: 车辆表持久层
+ * @author: lixiang
+ * @date: 2020-12-29 10:32:52
+ * @version 1.0
  */
 @Repository
 @Mapper

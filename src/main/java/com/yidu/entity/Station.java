@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * (Station)实体类
- *
- * @author lixiang
- * @since 2020-12-28 14:59:35
+ * @description: 中转表实体类
+ * @author:lixiang
+ * @date: 2020-12-28 14:59:35
+ * @vesion:1.0
  */
 @Component
 public class Station implements Serializable {
@@ -19,6 +19,16 @@ public class Station implements Serializable {
     private Integer cityid;
     
     private String stationname;
+
+    private City city;
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
 
     @Override
     public String toString() {

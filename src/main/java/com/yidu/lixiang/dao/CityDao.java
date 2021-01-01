@@ -1,6 +1,6 @@
 package com.yidu.lixiang.dao;
 
-import com.yidu.entity.Station;
+import com.yidu.entity.City;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,29 +8,29 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @description: 中转站持久层
+ * @description: 市级表持久层
  * @author: lixiang
- * @date: 2020-12-28 14:59:58
+ * @date: 2020/12/30 15:16
  * @version 1.0
  */
 @Repository
 @Mapper
-public interface StationDao {
+public interface CityDao {
 
     /**
-     * 中转站与市级表的一对一关系的查询所有
-     * @param station 中转站实体类
-     * @return 中转站集合
+     * 一对一关系映射的查询所有
+     * @param city 市级表实体类
+     * @return 市级集合
      */
-    List<Station> stationAndCity(Station station);
+    List<City> getProvince(City city);
 
     /**
      * 通过ID查询单条数据
      *
-     * @param stationid 主键
+     * @param cityid 主键
      * @return 实例对象
      */
-    Station queryById(Integer stationid);
+    City queryById(Integer cityid);
 
     /**
      * 查询指定行数据
@@ -39,39 +39,39 @@ public interface StationDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Station> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<City> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param station 实例对象
+     * @param city 实例对象
      * @return 对象列表
      */
-    List<Station> queryAll(Station station);
+    List<City> queryAll(City city);
 
     /**
      * 新增数据
      *
-     * @param station 实例对象
+     * @param city 实例对象
      * @return 影响行数
      */
-    int insert(Station station);
+    int insert(City city);
 
     /**
      * 修改数据
      *
-     * @param station 实例对象
+     * @param city 实例对象
      * @return 影响行数
      */
-    int update(Station station);
+    int update(City city);
 
     /**
      * 通过主键删除数据
      *
-     * @param stationid 主键
+     * @param cityid 主键
      * @return 影响行数
      */
-    int deleteById(Integer stationid);
+    int deleteById(Integer cityid);
 
 }

@@ -10,15 +10,20 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * (Station)表服务实现类
- *
- * @author lixiang
- * @since 2020-12-28 14:59:59
+ * @description: 中转站业务接口层
+ * @author: lixiang
+ * @date: 2020-12-28 14:59:59
+ * @version 1.0
  */
 @Service
 public class StationServiceImpl implements StationService {
     @Autowired
     private StationDao stationDao;
+
+    @Override
+    public List<Station> stationAndCity(Station station) {
+        return stationDao.stationAndCity(station);
+    }
 
     /**
      * 通过ID查询单条数据

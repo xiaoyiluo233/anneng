@@ -1,6 +1,6 @@
 package com.yidu.lixiang.dao;
 
-import com.yidu.entity.Station;
+import com.yidu.entity.Path;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,29 +8,39 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @description: 中转站持久层
+ * @description: 线路表持久层
  * @author: lixiang
- * @date: 2020-12-28 14:59:58
+ * @date: 2020/12/31 11:04
  * @version 1.0
  */
 @Repository
 @Mapper
-public interface StationDao {
+public interface PathDao {
+    /**
+     * 得到起点中转站的名字
+     * @return 起点中转站名
+     */
+    List<String> getStartStation();
 
     /**
-     * 中转站与市级表的一对一关系的查询所有
-     * @param station 中转站实体类
-     * @return 中转站集合
+     * 得到终点中转站的名字
+     * @return 终点中转站名
      */
-    List<Station> stationAndCity(Station station);
+    List<String> getDestination();
+
+    /**
+     * 得到总行数
+     * @return 总行数
+     */
+    int count();
 
     /**
      * 通过ID查询单条数据
      *
-     * @param stationid 主键
+     * @param pathid 主键
      * @return 实例对象
      */
-    Station queryById(Integer stationid);
+    Path queryById(Integer pathid);
 
     /**
      * 查询指定行数据
@@ -39,39 +49,39 @@ public interface StationDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Station> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Path> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param station 实例对象
+     * @param path 实例对象
      * @return 对象列表
      */
-    List<Station> queryAll(Station station);
+    List<Path> queryAll(Path path);
 
     /**
      * 新增数据
      *
-     * @param station 实例对象
+     * @param path 实例对象
      * @return 影响行数
      */
-    int insert(Station station);
+    int insert(Path path);
 
     /**
      * 修改数据
      *
-     * @param station 实例对象
+     * @param path 实例对象
      * @return 影响行数
      */
-    int update(Station station);
+    int update(Path path);
 
     /**
      * 通过主键删除数据
      *
-     * @param stationid 主键
+     * @param pathid 主键
      * @return 影响行数
      */
-    int deleteById(Integer stationid);
+    int deleteById(Integer pathid);
 
 }

@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * (Trucks)实体类
- *
- * @author lixiang
- * @since 2020-12-29 10:32:31
+ * @description: 货车表实体类
+ * @author: lixiang
+ * @date: 2020-12-29 10:32:31
+ * @version 1.0
  */
 @Component
 public class Trucks implements Serializable {

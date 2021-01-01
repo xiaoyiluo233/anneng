@@ -8,6 +8,33 @@
         <result property="cityid" column="cityId" jdbcType="INTEGER"/>
         <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
     </resultMap>
+    <!-- 中转站与市级表的一对一关系映射 -->
+    <resultMap id="stationAndCityMapper" type="com.yidu.entity.Station">
+        <result property="stationid" column="stationId" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+        <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+        <association property="city" javaType="com.yidu.entity.City">
+            <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+            <result property="provinceid" column="provinceId" jdbcType="INTEGER"/>
+            <result property="cityname" column="cityName" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="stationAndCity" resultMap="stationAndCityMapper">
+        SELECT * FROM station s1,city c1
+        <where>
+            s1.`cityId`=c1.`cityId`
+            <if test="stationid != null">
+                and stationId = #{stationid}
+            </if>
+            <if test="cityid != null">
+                and cityId = #{cityid}
+            </if>
+            <if test="stationname != null and stationname != ''">
+                and stationName = #{stationname}
+            </if>
+        </where>
+    </select>
 
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
