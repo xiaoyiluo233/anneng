@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CityDao {
+
     /**
      * 根据城市名查出城市id
      * @param cityname 城市名

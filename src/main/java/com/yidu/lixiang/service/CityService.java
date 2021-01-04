@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface CityService {
 
+    String getProvinceName(City city);
+
     /**
      * 一对一关系映射的查询所有
      * @param city 市级表实体类
