@@ -44,12 +44,13 @@ public interface PathService {
     List<Path> queryAllByLimit(int offset, int limit);
 
     /**
-     * 新增数据
-     *
-     * @param path 实例对象
-     * @return 实例对象
+     * 新增线路
+     * @param startStation 起点站
+     * @param destinationName 经过的中转站
+     * @param stationCenters 终点站
+     * @return 新增成功
      */
-    Path insert(Path path);
+    String insert(String startStation,String destinationName,String stationCenters);
 
     /**
      * 修改数据
@@ -61,10 +62,9 @@ public interface PathService {
 
     /**
      * 通过主键删除数据
-     *
-     * @param pathid 主键
-     * @return 是否成功
+     * @param ids 主键字符串
+     * @return 删除成功
      */
-    boolean deleteById(Integer pathid);
+    String deleteById(String ids);
 
 }

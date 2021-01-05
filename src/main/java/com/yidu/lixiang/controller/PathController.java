@@ -1,6 +1,7 @@
 package com.yidu.lixiang.controller;
 
 import com.yidu.entity.Path;
+import com.yidu.entity.StationMain;
 import com.yidu.lixiang.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,18 @@ public class PathController {
      */
     @Autowired
     private PathService pathService;
+
+    @RequestMapping(value = "path_delete",produces = {("application/json;charset=utf-8")})
+    @ResponseBody
+    public String delete(String ids){
+        return pathService.deleteById(ids);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "path_insert",produces = {("application/json;charset=utf-8")})
+    public String insert(String startStation,String destinationName,String stationCenters){
+        return pathService.insert(startStation, destinationName, stationCenters);
+    }
 
     @RequestMapping("path_queryStation")
     @ResponseBody
