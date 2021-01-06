@@ -21,6 +21,22 @@ public class CityServiceImpl implements CityService {
     private CityDao cityDao;
 
     @Override
+    public String getProvinceName(City city){
+        //申明变量用于返回值
+        String provincename="";
+        //查出市级集合
+        List<City> province = cityDao.getProvince(city);
+        //循环拿出市级
+        for (int i = 0; i < province.size(); i++) {
+            //得到市级
+            City city1 = province.get(i);
+            //得到省级名称
+            provincename = city1.getProvince().getProvincename();
+        }
+        return provincename;
+    }
+
+    @Override
     public List<City> getProvince(City city) {
         return cityDao.getProvince(city);
     }

@@ -18,6 +18,13 @@ import java.util.List;
 public interface CityDao {
 
     /**
+     * 根据城市名查出城市id
+     * @param cityname 城市名
+     * @return 城市id
+     */
+    int getCityIdByCityName(String cityname);
+
+    /**
      * 一对一关系映射的查询所有
      * @param city 市级表实体类
      * @return 市级集合

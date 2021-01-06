@@ -24,9 +24,15 @@ public class CityController {
     private CityService cityService;
 
     @ResponseBody
+    @RequestMapping(value = "city_getProvinceName",produces = {("application/json;charset=utf-8")})
+    public String getProvinceName(City city){
+        return cityService.getProvinceName(city);
+    }
+
+    @ResponseBody
     @RequestMapping("city_getProvince")
-    public List<City> getProvince(){
-        return cityService.getProvince(null);
+    public List<City> getProvince(City city){
+        return cityService.getProvince(city);
     }
 
     /**
