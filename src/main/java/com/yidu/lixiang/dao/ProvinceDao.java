@@ -1,16 +1,19 @@
-package com.yidu.lr.dao;
+package com.yidu.lixiang.dao;
 
 import com.yidu.entity.Province;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
- * (Province)表数据库访问层
- *
- * @author makejava
- * @since 2021-01-01 14:54:02
+ * @description: 省级表持久层
+ * @author: lixiang
+ * @date: 2020/12/30 15:11
+ * @version 1.0
  */
+@Repository
 @Mapper
 public interface ProvinceDao {
 

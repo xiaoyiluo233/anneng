@@ -1,16 +1,21 @@
-package com.yidu.lr.service;
+package com.yidu.lixiang.service;
 
 import com.yidu.entity.District;
-
 import java.util.List;
 
 /**
- * (District)表服务接口
- *
- * @author makejava
- * @since 2021-01-01 15:05:04
+ * @description: 县级表业务层
+ * @author: lixiang
+ * @date: 2020/12/30 15:46
+ * @version 1.0
  */
 public interface DistrictService {
+    /**
+     * 市级与县级的一对一关系映射的查询所有
+     * @param district 县级表实体类
+     * @return 县级表集合
+     */
+    List<District> getCity(District district);
 
     /**
      * 通过ID查询单条数据
