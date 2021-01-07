@@ -28,9 +28,7 @@ public class TrucksController {
     @ResponseBody
     @RequestMapping("trucks_getEnamesByRoleid")
     public String[] getEnamesByRoleid(int roleid){
-        String[] enameByRoleId = trucksService.getEnameByRoleId(roleid);
-        System.out.println("enameByRoleId = " + enameByRoleId);
-        return enameByRoleId;
+        return trucksService.getEnameByRoleId(roleid);
     }
 
     @RequestMapping(value = "trucks_delete",produces = {("application/json;charset=utf-8")})

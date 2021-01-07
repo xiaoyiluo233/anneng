@@ -149,18 +149,22 @@
     </div>
 </body>
 <script type="text/javascript">
+    $(function () {
+        getEname();
+    });
     function getEname(){
         $.ajax({
             type:"post",
-            data:"cityName=1",
-            url:"../../path_queryStation",
+            data:"roleid=1",
+            url:"../../trucks_getEnamesByRoleid",
             dataType: "json",
             success: function (msg){
                 var string=''+msg+'';
                 var stringResult = string.split(',');
-                $("#eid").children().not(":eq(0)").remove();
+                console.log(stringResult);
+                $("#eid").children().remove();
                 for (var p=0;p<stringResult.length;p++) {
-                    $(".stationsCenter").eq(indexs).append("<option value='"+stringResult[p]+"'>"+stringResult[p]+"</option>");
+                    $("#eid").append("<option value='"+stringResult[p]+"'>"+stringResult[p]+"</option>");
                 }
             }
         });
@@ -397,7 +401,7 @@
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         $("#tids").text(data_json[index].tid);
         $("#tnumbers").text(data_json[index].tnumber);
-        $("#eids").text(data_json[index].eid);
+        $("#eids").text(data_json[index].employee.ename);
         $("#parcelids").text(data_json[index].parcelid);
         if (data_json[index].state==0){
             $("#states").text('未发车');
