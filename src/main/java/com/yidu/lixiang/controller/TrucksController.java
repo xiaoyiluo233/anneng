@@ -25,6 +25,14 @@ public class TrucksController {
     @Autowired
     private TrucksServiceImpl trucksService;
 
+    @ResponseBody
+    @RequestMapping("trucks_getEnamesByRoleid")
+    public String[] getEnamesByRoleid(int roleid){
+        String[] enameByRoleId = trucksService.getEnameByRoleId(roleid);
+        System.out.println("enameByRoleId = " + enameByRoleId);
+        return enameByRoleId;
+    }
+
     @RequestMapping(value = "trucks_delete",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String delete(String tids){
