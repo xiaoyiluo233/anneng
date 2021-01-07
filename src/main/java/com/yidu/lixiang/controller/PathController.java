@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @description: 线路表控制层
@@ -43,8 +44,8 @@ public class PathController {
 
     @ResponseBody
     @RequestMapping("path_queryAll")
-    public HashMap<String,Object> queryAll(Path path){
-        return pathService.queryAll(path);
+    public List<StationMain> queryAll(){
+        return pathService.queryAll();
     }
 
     /**

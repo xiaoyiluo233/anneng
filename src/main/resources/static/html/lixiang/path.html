@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>线路规划</title>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=809109e2e35ed5b94300cb71dfb10a1a&plugin=AMap.Driving"></script>
+    <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
@@ -12,10 +18,17 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <style>
+        #container {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
     <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document"style="margin-top:10%;">
+        <div class="modal-dialog" role="document"style="margin-top:4%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="lookModalLabel">查看</h5>
@@ -41,6 +54,8 @@
                             <th>终点中转站</th>
                             <th><span id="destinationName1">123</span></th>
                         </tr>
+                        <div id="container"></div>
+                        <div id="panel" style="display: none"></div>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -50,6 +65,11 @@
             </div>
         </div>
     </div>
+
+    <div class="alert alert-success" style="display: none">
+        <strong>成功!</strong>
+    </div>
+
     <!--头部工具栏-->
     <div id="toolbar" class="btn-group">
         <button id="btn_add" type="button" class="btn btn-default">
@@ -152,6 +172,7 @@
     </div>
 </body>
 <script type="text/javascript">
+
     var stationCenters="";
     var indexs=0;
     function sures(){
@@ -343,7 +364,7 @@
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
             pageList: [5, 10, 20, 50],//分页步进值
-            sidePagination: "server",//服务端分页
+            /*sidePagination: "server",//服务端分页*/
             contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
             dataType: "json",//期待返回数据类型
             // ajax:function ajaxRequest(params) {
@@ -355,7 +376,7 @@
             toggle:"mytable",
             method: "post",//请求方式
             searchAlign: "left",//查询框对齐方式
-            queryParamsType: "limit",//查询参数组织方式
+            /*queryParamsType: "limit",//查询参数组织方式*/
             /*queryParams: function getParams(params) {
                 //params obj
                 params.other = "otherInfo";
@@ -373,20 +394,20 @@
             showExport: true,
             buttonsAlign: "right",//按钮对齐方式
             toolbar: "#toolbar",//指定工具栏
-
+            searchHighlight:true,
             // toolbarAlign: "right",//工具栏对齐方式
             searchAlign:"right",
             showFullscreen: true,//放大
             showPaginationSwitch: true, //收起
             bubbles:"btnAdd",//自定义按钮
-            queryParams : function(params) {//上传服务器的参数
+            /*queryParams : function(params) {//上传服务器的参数
                 var temp = {
                     offset :params.offset + 0,// SQL语句起始索引
                     pageNumber : params.limit,  // 每页显示数量
-                    tnumbers:params.search //搜索参数
+                    startStation:params.search //搜索参数
                 };
                 return temp;
-            },columns : [ {
+            },*/columns : [ {
                 checkbox:true  //第一列显示复选框
             },{
                 title : '线路id',
@@ -478,11 +499,13 @@
             data: datas,     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                alert(msg);     //返回信息
+                swal("结果:", msg, "success");
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
     });
+
+
     function LookViewById(row, index){
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
@@ -490,19 +513,67 @@
         $("#startStation1").text(data_json[index].startStation);
         $("#stationsCenter1").text(data_json[index].stationsCenter);
         $("#destinationName1").text(data_json[index].destinationName);
+        //基本地图加载
+        var map = new AMap.Map("container", {
+            resizeEnable: true,
+            center: [111, 27],//地图中心点
+            zoom: 13 //地图显示的缩放级别
+        });
+        var driving = new AMap.Driving({
+            map: map,
+            panel: "panel"
+        });
+        var centers=data_json[index].stationsCenter;
+        var shuzu=centers.split("-");
+        var bb=[];
+        var persons = new Object();
+        persons.keyword=data_json[index].startStation;
+        bb[0]=persons;
+        for (let i = 0; i < shuzu.length; i++) {
+            var person = new Object();
+            person.keyword=shuzu[i];
+            bb[i+1]=person;
+        }
+        persons.keyword=data_json[index].destinationName;
+        bb[bb.length]=persons;
+        driving.search(
+            bb
+        , function(status, result) {
+            // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+            if (status === 'complete') {
+                log.success('绘制路线完成')
+            } else {
+                log.error('获取数据失败：' + result)
+            }
+        });
         //弹出修改模态框，非新增模态框
-        $('#lookModal').modal('show')
+        $('#lookModal').modal('show');
     }
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../path_delete",     //url
-            data: "ids="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../path_delete",     //url
+                    data: "ids="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
     }
@@ -516,17 +587,32 @@
             return row.pathId
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
             //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../"+url,     //url
-                data: "ids="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../"+url,     //url
+                        data: "ids="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
         }

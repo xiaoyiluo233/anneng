@@ -1,6 +1,7 @@
 package com.yidu.lixiang.service;
 
 import com.yidu.entity.Path;
+import com.yidu.entity.StationMain;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,10 +22,9 @@ public interface PathService {
 
     /**
      * 查询所有
-     * @param path 线路实体类
-     * @return 线路集合
+     * @return 实体类
      */
-    HashMap<String,Object> queryAll(Path path);
+    List<StationMain> queryAll();
 
     /**
      * 通过ID查询单条数据

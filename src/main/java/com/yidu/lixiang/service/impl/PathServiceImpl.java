@@ -57,10 +57,8 @@ public class PathServiceImpl implements PathService {
     }
 
     @Override
-    public HashMap<String, Object> queryAll(Path path) {
-        //申明返回的map集合
-        HashMap<String,Object> resultMap=new HashMap<>();
-        //申明数组用于存储实体类
+    public List<StationMain> queryAll() {
+        //申明集合用于存储实体类
         List<StationMain> list=new ArrayList<>();
         //创建具体的中转站实体类
         StationMain stationMain=null;
@@ -79,7 +77,7 @@ public class PathServiceImpl implements PathService {
             //设置终点中转站
             stationMain.setDestinationName(destination.get(i));
             //查询出所有经过的中转站的id
-            List<Path> paths = pathDao.queryAll(path);
+            List<Path> paths = pathDao.queryAll(null);
             //得到经过的中转站的id
             String stationids = paths.get(i).getStationids();
             //截取id
@@ -104,10 +102,9 @@ public class PathServiceImpl implements PathService {
             //添加到集合
             list.add(stationMain);
         }
-        resultMap.put("rows",list);
-        resultMap.put("total",pathDao.count(path));
-        return resultMap;
+        return list;
     }
+
 
     /**
      * 通过ID查询单条数据

@@ -8,6 +8,7 @@
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
@@ -302,9 +303,9 @@
         var data_obj = JSON.parse(data);
         $("#state").attr("disabled",false);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
@@ -343,7 +344,7 @@
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                alert(msg);     //返回信息
+                swal("结果:", msg, "success");
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
@@ -366,6 +367,7 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
+        $("#state").attr("disabled",false);
         $("#tid").val(data_json[index].tid);
         $("#tnumber").val(data_json[index].tnumber);
         $("#eid").val(data_json[index].eid);
@@ -396,14 +398,29 @@
     }
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../trucks_delete",     //url
-            data: "tids="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../trucks_delete",     //url
+                    data: "tids="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
     }
@@ -417,17 +434,32 @@
             return row.tid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
             //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../"+url,     //url
-                data: "tids="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../"+url,     //url
+                        data: "tids="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
         }

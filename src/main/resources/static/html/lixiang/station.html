@@ -307,9 +307,9 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $.ajax({
                 type: "post",       //请求类型
@@ -321,7 +321,6 @@
                     $("#province").val(msg);
                     $("#cityname").append("<option>"+data_obj[0].city.cityname+"</option>");
                     $("#cityname").val(data_obj[0].city.cityname);
-
                     $("#stationid").val(data_obj[0].stationid);
                     $("#stationname").val(data_obj[0].stationname);
                     $("#addModal").modal({
@@ -357,7 +356,7 @@
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                alert(msg);     //返回信息
+                swal("结果:", msg, "success");
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
@@ -412,16 +411,32 @@
     }
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../station_delete",     //url
-            data: "stationids="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../station_delete",     //url
+                    data: "stationids="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
+
     }
 
 
@@ -433,17 +448,32 @@
             return row.stationid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
             //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../"+url,     //url
-                data: "stationids="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../"+url,     //url
+                        data: "stationids="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
         }
