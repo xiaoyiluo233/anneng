@@ -1,7 +1,9 @@
 package com.yidu.lf.service.impl;
 
 import com.yidu.entity.Role;
+import com.yidu.entity.Rolemenu;
 import com.yidu.lf.dao.RoleDao;
+import com.yidu.lf.dao.RolemenuDao;
 import com.yidu.lf.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
+
+    @Autowired
+    private RolemenuDao rolemenuDao;
 
     /**
      * 通过ID查询单条数据
@@ -88,5 +93,33 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public boolean deleteById(Integer roleid) {
         return this.roleDao.deleteById(roleid) > 0;
+    }
+
+    public String delete(String roleid){
+        //将角色id切割
+        String[] split = roleid.split(",");
+        //删除结果
+        boolean result=true;
+        //遍历切割后的角色id
+        for (String id : split) {
+            //根据角色id删除权限并接收返回值
+            int insert = this.roleDao.deleteById(Integer.parseInt(id));
+            //判断删除是否不成功
+            if (insert<1){
+                //删除结果改为假
+                result=false;
+                //结束循环
+                break;
+            }else {
+                //删除此角色关联的菜单
+                this.rolemenuDao.deleteByRoleId(Integer.parseInt(id));
+            }
+        }
+        //判断删除结果是否成功
+        if (result){
+            return "删除成功";
+        }else{
+            return "删除失败";
+        }
     }
 }

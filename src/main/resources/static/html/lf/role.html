@@ -13,7 +13,7 @@
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap-treeview.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -205,11 +205,11 @@
             }, columns : [ {
                 checkbox:true  //第一列显示复选框
             },{
-                title : '权限id',
+                title : '角色id',
                 field : 'roleid',
                 sortable : true
             }, {
-                title : '权限名',
+                title : '角色名',
                 field : 'rolename',
                 sortable : true
             },{
@@ -308,20 +308,30 @@
 
     //当前列删除
     function DeleteByIds(id) {
-        var ok=window.confirm("确定删除此角色吗？");
-        if (ok==true){
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../role_delete",     //url
-                data: "roleid="+id,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
-                }
-            });
-        }
-
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../role_delete",     //url
+                    data: "roleid="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){//返回信息
+                        if (obj=='删除成功'){
+                            swal(obj,"","success");
+                        }else{
+                            swal(obj,"","error");
+                        }
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            }
+        });
     }
 
 
@@ -332,21 +342,33 @@
             return row.roleid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
-            var ok=window.confirm("确定删除此角色吗？");
-            if (ok==true) {
-                $.ajax({
-                    type: "post",       //请求类型
-                    url: "../../role_delete",     //url
-                    data: "roleid=" + ids,     // 收集表单中的数据
-                    dataType: "text",    //参数返回类型
-                    success: function (obj) {
-                        alert(obj);     //返回信息
-                        $table.bootstrapTable('refresh');    //刷新表格
-                    }
-                });
-            }
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../role_delete",     //url
+                        data: "roleid=" + ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj) {
+                            if (obj=='删除成功'){
+                                swal(obj,"","success");
+                            }else{b
+                                swal(obj,"","error");
+                            }
+                                //返回信息
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                }
+            });
         }
     });
 
@@ -357,9 +379,9 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $("#roleids").val(data_obj[0].roleid);
             $("#rolenames").val(data_obj[0].rolename);
@@ -396,7 +418,7 @@
                 data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (obj) {
-                    alert(obj);     //返回信息
+                    swal(obj,"","success");    //返回信息
                     $table.bootstrapTable('refresh');    //刷新表格
                     $("#addModal").modal('hide');
                 }
@@ -406,7 +428,7 @@
     function yanZheng() {
         var name=$("#rolenames").val();
         if (name=="" || name==" "){
-            alert("角色名不能为空");
+            swal("角色名不能为空");
             return false;
         }
         return true;
@@ -554,7 +576,11 @@
            data:"roleId="+roleid+"&menuIds="+menuids,
            datatype:"text",
            success:function(obj){
-               alert(obj);
+               if (obj=='修改成功'){
+                   swal(obj,"","success");
+               }else{
+                   swal(obj,"","error");
+               }
                $("#editRoleMenu").modal('hide');
            }
         });

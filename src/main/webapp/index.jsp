@@ -11,6 +11,7 @@
     <title>安能物流-成为中国物流最有效率的连接者</title>
     <link rel="icon" href="img/LFimg/favicon-16x16.png" type="image/png" sizes="16*16" />
     <link rel="stylesheet" href="css/LFcss/index.css" />
+    <link rel="stylesheet" href="css/toubu.css">
     <script type="text/javascript" src="js/LFjs/jquery-1.10.2.js" ></script>
     <script type="text/javascript" src="js/LFjs/jquery.ui.effect.js" ></script>
     <script type="text/javascript" src="js/LFjs/jquery.numscroll.js" ></script>
@@ -40,22 +41,97 @@
     <div></div>
     <div></div>
 </div>
-<header style="" >
 
-    <div>
-        <img src="img/LFimg/gym-logo.png" />
-        <ul>
-            <li><a href="index.jsp">首页</a></li>
-            <li><a>自动服务</a></li>
-            <li><a>产品服务</a></li>
-            <li><a>加盟合作</a></li>
-            <li><a>走进安能</a></li>
-            <li><a>帮助与支持</a></li>
-            <li><a>快速登录/注册</a></li>
-            <li><a>员工专区</a></li>
-        </ul>
+<div id="head_tou">
+
+</div>
+<div id="head1">
+    <div id="head_toub">
+        <a href="javaScript:;"><img src="img/LFimg/gym-logo.png"></a>
+        <dl>
+            <dt class="navmenu">首页</dt>
+            <dt class="navmenu">自助服务
+                <div class="head_sjx">
+                    <img src="img/择律-选择费用-正三角形-支持.png" />
+                </div>
+                <ul>
+                    <a href="javaScript:;"><li>我要查件</li></a>
+                    <a href="javaScript:;"><li>我要寄件</li></a>
+                    <a href="javaScript:;"><li>网点查询</li></a>
+                    <a href="javaScript:;"><li>运费时效</li></a>
+                    <a href="javaScript:;"><li>收寄标准</li></a>
+                </ul>
+            </dt>
+            <dt class="navmenu">产品服务
+                <div class="head_sjx">
+                    <img src="img/择律-选择费用-正三角形-支持.png"/>
+                </div>
+                <ul>
+                    <a href="javaScript:;"><li>MiNi电商系列</li></a>
+                    <a href="javaScript:;"><li>精准零担快运</li></a>
+                    <a href="javaScript:;"><li>定时达</li></a>
+                    <a href="javaScript:;"><li>安心达</li></a>
+                    <a href="javaScript:;"><li>普惠达</li></a>
+                    <a href="javaScript:;"><li>增值服务</li></a>
+                </ul>
+            </dt>
+            <dt class="navmenu">加盟合作
+                <div class="head_sjx">
+                    <img src="img/择律-选择费用-正三角形-支持.png" />
+                </div>
+                <ul>
+                    <a href="javaScript:;"><li>招商加盟</li></a>
+                    <a href="javaScript:;"><li>大客户合作</li></a>
+                </ul>
+            </dt>
+            <dt class="navmenu">走进安能
+                <div class="head_sjx">
+                    <img src="img/择律-选择费用-正三角形-支持.png" />
+                </div>
+                <ul>
+                    <a href="javaScript:;"><li>公司简介</li></a>
+                    <a href="javaScript:;"><li>安能动态</li></a>
+                    <a href="javaScript:;"><li>企业文化</li></a>
+                    <a href="javaScript:;"><li>社会责任</li></a>
+                    <a href="javaScript:;"><li>人才招聘</li></a>
+                    <a href="javaScript:;"><li>联系我们</li></a>
+                </ul>
+            </dt>
+            <dt class="navmenu"> 帮助与支持
+                <div class="head_sjx">
+                    <img id="sjx_zh" src="img/择律-选择费用-正三角形-支持.png" />
+                </div>
+                <ul id="zh">
+                    <a href="javaScript:;"><li>服务与支持</li></a>
+                    <a href="javaScript:;"><li>运输</li></a>
+                    <a href="javaScript:;"><li>保价</li></a>
+                    <a href="javaScript:;"><li>包装</li></a>
+                    <a href="javaScript:;"><li>理赔</li></a>
+                    <a href="javaScript:;"><li>开放平台</li></a>
+                </ul>
+            </dt>
+            <a href="javaScript:;"><dt class="tou_imgs"><i class="iconfont icon-yuangong"></i>&nbsp;快速登陆/注册</dt></a>
+            <dt id="ygs" class="tou_imgs"><i class="iconfont icon-diannao"></i>&nbsp;员工专区</dt>
+        </dl>
     </div>
-</header>
+</div>
+<div id="tou_yg">
+    <div id="tou_ygs">
+        <div id="yg">
+            <dl>
+                <a href="javaScript:;"><dt>&nbsp;&nbsp;OA登录
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
+                </dt></a>
+                <a href="javaScript:;"><dt id="dier">&nbsp;&nbsp;企业邮箱
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
+                </dt></a>
+                <a href="javaScript:;"><dt>&nbsp;&nbsp;网点信息门户
+                    &nbsp;<span>&gt;</span>
+                </dt></a>
+            </dl>
+        </div>
+    </div>
+</div>
 <a name="one"></a>
 <div style="height: 70%;"></div>
 <div id="content">
@@ -464,6 +540,22 @@
 </body>
 </html>
 <script>
-
+    $(function(){
+        $("#ygs").click(function(){//按钮绑定点击事件
+            if(document.getElementById("yg").style.display=="block"){
+                document.getElementById("yg").style.display="none";
+            }else{
+                document.getElementById("yg").style.display="block";
+            }
+        });
+    });
+    $(function() {
+        $('.navmenu').mouseover(function() {
+            $(this).children('ul').show();
+        });
+        $('.navmenu').mouseout(function() {
+            $(this).children('ul').hide();
+        });
+    })
 </script>
 

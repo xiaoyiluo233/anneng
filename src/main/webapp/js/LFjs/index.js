@@ -127,10 +127,10 @@
             //获取当前滚动条高度
             var top = $(document).scrollTop();
             if (top > 200) {
-                $("header").css("background-color", "white");
+                $("#head_tou").css("opacity",1);
                 $(".arrow-right-up").css("display", "block");
             } else {
-                $("header").css("background-color", "rgba(256,256,256,.2)");
+                $("#head_tou").css("opacity",0.1);
                 $(".arrow-right-up").css("display", "none");
             }
             if (top > 400) {

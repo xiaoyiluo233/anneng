@@ -137,15 +137,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeList.size() > 0){
             //得到登录成功的对象
             Employee employee1=employeeList.get(0);
-            /**
-             *  根据员工id查询它的角色id
-             */
+            //根据员工id查询员工角色对象
             Employeerole employeerole = employeeroleService.queryByEid(employee1.getEid());
+            //取出角色id
             int roleId=employeerole.getRoleid();
-            /**
-             * 根据角色id查询权限名
-             */
+            //根据角色id查询角色对象
             Role role = roleService.queryById(roleId);
+            //取出角色名
             String roleName = role.getRolename();
             //创建角色限菜单对象
             Rolemenu rolemenu=new Rolemenu();
@@ -175,11 +173,12 @@ public class EmployeeServiceImpl implements EmployeeService {
                     //键为菜单id存入菜单map
                     menuHashMap.put(menu.getMenuid(), menu);
                 } else {
+                    //根据上级id作为键取出菜单map中的菜单上级对象
                     Menu menu1 = menuHashMap.get(levelid);
+                    //得到菜单上级对象的子菜单集合
                     List<Menu> childMenuList = menu1.getChildMenuList();
+                    //将菜单存入子菜单集合
                     childMenuList.add(menu);
-                    menu1.setChildMenuList(childMenuList);
-                    menuHashMap.put(levelid, menu1);
                 }
             }
             //得到会话
@@ -195,5 +194,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         //返回失败
         return "登录失败";
+    }
+
+    /**
+     * 通过角色id查询所有该角色的员工
+     * @param roleid 角色id
+     * @return 员工集合
+     */
+    @Override
+    public List<Employee> selectEmpByRoleId(Integer roleid) {
+        //调用查询方法并用集合接收
+        List<Employee> employeeList = this.employeeDao.selectEmpByRoleId(roleid);
+        //返回集合
+        return employeeList;
     }
 }
