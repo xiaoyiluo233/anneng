@@ -1,30 +1,25 @@
 package com.yidu.entity;
 
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 /**
- * @description: 省级表实体类
- * @author:lixiang
- * @date: 2020-12-30 14:00:03
- * @vesion:1.0
+ * (Province)实体类
+ *
+ * @author makejava
+ * @since 2021-01-01 14:54:02
  */
+@Data
 @Component
 public class Province implements Serializable {
-    private static final long serialVersionUID = 752800526270506156L;
+    private static final long serialVersionUID = -66580543797394311L;
     
     private Integer provinceid;
     
     private String provincename;
 
-    @Override
-    public String toString() {
-        return "Province{" +
-                "provinceid=" + provinceid +
-                ", provincename='" + provincename + '\'' +
-                '}';
-    }
 
     public Integer getProvinceid() {
         return provinceid;

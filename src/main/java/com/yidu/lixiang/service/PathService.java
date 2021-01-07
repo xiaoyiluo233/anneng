@@ -18,7 +18,7 @@ public interface PathService {
      * @param cityName 市级名
      * @return 中转站数组
      */
-    public String[] queryStation(String cityName);
+    String[] queryStation(String cityName);
 
     /**
      * 查询所有

@@ -102,13 +102,11 @@
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="eid">员工id</label>
+                                <label class="control-label"for="eid">员工名</label>
                             </div>
-
-                            <div class="col-sm-9">
-                                <input type="text"name="eid"class="form-control" placeholder="员工id" id="eid">
-                            </div>
-                            <label class="err-info-modal"></label>
+                            <select class="form-control" style="width: 180px;display: inline-block" id="eid" name="eid">
+                                <option value="0">请选择员工</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -151,6 +149,22 @@
     </div>
 </body>
 <script type="text/javascript">
+    function getEname(){
+        $.ajax({
+            type:"post",
+            data:"cityName=1",
+            url:"../../path_queryStation",
+            dataType: "json",
+            success: function (msg){
+                var string=''+msg+'';
+                var stringResult = string.split(',');
+                $("#eid").children().not(":eq(0)").remove();
+                for (var p=0;p<stringResult.length;p++) {
+                    $(".stationsCenter").eq(indexs).append("<option value='"+stringResult[p]+"'>"+stringResult[p]+"</option>");
+                }
+            }
+        });
+    }
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
@@ -229,7 +243,7 @@
                 sortable : true
             }, {
                 title : '车辆驾驶员',
-                field : 'eid',
+                field : 'employee.ename',
                 sortable : true
             },{
                 title : '包裹id',
@@ -308,7 +322,7 @@
         }else{
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
-            $("#eid").val(data_obj[0].eid);
+            $("#eid").append("<option value='"+data_obj[0].eid+"'>"+data_obj[0].employee.ename+"</option>");
             $("#parcelid").val(data_obj[0].parcelid);
             $("#state").val(data_obj[0].state);
             $("#addModal").modal({

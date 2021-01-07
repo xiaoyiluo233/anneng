@@ -61,7 +61,7 @@ public class TrucksServiceImpl implements TrucksService {
         //创建map集合
         HashMap<String,Object> map=new HashMap<>();
         //添加行数据
-        map.put("rows",trucksDao.queryAllByLimit(offset, limit, tnumbers));
+        map.put("rows",trucksDao.getEmployeeName(offset, limit, tnumbers));
         //添加总行数
         map.put("total",trucksDao.count(tnumbers));
         //返回map集合
