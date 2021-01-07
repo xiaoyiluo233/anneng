@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.RoleDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Role">
+        <!--@Table role-->
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+        <result property="rolename" column="roleName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          roleId, roleName
+        from ane.role
+        where roleId = #{roleid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          roleId, roleName
+        from ane.role
+        <where>
+            <if test="text != null and text != ''">
+                and roleName like '%${text}%'
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          roleId, roleName
+        from ane.role
+        <where>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+            <if test="rolename != null and rolename != ''">
+                and roleName = #{rolename}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roleid" useGeneratedKeys="true">
+        insert into ane.role(roleName)
+        values (#{rolename})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.role
+        <set>
+            <if test="rolename != null and rolename != ''">
+                roleName = #{rolename},
+            </if>
+        </set>
+        where roleId = #{roleid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.role where roleId = #{roleid}
+    </delete>
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.role
+        <where>
+            <if test="text!=null and text != ''">
+                roleName like '%${text}%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.EmployeeDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Employee">
+        <!--@Table employee-->
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="ename" column="ename" jdbcType="VARCHAR"/>
+        <result property="epassword" column="epassword" jdbcType="VARCHAR"/>
+        <result property="eage" column="eage" jdbcType="INTEGER"/>
+        <result property="esex" column="esex" jdbcType="VARCHAR"/>
+        <result property="ephone" column="ephone" jdbcType="VARCHAR"/>
+        <result property="districtid" column="districtId" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          eid, ename, epassword, eage, esex, ephone, districtId, state
+        from ane.employee
+        where eid = #{eid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          eid, ename, epassword, eage, esex, ephone, districtId, state
+        from ane.employee
+        <where>
+            <if test="text != null and text != ''">
+                and ename like '%${text}%'
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          eid, ename, epassword, eage, esex, ephone, districtId, state
+        from ane.employee
+        <where>
+            <if test="eid != null">
+                and eid = #{eid}
+            </if>
+            <if test="ename != null and ename != ''">
+                and ename = #{ename}
+            </if>
+            <if test="epassword != null and epassword != ''">
+                and epassword = #{epassword}
+            </if>
+            <if test="eage != null">
+                and eage = #{eage}
+            </if>
+            <if test="esex != null and esex != ''">
+                and esex = #{esex}
+            </if>
+            <if test="ephone != null and ephone != ''">
+                and ephone = #{ephone}
+            </if>
+            <if test="districtid != null">
+                and districtId = #{districtid}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="eid" useGeneratedKeys="true">
+        insert into ane.employee(ename, epassword, eage, esex, ephone, districtId, state)
+        values (#{ename}, #{epassword}, #{eage}, #{esex}, #{ephone}, #{districtid}, #{state})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.employee
+        <set>
+            <if test="ename != null and ename != ''">
+                ename = #{ename},
+            </if>
+            <if test="epassword != null and epassword != ''">
+                epassword = #{epassword},
+            </if>
+            <if test="eage != null">
+                eage = #{eage},
+            </if>
+            <if test="esex != null and esex != ''">
+                esex = #{esex},
+            </if>
+            <if test="ephone != null and ephone != ''">
+                ephone = #{ephone},
+            </if>
+            <if test="districtid != null">
+                districtId = #{districtid},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where eid = #{eid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.employee where eid = #{eid}
+    </delete>
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.employee
+        <where>
+            <if test="text!=null and text != ''">
+                ename like '%${text}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>

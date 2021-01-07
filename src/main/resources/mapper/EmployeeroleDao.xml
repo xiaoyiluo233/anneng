@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.EmployeeroleDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Employeerole">
+        <!--@Table employeerole-->
+        <result property="erid" column="erid" jdbcType="INTEGER"/>
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryByEid" resultMap="BaseResultMap">
+        select
+          erid, eid, roleId
+        from ane.employeerole
+        where erid = #{erid}
+    </select>
+    <!--根据员工id查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          erid, eid, roleId
+        from ane.employeerole
+        where eid = #{eid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          erid, eid, roleId
+        from ane.employeerole
+        <where>
+            <if test="text != null and text != ''">
+                eid IN(SELECT eid FROM ane.employee WHERE ename LIKE '%${text}%');
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          erid, eid, roleId
+        from ane.employeerole
+        <where>
+            <if test="erid != null">
+                and erid = #{erid}
+            </if>
+            <if test="eid != null">
+                and eid = #{eid}
+            </if>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="erid" useGeneratedKeys="true">
+        insert into ane.employeerole(eid, roleId)
+        values (#{eid}, #{roleid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.employeerole
+        <set>
+            <if test="eid != null">
+                eid = #{eid},
+            </if>
+            <if test="roleid != null">
+                roleId = #{roleid},
+            </if>
+        </set>
+        where erid = #{erid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.employeerole where erid = #{erid}
+    </delete>
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.employeerole
+        <where>
+            <if test="text != null and text != ''">
+                eid IN(SELECT eid FROM ane.employee WHERE ename LIKE '%${text}%');
+            </if>
+        </where>
+    </select>
+</mapper>
