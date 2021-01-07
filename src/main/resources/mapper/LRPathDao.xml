@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.PathDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Path">
+        <!--@Table path-->
+        <result property="pathid" column="pathid" jdbcType="INTEGER"/>
+        <result property="start" column="start" jdbcType="VARCHAR"/>
+        <result property="halfway" column="halfway" jdbcType="VARCHAR"/>
+        <result property="destination" column="destination" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          pathid, start, halfway, destination
+        from ane.path
+        where pathid = #{pathid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          pathid, start, halfway, destination
+        from ane.path
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          pathid, start, halfway, destination
+        from ane.path
+        <where>
+            <if test="pathid != null">
+                and pathid = #{pathid}
+            </if>
+            <if test="start != null and start != ''">
+                and start = #{start}
+            </if>
+            <if test="halfway != null and halfway != ''">
+                and halfway = #{halfway}
+            </if>
+            <if test="destination != null and destination != ''">
+                and destination = #{destination}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pathid" useGeneratedKeys="true">
+        insert into ane.path(start, halfway, destination)
+        values (#{start}, #{halfway}, #{destination})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.path
+        <set>
+            <if test="start != null and start != ''">
+                start = #{start},
+            </if>
+            <if test="halfway != null and halfway != ''">
+                halfway = #{halfway},
+            </if>
+            <if test="destination != null and destination != ''">
+                destination = #{destination},
+            </if>
+        </set>
+        where pathid = #{pathid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.path where pathid = #{pathid}
+    </delete>
+
+</mapper>

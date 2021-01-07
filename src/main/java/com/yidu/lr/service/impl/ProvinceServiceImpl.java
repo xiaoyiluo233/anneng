@@ -1,23 +1,23 @@
-package com.yidu.lixiang.service.impl;
+package com.yidu.lr.service.impl;
+
 
 import com.yidu.entity.Province;
-import com.yidu.lixiang.dao.ProvinceDao;
-import com.yidu.lixiang.service.ProvinceService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yidu.lr.dao.ProvinceDao;
+import com.yidu.lr.service.ProvinceService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @description: 省级表业务接口层
- * @author: lixiang
- * @date: 2020/12/30 15:11
- * @version 1.0
+ * (Province)表服务实现类
+ *
+ * @author makejava
+ * @since 2021-01-01 14:54:02
  */
 @Service("provinceService")
 public class ProvinceServiceImpl implements ProvinceService {
-    @Autowired
+    @Resource
     private ProvinceDao provinceDao;
 
     /**

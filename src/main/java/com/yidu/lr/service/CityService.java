@@ -1,24 +1,16 @@
-package com.yidu.lixiang.service;
+package com.yidu.lr.service;
 
 import com.yidu.entity.City;
+
 import java.util.List;
 
 /**
- * @description: 市级业务层
- * @author: lixiang
- * @date: 2020/12/30 15:16
- * @version 1.0
+ * (City)表服务接口
+ *
+ * @author makejava
+ * @since 2021-01-01 14:45:36
  */
 public interface CityService {
-
-    String getProvinceName(City city);
-
-    /**
-     * 一对一关系映射的查询所有
-     * @param city 市级表实体类
-     * @return 市级集合
-     */
-    List<City> getProvince(City city);
 
     /**
      * 通过ID查询单条数据
