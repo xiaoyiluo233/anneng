@@ -1,38 +1,18 @@
-package com.yidu.lixiang.dao;
+package com.yidu.lr.dao;
 
 import com.yidu.entity.Path;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
- * @description: 线路表持久层
- * @author: lixiang
- * @date: 2020/12/31 11:04
- * @version 1.0
+ * (Path)表数据库访问层
+ *
+ * @author makejava
+ * @since 2021-01-01 14:54:48
  */
-@Repository
 @Mapper
 public interface PathDao {
-    /**
-     * 得到起点中转站的名字
-     * @return 起点中转站名
-     */
-    List<String> getStartStation();
-
-    /**
-     * 得到终点中转站的名字
-     * @return 终点中转站名
-     */
-    List<String> getDestination();
-
-    /**
-     * 得到总行数
-     * @return 总行数
-     */
-    int count(Path path);
 
     /**
      * 通过ID查询单条数据

@@ -1,13 +1,14 @@
-package com.yidu.lixiang.service;
+package com.yidu.lr.service;
 
 import com.yidu.entity.Province;
+
 import java.util.List;
 
 /**
- * @description: 省级表业务层
- * @author: lixiang
- * @date: 2020/12/30 15:11
- * @version 1.0
+ * (Province)表服务接口
+ *
+ * @author makejava
+ * @since 2021-01-01 14:54:02
  */
 public interface ProvinceService {
 
