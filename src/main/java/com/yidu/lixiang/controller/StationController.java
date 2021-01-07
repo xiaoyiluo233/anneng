@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,10 +24,28 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
+    @RequestMapping(value = "station_delete",produces = {("application/json;charset=utf-8")})
+    @ResponseBody
+    public String delete(String stationids){
+        return stationService.deleteById(stationids);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "station_update",produces = {("application/json;charset=utf-8")})
+    public String update(Station station,String citynames){
+        return stationService.update(station, citynames);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "station_insert",produces = {("application/json;charset=utf-8")})
+    public String insert(Station station,String citynames){
+        return stationService.insert(station,citynames);
+    }
+
     @ResponseBody
     @RequestMapping("station_stationAndCity")
-    public List<Station> stationAndCity(){
-        return stationService.stationAndCity(null);
+    public HashMap<String, Object> stationAndCity(int offset,int pageNumber,Station station){
+        return stationService.stationAndCity(offset,pageNumber,station);
     }
 
     /**

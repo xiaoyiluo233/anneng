@@ -3,13 +3,13 @@ package com.yidu.lixiang.service.impl;
 import com.yidu.entity.Path;
 import com.yidu.entity.Station;
 import com.yidu.entity.StationMain;
+import com.yidu.lixiang.dao.CityDao;
 import com.yidu.lixiang.dao.PathDao;
 import com.yidu.lixiang.dao.StationDao;
 import com.yidu.lixiang.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +26,39 @@ public class PathServiceImpl implements PathService {
     private PathDao pathDao;
     @Autowired
     private StationDao stationDao;
+    @Autowired
+    private CityDao cityDao;
+    @Autowired
+    private Station station;
 
     @Override
-    public HashMap<String, Object> queryAll(Path path) {
-        //申明返回的map集合
-        HashMap<String,Object> resultMap=new HashMap<>();
-        //申明数组用于存储实体类
+    public String[] queryStation(String cityName) {
+        try {
+            //调用查询城市id的方法
+            int cityIdByCityName = cityDao.getCityIdByCityName(cityName);
+            //设置城市id
+            station.setCityid(cityIdByCityName);
+            //调用查询中转站的方法
+            List<Station> stations = stationDao.queryAll(station);
+            //申明一个数组用于存储中转站
+            String[] stationName=new String[stations.size()];
+            //循环取出中转站实体类
+            for (int i = 0; i < stations.size(); i++) {
+                //得到中转站名
+                String stationname = stations.get(i).getStationname();
+                //存进中转站数组中
+                stationName[i]=stationname;
+            }
+            //返回中转站数组
+            return stationName;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<StationMain> queryAll() {
+        //申明集合用于存储实体类
         List<StationMain> list=new ArrayList<>();
         //创建具体的中转站实体类
         StationMain stationMain=null;
@@ -75,10 +102,9 @@ public class PathServiceImpl implements PathService {
             //添加到集合
             list.add(stationMain);
         }
-        resultMap.put("rows",list);
-        resultMap.put("total",pathDao.count());
-        return resultMap;
+        return list;
     }
+
 
     /**
      * 通过ID查询单条数据
@@ -104,15 +130,59 @@ public class PathServiceImpl implements PathService {
     }
 
     /**
-     * 新增数据
-     *
-     * @param path 实例对象
-     * @return 实例对象
+     * 新增线路
+     * @param startStation 起点站
+     * @param destinationName 经过的中转站
+     * @param stationCenters 终点站
+     * @return 新增成功
      */
     @Override
-    public Path insert(Path path) {
-        this.pathDao.insert(path);
-        return path;
+    public String insert(String startStation,String destinationName,String stationCenters) {
+        //申明变量用于接收经过的中转站的id
+        String stationIds="";
+        //创建线路实体类
+        Path path=new Path();
+        //创建中转站实体类
+        Station station=new Station();
+        //1、设置起点中转站
+        station.setStationname(startStation);
+        //查询出起点中转站的所有信息
+        List<Station> stations = stationDao.queryAll(station);
+        //得到起点中转站的id
+        Integer startStationId = stations.get(0).getStationid();
+        //将起点站id设置进线路实体类中
+        path.setStartstation(startStationId);
+        //2、设置终点中转站
+        station.setStationname(destinationName);
+        //查询出终点中转站的所有信息
+        stations=stationDao.queryAll(station);
+        //得到终点中转站的id
+        Integer destinationId = stations.get(0).getStationid();
+        //将起点站id设置进线路实体类中
+        path.setDestination(destinationId);
+        //3、截取出经过的中转站
+        String[] split = stationCenters.split("-");
+        //循环拿出经过的中转站
+        for (int i = 0; i < split.length; i++) {
+            //设置经过的每一个中转站
+            station.setStationname(split[i]);
+            //查询出终点中转站的所有信息
+            stations=stationDao.queryAll(station);
+            //得到终点中转站的id
+            Integer stationCenterId = stations.get(0).getStationid();
+            //拼接进中转站id中
+            stationIds+=stationCenterId+"-";
+        }
+        //将经过的中转站的id设置进线路实体类中
+        path.setStationids(stationIds);
+        //调用新增的方法
+        int result = pathDao.insert(path);
+        //判断是否新增成功
+        if (result>0){
+            return "新增成功！";
+        }else {
+            return "新增失败！";
+        }
     }
 
     /**
@@ -129,12 +199,32 @@ public class PathServiceImpl implements PathService {
 
     /**
      * 通过主键删除数据
-     *
-     * @param pathid 主键
-     * @return 是否成功
+     * @param ids 主键字符串
+     * @return 删除成功
      */
     @Override
-    public boolean deleteById(Integer pathid) {
-        return this.pathDao.deleteById(pathid) > 0;
+    public String deleteById(String ids) {
+        //申明变量用于统计删除成功的次数
+        int sum=0;
+        //截取出单个id
+        String[] split = ids.split(",");
+        //循环id数组
+        for (int i = 0; i < split.length; i++) {
+            //得到单个id
+            int pathId = Integer.parseInt(split[i]);
+            //调用删除的方法
+            int deleteById = pathDao.deleteById(pathId);
+            //判断是否删除成功
+            if (deleteById>0){
+                //成功则sum++
+                sum++;
+            }
+        }
+        //判断成功次数是否与id数组长度相同
+        if (sum==split.length){
+            return "删除成功！";
+        }else {
+            return "删除失败！";
+        }
     }
 }
