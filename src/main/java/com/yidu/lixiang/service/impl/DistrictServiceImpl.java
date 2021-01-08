@@ -1,23 +1,29 @@
-package com.yidu.lr.service.impl;
+package com.yidu.lixiang.service.impl;
 
 import com.yidu.entity.District;
-import com.yidu.lr.dao.DistrictDao;
-import com.yidu.lr.service.DistrictService;
+import com.yidu.lixiang.dao.DistrictDao;
+import com.yidu.lixiang.service.DistrictService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * (District)表服务实现类
- *
- * @author makejava
- * @since 2021-01-01 15:05:04
+ * @description: 县级表业务接口层
+ * @author: lixiang
+ * @date: 2020/12/30 15:47
+ * @version 1.0
  */
-@Service("districtService")
+@Service
 public class DistrictServiceImpl implements DistrictService {
-    @Resource
+    @Autowired
     private DistrictDao districtDao;
+
+    @Override
+    public List<District> getCity(District district) {
+        return districtDao.getCity(district);
+    }
 
     /**
      * 通过ID查询单条数据

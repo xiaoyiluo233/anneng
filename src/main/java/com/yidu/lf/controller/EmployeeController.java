@@ -151,4 +151,16 @@ public class EmployeeController {
             return "no";
         }
     }
+
+    /**
+     * 通过角色id查询所有该角色的员工
+     * @param roleid 角色id
+     * @return 员工集合
+     */
+    @ResponseBody
+    @RequestMapping("emp_selectEmpByRoleId")
+    public List<Employee> selectEmpByRoleId(Integer roleid) {
+        //调用查询方法并用返回结果
+        return this.employeeService.selectEmpByRoleId(roleid);
+    }
 }

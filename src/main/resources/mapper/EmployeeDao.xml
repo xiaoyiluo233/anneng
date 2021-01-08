@@ -116,5 +116,10 @@
             </if>
         </where>
     </select>
+    <!--通过角色id查询所有该角色的员工-->
+    <select id="selectEmpByRoleId" resultMap="BaseResultMap">
+                SELECT e1.* FROM employee e1,role r1,employeerole e2
+WHERE e1.`eid`=e2.`eid` AND r1.`roleId`=e2.`roleId` AND r1.`roleId`=#{roleid};
 
+    </select>
 </mapper>

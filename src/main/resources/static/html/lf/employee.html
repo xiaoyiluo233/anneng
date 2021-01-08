@@ -12,6 +12,7 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -153,8 +154,14 @@
                         <div class="col-sm-3">
                             <label class="control-label" for="state">状态</label>
                         </div>
-                        <div class="col-sm-9">
-                            <input type="text"name="state" class="form-control" required placeholder="状态" id="states">
+                        <div class="col-sm-2">
+                            <input type="radio"name="state" value="1" checked="checked">&nbsp;在职
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="radio"name="state" value="2">&nbsp;请假
+                        </div>
+                        <div class="col-sm-2">
+                            <input type="radio"name="state" value="3">&nbsp;放假
                         </div>
                     </div>
                 </form>
@@ -364,10 +371,21 @@
         $("#enames").val(data_json[index].ename);
         $("#epasswords").val(data_json[index].epassword);
         $("#eages").val(data_json[index].eage);
-        $("#esexs").val(data_json[index].esex);
+        if (data_json[index].esex=='男'){
+            $("input[name='esex']:eq(0)").prop("checked","true");
+        }else
+        {
+            $("input[name='esex']:eq(1)").prop("checked","true");
+        }
         $("#ephones").val(data_json[index].ephone);
         $("#districtids").val(data_json[index].districtid);
-        $("#states").val(data_json[index].state);
+        if (data_json[index].state=='1'){
+            $("input[name='state']:eq(0)").prop("checked","true");
+        }else if (data_json[index].state=='2') {
+            $("input[name='state']:eq(1)").prop("checked","true");
+        }else {
+            $("input[name='state']:eq(2)").prop("checked","true");
+        }
         //弹出修改模态框，非新增模态框
         $('#addModal').modal('show')
     }
@@ -400,20 +418,30 @@
 
     //当前列删除
     function DeleteByIds(id) {
-        //alert(id);
-        var ok=window.confirm("确定删除此菜单吗？");
-        if (ok){
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../emp_delete",     //url
-                data: "eid="+id,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
-                }
-            });
-        }
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../emp_delete",     //url
+                    data: "eid="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        if (obj=='删除成功'){
+                            swal(obj,"","success");
+                        }else{
+                            swal(obj,"","error");
+                        }     //返回信息
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            }
+        });
     }
 
 
@@ -426,19 +454,30 @@
         if(ids==""){
             alert("至少选中一行");
         } else {
-            var ok=window.confirm("确定删除此菜单吗？");
-            if (ok){
-                $.ajax({
-                    type: "post",       //请求类型
-                    url: "../../emp_delete",     //url
-                    data: "eid="+ids,     // 收集表单中的数据
-                    dataType: "text",    //参数返回类型
-                    success: function (obj){
-                        alert(obj);     //返回信息
-                        $table.bootstrapTable('refresh');    //刷新表格
-                    }
-                });
-            }
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../emp_delete",     //url
+                        data: "eid="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            if (obj=='删除成功'){
+                                swal(obj,"","success");
+                            }else{
+                                swal(obj,"","error");
+                            }     //返回信息
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                }
+            });
         }
     });
 
@@ -449,9 +488,9 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $("#eids").val(data_obj[0].eid);
             $("#enames").val(data_obj[0].ename);
@@ -459,14 +498,19 @@
             $("#eages").val(data_obj[0].eage);
             if (data_obj[0].esex=='男'){
                 $("input[name='esex']:eq(0)").prop("checked","true");
-            }else
-            {
+            }else {
                 $("input[name='esex']:eq(1)").prop("checked","true");
+            }
+            if (data_obj[0].state=='1'){
+                $("input[name='state']:eq(0)").prop("checked","true");
+            }else if (data_obj[0].state=='2') {
+                $("input[name='state']:eq(1)").prop("checked","true");
+            }else {
+                $("input[name='state']:eq(2)").prop("checked","true");
             }
             $("#esexs").val(data_obj[0].esex);
             $("#ephones").val(data_obj[0].ephone);
             $("#districtids").val(data_obj[0].districtid);
-            $("#states").val(data_obj[0].state);
             $("#addModal").modal({
                 keyboard: true
             });
@@ -500,7 +544,7 @@
                 data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (obj){
-                    alert(obj);     //返回信息
+                    swal(obj,"","success");     //返回信息
                     $table.bootstrapTable('refresh');    //刷新表格
                     $("#addModal").modal('hide');
                 }
@@ -517,25 +561,25 @@
         var districtid=$("#districtids").val();
         var state=$("#states").val();
         if (ename=="" || ename==" "){
-            alert("姓名不能为空");
+            swal("姓名不能为空");
             return false;
         }
         if (epass=="" || epass==" "){
-            alert("密码不能为空")
+            swal("密码不能为空")
             return false;
         }
         if (age<1 || age>100){
-            alert("年龄不符合");
+            swal("年龄不符合");
             return false;
         }
         if (phone.length!=11){
-            alert("电话格式不对");
+            swal("电话格式不对");
             return false;
         }if (districtid=="" || districtid==" "){
-            alert("区级id不能为空");
+            swal("区级id不能为空");
             return false;
         }if (state=="" || state==" "){
-            alert("状态不能为空");
+            swal("状态不能为空");
             return false;
         }
         return true;

@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>安能后台管理系统</title>
+    <link rel="icon" href="img/LFimg/favicon-16x16.png" type="image/png" sizes="16*16" />
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
@@ -311,18 +312,7 @@
     $(function () {
         $(".nav-list>li>a>i").css("line-height","30px");
     });
-    // function editLineHeight() {
-    //
-    //     var result=$("#sidebar").hasClass("menu-min");
-    //
-    //     if (result=="false"){
-    //         $(".nav-list>li>a>i").css("line-height","50px");
-    //         //alert(result);
-    //     }else{
-    //         //alert(result);
-    //
-    //     }
-    // }
+
 </script>
 </body>
 </html>

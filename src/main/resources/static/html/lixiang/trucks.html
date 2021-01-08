@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
@@ -103,13 +102,11 @@
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="eid">员工id</label>
+                                <label class="control-label"for="eid">员工名</label>
                             </div>
-
-                            <div class="col-sm-9">
-                                <input type="text"name="eid"class="form-control" placeholder="员工id" id="eid">
-                            </div>
-                            <label class="err-info-modal"></label>
+                            <select class="form-control" style="width: 180px;display: inline-block" id="eid" name="eid">
+                                <option value="0">请选择员工</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -152,6 +149,26 @@
     </div>
 </body>
 <script type="text/javascript">
+    $(function () {
+        getEname();
+    });
+    function getEname(){
+        $.ajax({
+            type:"post",
+            data:"roleid=1",
+            url:"../../trucks_getEnamesByRoleid",
+            dataType: "json",
+            success: function (msg){
+                var string=''+msg+'';
+                var stringResult = string.split(',');
+                console.log(stringResult);
+                $("#eid").children().remove();
+                for (var p=0;p<stringResult.length;p++) {
+                    $("#eid").append("<option value='"+stringResult[p]+"'>"+stringResult[p]+"</option>");
+                }
+            }
+        });
+    }
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
@@ -230,7 +247,7 @@
                 sortable : true
             }, {
                 title : '车辆驾驶员',
-                field : 'eid',
+                field : 'employee.ename',
                 sortable : true
             },{
                 title : '包裹id',
@@ -309,7 +326,7 @@
         }else{
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
-            $("#eid").val(data_obj[0].eid);
+            $("#eid").append("<option value='"+data_obj[0].eid+"'>"+data_obj[0].employee.ename+"</option>");
             $("#parcelid").val(data_obj[0].parcelid);
             $("#state").val(data_obj[0].state);
             $("#addModal").modal({
@@ -384,7 +401,7 @@
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         $("#tids").text(data_json[index].tid);
         $("#tnumbers").text(data_json[index].tnumber);
-        $("#eids").text(data_json[index].eid);
+        $("#eids").text(data_json[index].employee.ename);
         $("#parcelids").text(data_json[index].parcelid);
         if (data_json[index].state==0){
             $("#states").text('未发车');

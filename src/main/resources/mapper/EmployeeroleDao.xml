@@ -9,19 +9,20 @@
         <result property="roleid" column="roleId" jdbcType="INTEGER"/>
     </resultMap>
 
-    <!--查询单个-->
+
+    <!--根据员工id查询单个-->
     <select id="queryByEid" resultMap="BaseResultMap">
         select
           erid, eid, roleId
         from ane.employeerole
-        where erid = #{erid}
+        where eid = #{eid}
     </select>
-    <!--根据员工id查询单个-->
+    <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
           erid, eid, roleId
         from ane.employeerole
-        where eid = #{eid}
+        where erid = #{erid}
     </select>
 
     <!--查询指定行数据-->
@@ -31,7 +32,7 @@
         from ane.employeerole
         <where>
             <if test="text != null and text != ''">
-                eid IN(SELECT eid FROM ane.employee WHERE ename LIKE '%${text}%');
+                eid IN(SELECT eid FROM ane.employee WHERE ename LIKE '%${text}%')
             </if>
         </where>
         limit #{offset}, #{limit}

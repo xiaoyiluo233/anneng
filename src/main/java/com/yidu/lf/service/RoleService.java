@@ -61,4 +61,5 @@ public interface RoleService {
      */
     boolean deleteById(Integer roleid);
 
+    String delete(String roleid);
 }

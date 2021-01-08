@@ -122,7 +122,7 @@
     $(function () {
         $.ajax({
             type:"post",
-           url:"../../role_queryAll",
+            url:"../../role_queryAll",
             datatype:"json",
             success:function (roleList) {
                 var str="";
@@ -263,12 +263,12 @@
     });
     function getEname(value,row,index) {
         var ename = "";
-       $.ajax({
+        $.ajax({
             type: "post",
             url: "../../emp_selectNameById",
             data: "eid=" + value,
             datatype: "text",
-           async:false,
+            async:false,
             success: function (name) {
                 ename += name;
             }
@@ -311,6 +311,7 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
+        $("#eids").prop("readonly",true);
         $("#erids").val(data_json[index].erid);
         $("#eids").val(data_json[index].eid);
         $("#roleids").val(data_json[index].roleid);
@@ -341,19 +342,30 @@
 
     //当前列删除
     function DeleteByIds(id) {
-        var ok=window.confirm("确定删除此员工角色吗？");
-        if (ok==true){
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../empRole_delete",     //url
-                data: "erid="+id,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
-                }
-            });
-        }
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../empRole_delete",     //url
+                    data: "erid="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        if (obj=='删除成功'){
+                            swal(obj,"","success");
+                        }else{
+                            swal(obj,"","error");
+                        }     //返回信息
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            }
+        });
 
     }
 
@@ -367,19 +379,30 @@
         if(ids==""){
             alert("至少选中一行");
         } else {
-            var ok=window.confirm("确定删除此员工角色吗？");
-            if (ok==true) {
-                $.ajax({
-                    type: "post",       //请求类型
-                    url: "../../empRole_delete",     //url
-                    data: "erid=" + ids,     // 收集表单中的数据
-                    dataType: "text",    //参数返回类型
-                    success: function (obj) {
-                        alert(obj);     //返回信息
-                        $table.bootstrapTable('refresh');    //刷新表格
-                    }
-                });
-            }
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../empRole_delete",     //url
+                        data: "erid=" + ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj) {
+                            if (obj=='删除成功'){
+                                swal(obj,"","success");
+                            }else{
+                                swal(obj,"","error");
+                            }     //返回信息
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                }
+            });
         }
     });
 
@@ -390,10 +413,11 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
+            $("#eids").prop("readonly",true);
             $("#erids").val(data_obj[0].erid);
             $("#eids").val(data_obj[0].eid);
             $("#roleids").val(data_obj[0].roleid);
@@ -412,6 +436,7 @@
             keyboard: true
         });
         //$('#addModal').modal('show')
+        $("#eids").prop("readonly",false);
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
 
@@ -430,7 +455,7 @@
                 data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (obj) {
-                    alert(obj);     //返回信息
+                    swal(obj,"","success");     //返回信息
                     $table.bootstrapTable('refresh');    //刷新表格
                     $("#addModal").modal('hide');
                 }
@@ -443,7 +468,10 @@
         var roleids=$("#roleids").val();
         var result=true;
         if (eid=="" || eid==" "){
-            alert("请输入员工id");
+            swal("请输入员工id");
+            result=false;
+        }else if (roleids=='0'){
+            swal("请选择角色");
             result=false;
         }else{
             $.ajax({
@@ -454,29 +482,26 @@
                 async:false,
                 success:function (msg) {
                     if (msg!='ok'){
-                        alert("此员工id不存在");
+                        swal("此员工id不存在");
                         result=false;
                     }
                 }
             });
-            $.ajax({
-                url:"../../empRole_boolByEid",
-                type:"post",
-                data:"eid="+eid,
-                datatype:"text",
-                async:false,
-                success:function (msg) {
-                    if (msg!='ok'){
-                        alert("此员工已经添加了角色");
-                        result=false;
+            if (url=="empRole_insert"){
+                $.ajax({
+                    url:"../../empRole_boolByEid",
+                    type:"post",
+                    data:"eid="+eid,
+                    datatype:"text",
+                    async:false,
+                    success:function (msg) {
+                        if (msg!='ok'){
+                            swal("此员工已经添加了角色");
+                            result=false;
+                        }
                     }
-                }
-            });
-        }
-
-        if (roleids=='0'){
-            alert("请选择角色");
-            result=false;
+                });
+            }
         }
         return result;
     }

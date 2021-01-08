@@ -71,4 +71,11 @@ public interface EmployeeService {
      * @return 登录结果
      */
     String login(String ename, String epassword, HttpServletRequest request);
+
+    /**
+     * 通过角色id查询所有该角色的员工
+     * @param roleid 角色id
+     * @return 员工集合
+     */
+    List<Employee> selectEmpByRoleId(Integer roleid);
 }

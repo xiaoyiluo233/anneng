@@ -5,6 +5,7 @@ import com.yidu.entity.Menu;
 import com.yidu.entity.Role;
 import com.yidu.lf.service.MenuService;
 import com.yidu.lf.service.RoleService;
+import com.yidu.lf.service.RolemenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -84,28 +85,8 @@ public class RoleController {
     @ResponseBody
     @RequestMapping("/role_delete")
     public String delete(String roleid){
-        //将角色id切割
-        String[] split = roleid.split(",");
-        //删除结果
-        boolean result=true;
-        //遍历切割后的角色id
-        for (String id : split) {
-            //根据角色id删除权限并接收返回值
-            boolean insert = this.roleService.deleteById(Integer.parseInt(id));
-            //判断删除是否不成功
-            if (!insert){
-                //删除结果改为假
-                result=false;
-                //结束循环
-                break;
-            }
-        }
-        //判断删除结果是否成功
-        if (result){
-            return "删除成功";
-        }else{
-            return "删除失败";
-        }
+        //调用删除方法
+        return roleService.delete(roleid);
     }
     @ResponseBody
     @RequestMapping("role_selectNameById")
