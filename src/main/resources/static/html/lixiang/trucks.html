@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
@@ -96,7 +96,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="tnumber"class="form-control" placeholder="车牌号" id="tnumber">
+                                <input style="padding-left: 16px;padding-left: 12px;"  type="text"name="tnumber"class="form-control" placeholder="车牌号" id="tnumber">
                             </div>
                         </div>
 
@@ -104,7 +104,7 @@
                             <div class="col-sm-3">
                                 <label class="control-label"for="eid">员工名</label>
                             </div>
-                            <select class="form-control" style="width: 180px;display: inline-block" id="eid" name="eid">
+                            <select class="form-control" style="width: 180px;display: inline-block;margin-left: 14px;" id="eid" name="eid">
                                 <option value="0">请选择员工</option>
                             </select>
                         </div>
@@ -115,7 +115,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="parcelid"class="form-control" placeholder="包裹id" id="parcelid">
+                                <input style="padding-left: 16px" type="text"name="parcelid"class="form-control" placeholder="包裹id" id="parcelid">
                             </div>
                         </div>
                         <div class="form-group">
@@ -152,6 +152,8 @@
     $(function () {
         getEname();
     });
+    var eids=[];
+    var names=[];
     function getEname(){
         $.ajax({
             type:"post",
@@ -160,14 +162,24 @@
             dataType: "json",
             success: function (msg){
                 var string=''+msg+'';
-                var stringResult = string.split(',');
-                console.log(stringResult);
+                names = string.split(',');
                 $("#eid").children().remove();
-                for (var p=0;p<stringResult.length;p++) {
-                    $("#eid").append("<option value='"+stringResult[p]+"'>"+stringResult[p]+"</option>");
+            }
+        });
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../trucks_getEidsByRoleId",     //url
+            data: "roleid=1",     // 收集表单中的数据
+            dataType: "json",    //参数返回类型
+            success: function (msg){
+                var string=''+msg+'';
+                eids = string.split(',');
+                for (var p=0;p<names.length;p++) {
+                    $("#eid").append("<option value='"+eids[p]+"'>"+names[p]+"</option>");
                 }
             }
         });
+
     }
     //根据窗口调整表格高度
     $(window).resize(function() {
@@ -324,9 +336,13 @@
         }else if(data_obj==0){
             swal("请选择一行");
         }else{
+            $("#eid").children().remove();
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
-            $("#eid").append("<option value='"+data_obj[0].eid+"'>"+data_obj[0].employee.ename+"</option>");
+            for (var o=0;o<names.length;o++) {
+                $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
+            }
+            $("#eid option[value='"+data_obj[0].eid+"']").attr('selected',true);
             $("#parcelid").val(data_obj[0].parcelid);
             $("#state").val(data_obj[0].state);
             $("#addModal").modal({
@@ -339,13 +355,13 @@
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
         $("#state").attr("disabled","disabled");
+        clearForm("#add_form_modal");// 清除表单上一次的输入数据
         url="trucks_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
         });
         //$('#addModal').modal('show')
-        clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
 
     // helper: 重置表单
@@ -376,6 +392,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
+        $("#eid").children().remove();
         url="trucks_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
@@ -387,7 +404,10 @@
         $("#state").attr("disabled",false);
         $("#tid").val(data_json[index].tid);
         $("#tnumber").val(data_json[index].tnumber);
-        $("#eid").val(data_json[index].eid);
+        for (var o=0;o<names.length;o++) {
+            $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
+        }
+        $("#eid option[value='"+data_json[index].eid+"']").attr('selected',true);
         $("#parcelid").val(data_json[index].parcelid);
         $("#state").val(data_json[index].state);
         $("#addModalLabel").text("修改");

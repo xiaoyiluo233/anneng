@@ -26,6 +26,12 @@ public class TrucksController {
     private TrucksServiceImpl trucksService;
 
     @ResponseBody
+    @RequestMapping("trucks_getEidsByRoleId")
+    public int[] getEidsByRoleId(int roleid){
+        return trucksService.getEidByRoleId(roleid);
+    }
+
+    @ResponseBody
     @RequestMapping("trucks_getEnamesByRoleid")
     public String[] getEnamesByRoleid(int roleid){
         return trucksService.getEnameByRoleId(roleid);
@@ -50,6 +56,7 @@ public class TrucksController {
     @RequestMapping(value = "trucks_insert",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String insert(Trucks trucks){
+        System.out.println("trucks = " + trucks);
         //调用新增的方法
         String insert = trucksService.insert(trucks);
         return insert;

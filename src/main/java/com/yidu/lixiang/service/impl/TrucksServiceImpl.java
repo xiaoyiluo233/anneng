@@ -25,6 +25,24 @@ public class TrucksServiceImpl implements TrucksService {
     private EmployeeDao employeeDao;
 
     @Override
+    public int[] getEidByRoleId(int roleid) {
+        //根据角色id查出员工信息
+        List<Employee> employees = employeeDao.selectEmpByRoleId(roleid);
+        //创建员工id数组，长度为员工集合的长度
+        int[] eids=new int[employees.size()];
+        //循环员工集合
+        for (int i = 0; i < employees.size(); i++) {
+            //取出员工实体类
+            Employee employee = employees.get(i);
+            //得到员工id
+            Integer eid = employee.getEid();
+            //将员工id添加进数组
+            eids[i]=eid;
+        }
+        return eids;
+    }
+
+    @Override
     public String[] getEnameByRoleId(int roleid) {
         //根据角色id查出员工信息
         List<Employee> employees = employeeDao.selectEmpByRoleId(roleid);

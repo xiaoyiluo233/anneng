@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>查询所有的货车</title>
+    <title>查询所有的中转站</title>
 
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
@@ -12,7 +12,7 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
 </head>
 <body>
     <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -132,19 +132,19 @@
     })
     function starts(){
         for (var i=0;i<provines.length;i++) {
-            $("#province").append("<option>"+provines[i]+"</option>");
+            $("#province").append("<option value='"+provines[i]+"'>"+provines[i]+"</option>");
         }
         $("#province").change(function(){
             $("#cityname").children().not(":eq(0)").remove();
             num1=$(this).children("option:selected").index();
             var acity=citys[num1-1];
             for (var o=0;o<acity.length;o++) {
-                $("#cityname").append("<option>"+acity[o]+"</option>");
+                $("#cityname").append("<option value='"+acity[o]+"'>"+acity[o]+"</option>");
             }
         });
     }
     var num1;
-    var provines=['安徽省','澳门特别行政区','北京市','福建省','甘肃省','广东省','广西省','贵州省','海南省','河北省','河南省','黑龙江省','湖北省','湖南省','吉林省','江苏省','江西省','辽宁省','内蒙古自治区','宁夏回族自治区','青海省','山东省','山西省','陕西省','上海市','四川省','台湾省','天津市','西藏自治区','香港特别行政区','新疆维吾尔自治区','云南省','浙江省','重庆省'];
+    var provines=['安徽','澳门','北京','福建','甘肃','广东','广西','贵州','海南','河北','河南','黑龙江','湖北','湖南','吉林','江苏','江西','辽宁','内蒙古','宁夏','青海','山东','山西','陕西','上海','四川','台湾','天津','西藏','香港','新疆','云南','浙江','重庆'];
     var citys=[["合肥市","芜湖市","蚌埠市","淮南市","马鞍山市","淮北市","铜陵市","安庆市","黄山市","滁州市","阜阳市","宿州市","巢湖市","六安市","豪州市","池州市","宣城市"],
         ["澳门半岛"],
         ["北京市"],
@@ -199,10 +199,10 @@
             height: tableHeight(),//高度调整
             //cardView:true,//卡视图
             search: true,//是否搜索
+            searchHighlight:true,
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
-            pageList: [5, 10, 20, 50],//分页步进值
-            sidePagination: "server",//服务端分页
+            pageList: [5, 10, 20, 50],//分页步进
             contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
             dataType: "json",//期待返回数据类型
             // ajax:function ajaxRequest(params) {
@@ -238,14 +238,14 @@
             showFullscreen: true,//放大
             showPaginationSwitch: true, //收起
             bubbles:"btnAdd",//自定义按钮
-            queryParams : function(params) {//上传服务器的参数
+            /*queryParams : function(params) {//上传服务器的参数
                 var temp = {
                     offset :params.offset + 0,// SQL语句起始索引
                     pageNumber : params.limit,  // 每页显示数量
                     tnumbers:params.search //搜索参数
                 };
                 return temp;
-            },columns : [ {
+            },*/columns : [ {
                 checkbox:true  //第一列显示复选框
             },{
                 title : '中转站id',
@@ -318,10 +318,14 @@
                 data: "cityname="+data_obj[0].city.cityname,     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (msg){
-                    $("#province").append("<option>"+msg+"</option>");
-                    $("#province").val(msg);
-                    $("#cityname").append("<option>"+data_obj[0].city.cityname+"</option>");
-                    $("#cityname").val(data_obj[0].city.cityname);
+                    $("#province option[value='"+msg+"']").attr('selected',true);
+                    $("#cityname").children().not(":eq(0)").remove();
+                    var num3=$("#province").children("option:selected").index();
+                    var bcity=citys[num3-1];
+                    for (var o=0;o<bcity.length;o++) {
+                        $("#cityname").append("<option value='"+bcity[o]+"'>"+bcity[o]+"</option>");
+                    }
+                    $("#cityname option[value='"+data_obj[0].city.cityname+"']").attr('selected',true);
                     $("#stationid").val(data_obj[0].stationid);
                     $("#stationname").val(data_obj[0].stationname);
                     $("#addModal").modal({
@@ -336,12 +340,12 @@
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
         url="station_insert";
+        clearForm("#add_form_modal");// 清除表单上一次的输入数据
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
         });
         //$('#addModal').modal('show')
-        clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
 
     // helper: 重置表单
@@ -386,16 +390,20 @@
             data: "cityname="+data_json[index].city.cityname,     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                $("#province").append("<option>"+msg+"</option>");
-                $("#province").val(msg);
-                $("#cityname").append("<option>"+data_json[index].city.cityname+"</option>");
-                $("#cityname").val(data_json[index].city.cityname);
-
+                $("#province option[value='"+msg+"']").attr('selected',true);
+                $("#cityname").children().not(":eq(0)").remove();
+                var num3=$("#province").children("option:selected").index();
+                var bcity=citys[num3-1];
+                for (var o=0;o<bcity.length;o++) {
+                    $("#cityname").append("<option value='"+bcity[o]+"'>"+bcity[o]+"</option>");
+                }
+                $("#cityname option[value='"+data_json[index].city.cityname+"']").attr('selected',true);
                 $("#stationid").val(data_json[index].stationid);
                 $("#stationname").val(data_json[index].stationname);
                 $("#addModalLabel").text("修改");
-                //弹出修改模态框，非新增模态框
-                $('#addModal').modal('show')
+                $("#addModal").modal({
+                    keyboard: true
+                });
             }
         });
     }

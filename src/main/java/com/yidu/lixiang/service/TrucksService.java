@@ -14,6 +14,12 @@ import java.util.List;
  */
 public interface TrucksService {
     /**
+     * 根据角色id查出员工id
+     * @param roleid 角色id
+     * @return 员工id数组
+     */
+    int[] getEidByRoleId(int roleid);
+    /**
      * 根据角色id查出员工姓名
      * @param roleid 角色id
      * @return 员工姓名数组
