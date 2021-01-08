@@ -1,7 +1,7 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Path;
-import com.yidu.lr.dao.PathDao;
+import com.yidu.lixiang.dao.PathDao;
 import com.yidu.lr.service.PathService;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,8 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 14:54:48
  */
-@Service("pathService")
-public class PathServiceImpl implements PathService {
+@Service
+public class LRPathServiceImpl implements PathService {
     @Resource
     private PathDao pathDao;
 

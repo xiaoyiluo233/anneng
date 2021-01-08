@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2021-01-01 15:02:32
  */
 @Mapper
-public interface OrdersDao {
+public interface LROrdersDao {
 
     /**
      * 通过ID查询单条数据

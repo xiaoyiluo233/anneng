@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2021-01-01 17:39:15
  */
 @Mapper
-public interface ParcelDao {
+public interface LRParcelDao {
 
     /**
      * 通过ID查询单条数据

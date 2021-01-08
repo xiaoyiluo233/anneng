@@ -1,0 +1,145 @@
+/**
+ * 白色背景
+ */
+.zhucebeijin{
+	border-radius:10px;
+	height:500px;
+	width:380px;
+	position:fixed;
+	top:160px;
+	left:730px;
+}
+/**
+ * 空格
+ */
+.form-grounp {
+    width: 300px;
+}
+.lh60 {
+    height: 60px;
+    line-height: 60px;
+}
+.m-t-30 {
+    margin-top: 30px;
+}
+/**
+ * 会员注册图标
+ */
+.f-26 {
+    font-size: 26px;
+}
+.c-2 {
+    color: #222222;
+}
+.text-left {
+    left: 5%;
+}
+/**
+ * 短信注册方式
+ */
+.m-t-10 {
+    margin-top: 10px;
+}
+.p-l-10 {
+    padding-left: 10px!important;
+}
+.login-group {
+    border-radius: 5px;
+    background: #FFFFFF;
+	width: 360px;
+    height: 50px;
+    line-height: 50px;
+    text-align: left;
+    margin-bottom: 10px;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075)!important;
+}
+.bg-f7 {
+    background: #FFFFFF;
+	border: 0;
+	outline: none;
+}
+.p-l-20 {
+    padding-left: 10px!important;
+	padding-top: 5px!important;
+}
+.yzmjz{
+	  margin: 0;
+	  position: absolute;
+	  top: 37%;
+	  left: 52%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+}
+.bj{
+	background-color:#d8d8d8;
+	width:140px;
+	height:50px;
+	color: #FFFFFF;
+	border:none;
+	position: absolute;
+	left: 68.5%;
+	top: 32%;
+}
+/**
+ * 注册会员
+ */
+.zchy{
+	width:144px;
+	height:50px;
+	position: absolute;
+	left: 40%;
+	top: 80%;
+	background:#f18700;
+	border-radius:2px;
+	line-height: 50px;
+	
+}
+.ziti{
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	font-size:22px;
+	color:#FFFFFF;
+}
+.bc{
+	width: 200px;
+	height: 50px;
+	position: absolute;
+	top: 70%;
+	left: 33%;
+}
+.f-10{
+	font-size: 10px;
+	color: #999999;
+	position: absolute;
+	top: 95%;
+	left: 20%;
+}
+.jt{
+	position: absolute;
+	top: 35%;
+	left: 25%;
+}
+.fh{
+	width: 100px;
+	position: absolute;
+	top: 50%;
+	left: 20%;
+}
+.ppp{
+	width: 360px;
+	height: 21px;
+	color: #999999;
+	font-size: 13px;
+	position: absolute;
+	top: 65%;
+	left: 13%;
+}
+
+
+
+
+
+
+
+
+

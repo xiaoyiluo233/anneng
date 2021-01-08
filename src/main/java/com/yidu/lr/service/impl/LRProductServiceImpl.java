@@ -1,7 +1,7 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Product;
-import com.yidu.lr.dao.ProductDao;
+import com.yidu.lr.dao.LRProductDao;
 import com.yidu.lr.service.ProductService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 16:52:46
  */
-@Service("productService")
-public class ProductServiceImpl implements ProductService {
+@Service
+public class LRProductServiceImpl implements ProductService {
     @Resource
-    private ProductDao productDao;
+    private LRProductDao productDao;
 
     /**
      * 通过ID查询单条数据

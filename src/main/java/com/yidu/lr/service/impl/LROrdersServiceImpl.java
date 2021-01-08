@@ -1,7 +1,7 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Orders;
-import com.yidu.lr.dao.OrdersDao;
+import com.yidu.lr.dao.LROrdersDao;
 import com.yidu.lr.service.OrdersService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 15:02:32
  */
-@Service("ordersService")
-public class OrdersServiceImpl implements OrdersService {
+@Service
+public class LROrdersServiceImpl implements OrdersService {
     @Resource
-    private OrdersDao ordersDao;
+    private LROrdersDao ordersDao;
 
     /**
      * 通过ID查询单条数据

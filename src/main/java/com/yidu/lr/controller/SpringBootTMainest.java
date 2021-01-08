@@ -2,8 +2,10 @@ package com.yidu.lr.controller;
 
 import com.yidu.entity.*;
 import com.yidu.lr.service.*;
-import com.yidu.lr.service.impl.OrdersServiceImpl;
-import org.junit.Before;
+import com.yidu.lr.service.impl.LRCityServiceImpl;
+import com.yidu.lr.service.impl.LRDistrictServiceImpl;
+import com.yidu.lr.service.impl.LROrdersServiceImpl;
+import com.yidu.lr.service.impl.LRProvinceServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +19,16 @@ import java.util.*;
 @SpringBootTest
 public class SpringBootTMainest {
     //省服务对象
-    @Resource
-    private ProvinceService provinceService;
+    @Autowired
+    private LRProvinceServiceImpl provinceService;
 
     //市服务对象
-    @Resource
-    private CityService cityService;
+    @Autowired
+    private LRCityServiceImpl cityService;
 
     //区服务对象
-    @Resource
-    private DistrictService districtService;
+    @Autowired
+    private LRDistrictServiceImpl districtService;
 
     //线路服务对象
     @Resource
@@ -34,7 +36,7 @@ public class SpringBootTMainest {
 
     //订单服务对象
     @Autowired
-    private OrdersServiceImpl ordersService;
+    private LROrdersServiceImpl ordersService;
 
     //地址服务对象
     @Resource
