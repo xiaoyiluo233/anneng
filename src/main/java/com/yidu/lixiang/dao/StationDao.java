@@ -16,13 +16,18 @@ import java.util.List;
 @Repository
 @Mapper
 public interface StationDao {
+    /**
+     * 根据条件统计行数
+     * @param station 中转站实体类
+     * @return 总行数
+     */
+    int count(Station station);
 
     /**
      * 中转站与市级表的一对一关系的查询所有
-     * @param station 中转站实体类
      * @return 中转站集合
      */
-    List<Station> stationAndCity(Station station);
+    List<Station> stationAndCity();
 
     /**
      * 通过ID查询单条数据

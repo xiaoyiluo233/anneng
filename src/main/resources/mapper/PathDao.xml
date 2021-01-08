@@ -31,6 +31,20 @@
     <!-- 统计行数 -->
     <select id="count" resultType="int">
         select count(1) from ane.path
+        <where>
+            <if test="pathid != null">
+                and pathId = #{pathid}
+            </if>
+            <if test="startstation != null">
+                and startStation = #{startstation}
+            </if>
+            <if test="stationids != null and stationids != ''">
+                and stationIds = #{stationids}
+            </if>
+            <if test="destination != null">
+                and destination = #{destination}
+            </if>
+        </where>
     </select>
 
     <!--查询单个-->

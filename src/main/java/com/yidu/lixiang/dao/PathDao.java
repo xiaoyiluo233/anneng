@@ -32,7 +32,7 @@ public interface PathDao {
      * 得到总行数
      * @return 总行数
      */
-    int count();
+    int count(Path path);
 
     /**
      * 通过ID查询单条数据

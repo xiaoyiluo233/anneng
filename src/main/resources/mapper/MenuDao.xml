@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.MenuDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Menu">
+        <!--@Table menu-->
+        <result property="menuid" column="menuId" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="levelid" column="levelId" jdbcType="VARCHAR"/>
+        <result property="iconcls" column="iconCls" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          menuId, title, url, levelId, iconCls
+        from ane.menu
+        where menuId = #{menuid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          menuId, title, url, levelId, iconCls
+        from ane.menu
+        <where>
+        <if test="text != null and text != ''">
+            and title like '%${text}%'
+        </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          menuId, title, url, levelId, iconCls
+        from ane.menu
+        <where>
+            <if test="menuid != null and menuid != ''">
+                and menuId = #{menuid}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="levelid != null and levelid != ''">
+                and levelId = #{levelid}
+            </if>
+            <if test="iconcls != null and iconcls != ''">
+                and iconCls = #{iconcls}
+            </if>
+        </where>
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="menuid" useGeneratedKeys="true">
+        insert into ane.menu(menuid,title, url, levelId, iconCls)
+        values (#{menuid},#{title}, #{url}, #{levelid}, #{iconcls})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.menu
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="levelid != null and levelid != ''">
+                levelId = #{levelid},
+            </if>
+            <if test="iconcls != null and iconcls != ''">
+                iconCls = #{iconcls},
+            </if>
+        </set>
+        where menuId = #{menuid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.menu where menuId = #{menuid}
+    </delete>
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.menu
+        <where>
+            <if test="text!=null and text != ''">
+                title like '%${text}%'
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,6 +1,8 @@
 package com.yidu.lixiang.service;
 
 import com.yidu.entity.Station;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -13,10 +15,9 @@ public interface StationService {
 
     /**
      * 中转站与市级表的一对一关系的查询所有
-     * @param station 中转站实体类
      * @return 中转站集合
      */
-    List<Station> stationAndCity(Station station);
+    List<Station> stationAndCity();
 
     /**
      * 通过ID查询单条数据
@@ -39,24 +40,24 @@ public interface StationService {
      * 新增数据
      *
      * @param station 实例对象
-     * @return 实例对象
+     * @return 新增成功
      */
-    Station insert(Station station);
+    String insert(Station station,String citynames);
 
     /**
      * 修改数据
      *
      * @param station 实例对象
-     * @return 实例对象
+     * @return 修改成功
      */
-    Station update(Station station);
+    String update(Station station,String citynames);
 
     /**
      * 通过主键删除数据
      *
-     * @param stationid 主键
+     * @param stationids 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer stationid);
+    String deleteById(String stationids);
 
 }

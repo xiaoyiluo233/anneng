@@ -19,11 +19,10 @@
             <result property="cityname" column="cityName" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
-
-    <select id="stationAndCity" resultMap="stationAndCityMapper">
-        SELECT * FROM station s1,city c1
+    
+    <select id="count" resultType="int">
+        select count(1) from station
         <where>
-            s1.`cityId`=c1.`cityId`
             <if test="stationid != null">
                 and stationId = #{stationid}
             </if>
@@ -33,6 +32,13 @@
             <if test="stationname != null and stationname != ''">
                 and stationName = #{stationname}
             </if>
+        </where>
+    </select>
+
+    <select id="stationAndCity" resultMap="stationAndCityMapper">
+        SELECT * FROM station s1,city c1
+        <where>
+            s1.`cityId`=c1.`cityId`
         </where>
     </select>
 
