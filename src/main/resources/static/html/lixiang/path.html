@@ -8,11 +8,10 @@
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=809109e2e35ed5b94300cb71dfb10a1a&plugin=AMap.Driving"></script>
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
@@ -129,7 +128,7 @@
                                 <select class="form-control city2" style="width: 100px;display: inline-block" id="citys2" name="city">
                                     <option value="0">请选择市</option>
                                 </select>
-                                <select class="form-control stationsCenter" style="width: 180px;display: inline-block" id="stationsCenter" name="destinationName">
+                                <select class="form-control stationsCenter" style="width: 180px;display: inline-block" id="stationsCenter">
                                     <option value="0">请选择经过的中转站</option>
                                 </select>
                                 <button type="button" class="btn btn-success" onclick="sures()">确认</button>
@@ -543,7 +542,7 @@
             if (status === 'complete') {
                 log.success('绘制路线完成')
             } else {
-                log.error('获取数据失败：' + result)
+                log.error('不好意思，该线路暂没路线图')
             }
         });
         //弹出修改模态框，非新增模态框
