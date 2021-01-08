@@ -57,21 +57,25 @@ public class SpringBootTMainest {
     //订单信息暂存集合
     List<Orders> orders = new ArrayList<>();
 
-    //创建set集合
+    //创建省市区set集合
     HashSet<Integer> setprovince=new HashSet<>();
     HashSet<Integer> setcity=new HashSet<>();
     HashSet<Integer> setdistrict=new HashSet<>();
 
+    //创建省市区map集合
     HashMap provincemap = new HashMap();
     HashMap citymap = new HashMap();
     HashMap districtmap = new HashMap();
 
+    //订单循环次数
     int count=0;
 
     @Test
     public void selectAll() {
 
+        //订单信息等暂存集合
         forOrders();
+        //初始化map集合
         for (Integer integer : setprovince) {
             provincemap.put(integer,"");
         }
@@ -99,29 +103,27 @@ public class SpringBootTMainest {
             //寄件人省信息 （根据市省级id查询省信息）
             Province myprovince = provinceService.queryById(mycity.getProvinceid());
 
-//            //收件人地址 （根据货物地址id查询地址信息）
-//            Address youaddress = addressService.queryById(product.getYouaid());
-
             //收件人地区信息 （根据地址区级id查询区级信息）
             District youdistrict = listDistrict.get(count);
             //收件人市信息 （根据地区市级id查询市级信息）
             City youcity = listCity.get(count);
             //收件人省信息 （根据市省级id查询省信息）
             Province youprovince = listProvince.get(count);
-                        
+
+            //拼接相同省地址订单id
             for (Integer integer : setprovince) {
                 if (youprovince.getProvinceid() == integer) {
                     provincemap.put(integer, provincemap.get(integer).toString() + order.getOid() + "-");
                 }
 
             }
-
+            //拼接相同市地址订单id
             for (Integer integer : setcity) {
                 if(youcity.getCityid()==integer){
                     citymap.put(integer,citymap.get(integer).toString() + order.getOid() + "-");
                 }
             }
-
+            //拼接相同区地址订单id
             for (Integer integer : setdistrict) {
                 if(youdistrict.getDistrictid()==integer){
                     districtmap.put(integer,districtmap.get(integer).toString() + order.getOid() + "-");
@@ -142,17 +144,17 @@ public class SpringBootTMainest {
             }
             count++;
         }
-
+        //输出省
         Set set = provincemap.keySet();
         for (Object o : set) {
             System.out.println("省id"+o+"="+provincemap.get(o));
         }
-
+        //输出市
         Set set1 = citymap.keySet();
         for (Object o : set1) {
             System.out.println("市id"+o+"="+citymap.get(o));
         }
-
+        //输出区
         Set set2 = districtmap.keySet();
         for (Object o : set2) {
             System.out.println("区id"+o+"="+districtmap.get(o));
@@ -195,26 +197,6 @@ public class SpringBootTMainest {
             //保存收货地址总共区
             setdistrict.add(youdistrict.getDistrictid());
         }
-//        for (District district : listDistrict) {
-//            System.out.println("listDistrict = " + district.getDistrictname());
-//        }
-//        for (City City : listCity) {
-//            System.out.println("listCity = " + City.getCityname());
-//        }
-//        for (Province province : listProvince) {
-//            System.out.println("listProvince = " + province.getProvincename());
-//        }
-//        for (Integer integer : setprovince) {
-//            System.out.println("integerprovince = " + integer);
-//        }
-//
-//        for (Integer integer : setcity) {
-//            System.out.println("integercity = " + integer);
-//        }
-//
-//        for (Integer integer : setdistrict) {
-//            System.out.println("integerdistrict = " + integer);
-//        }
     }
 
     @Test
