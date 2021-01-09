@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单</title>
+    <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../../assets/dist/bootstrap-table.js"></script>
+    <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+
+</head>
+<body>
+<div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="margin-top:10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="lookModalLabel">查看</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <tr>
+                        <th>订单表id</th>
+                        <th><span id="oids">1</span></th>
+                    </tr>
+                    <tr>
+                        <th>用户下单表id</th>
+                        <th><span id="pids">1</span></th>
+                    </tr>
+                    <tr>
+                        <th>价格表id</th>
+                        <th><span id="priceids">1</span></th>
+                    </tr>
+                    <tr>
+                        <th>运输方式</th>
+                        <th><span id="shippings">admin</span></th>
+                    </tr>
+                    <tr>
+                        <th>条形码</th>
+                        <th><span id="barcodes" src="img/a.jpg" width="50px" class="img-rounded">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>支付方式</th>
+                        <th><span id="payMents">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>订单状态</th>
+                        <th><span id="conditionss">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>货品详情</th>
+                        <th><span id="pvalues">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>用户id</th>
+                        <th><span id="uids">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>状态</th>
+                        <th><span id="states">123</span></th>
+                    </tr>
+                    <tr>
+                        <th>价格</th>
+                        <th><span id="prices">123</span></th>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--头部工具栏-->
+<div id="toolbar" class="btn-group">
+    <button id="btn_add" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+    </button>
+    <button id="btn_edit" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+    </button>
+    <button id="btn_delete" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+    </button>
+</div>
+<table id="mytable"></table>
+<!--新增-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal-dialog" role="document" style="margin-top:10%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="addModalLabel">添加配置信息</h4>
+            </div>
+            <div class="modal-body">
+
+                <form id="add_form_modal" class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="oid">订单表id</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="oid" class="form-control" id="oid" placeholder="订单表id自动生成" readonly>
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="pid">用户下单表id</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="pid" class="form-control" id="pid" placeholder="用户下单表id" >
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="priceid">价格表id</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="priceid" class="form-control" id="priceid" placeholder="价格表id" >
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="shipping">运输方式</label>
+                        </div>
+
+                        <select class="form-control" style="width: 180px;margin-left: 164px" id="shipping" name="shipping">
+                            <option value="1">陆路</option>
+                            <option value="2">水路</option>
+                            <option value="3">空运</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="barcode">条形码</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="barcode" class="form-control" placeholder="条形码" id="barcode">
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="payment">支付方式</label>
+                        </div>
+
+                        <select class="form-control" style="width: 180px;margin-left: 164px" id="payMent" name="payment">
+                            <option value="1">线上支付</option>
+                            <option value="2">货到付款</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="conditions">订单状态</label>
+                        </div>
+                        <select class="form-control" style="width: 180px;margin-left: 164px" id="conditions" name="conditions">
+                            <option value="1">有效</option>
+                            <option value="2">无效</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="pvalue">货品详情</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="pvalue" class="form-control" placeholder="货品详情" id="pvalue">
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="uid">用户id</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="uid" class="form-control" placeholder="用户id" id="uid">
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="state">状态</label>
+                        </div>
+                        <select class="form-control" style="width: 180px;margin-left: 164px" id="state" name="state">
+                            <option value="0">有效</option>
+                            <option value="1">无效</option>
+                            <option value="2">有效</option>
+                            <option value="3">无效</option>
+                            <option value="4">有效</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="price">价格</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="price" class="form-control" placeholder="价格" id="price">
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+                </form>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn_reset_c" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-remove" aria-hidden="true"></span>取消
+                    </button>
+
+                    <button type="button" id="btn_add_reset" class="btn btn-default btn_reset_c">
+                        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>重置
+                    </button>
+
+                    <button type="button" id="btn_add_submit" class="btn btn-primary" data-dismiss="modal"><span
+                            class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //根据窗口调整表格高度
+    $(window).resize(function () {
+        $('#mytable').bootstrapTable('resetView', {
+            height: tableHeight()
+        })
+    });
+
+    //窗口高度减50
+    function tableHeight() {
+        return $(window).height() - 50;
+    }
+
+    //表格选择器
+    $table = $("#mytable");
+    //新增修改url
+    var url = "";
+    $(document).ready(function () {
+        $table.bootstrapTable({
+            url: "../../orders_selectAll",   //请求地址
+            height: tableHeight(),//高度调整
+            //cardView:true,//卡视图
+            search: true,//是否搜索
+            pagination: true,//是否分页
+            searchHighlight: true,
+            pageSize: 5,//单页记录数
+            pageList: [5, 10, 20, 50],//分页步进值
+            contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+            dataType: "json",//期待返回数据类型
+            // ajax:function ajaxRequest(params) {
+            //     var url = 'user/selectAll'
+            //     $.get(url + '?' + $.param(params.data)).then(function (res) {
+            //         params.success(res)
+            //     })
+            // },//ajax
+            toggle: "mytable",
+            method: "post",//请求方式
+            searchAlign: "left",//查询框对齐方式
+            queryParamsType: "limit",//查询参数组织方式
+            /*queryParams: function getParams(params) {
+                //params obj
+                params.other = "otherInfo";
+                return params;
+            },*/
+            clickToSelect: true,//单击选中
+            theadClasses: "thead-light",
+            detailFormatters: "detailFormatter",//数据格式化
+            searchOnEnterKey: false,//回车搜索
+            showColumnsToggleAll: true, //列按钮
+            showRefresh: true,//刷新按钮
+            showColumns: true,//列选择按钮
+            showToggle: true,//切换视图按钮
+            showSearchButton: true,//搜索显示图标
+            showExport: true,
+            buttonsAlign: "right",//按钮对齐方式
+            toolbar: "#toolbar",//指定工具栏
+
+            // toolbarAlign: "right",//工具栏对齐方式
+            searchAlign: "right",
+            showFullscreen: true,//放大
+            showPaginationSwitch: true, //收起
+            bubbles: "btnAdd",//自定义按钮
+            columns: [{
+                checkbox: true  //第一列显示复选框
+            }, {
+                title: '订单表id',
+                field: 'oid',
+                sortable: true
+            }, {
+                title: '用户下单表id',
+                field: 'pid',
+                sortable: true
+            },{
+                title: '价格表id',
+                field: 'priceid',
+                sortable: true
+            },{
+                title: '运输方式',
+                field: 'shipping',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '陆路';
+                    } else if (value == 2) {
+                        return '水路';
+                    } else if (value == 3) {
+                        return '空运';
+                    }
+                }
+            }, {
+                title: '条形码',
+                field: 'barcode',
+                sortable: true,
+                //value代表当前单元格中的值，row代表当前行数据，index表示当前行的下标
+                formatter:function (value,row,index) {
+                    return '<img src="img/'+value+'" width="20px" class="img-rounded"/>';
+                }
+            }, {
+                title: '支付方式',
+                field: 'payment',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '线上支付';
+                    } else if (value == 2) {
+                        return '货到付款';
+                    }
+                }
+            }, {
+                title: '订单状态',
+                field: 'conditions',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '有效';
+                    } else if (value == 2) {
+                        return '无效';
+                    }
+                }
+            },{
+                title: '货品详情',
+                field: 'product.pvalue',
+                sortable: true
+               /* field: 'product.pvalue',
+                title: '货品详情',
+                width: 120,
+                align: 'center',
+                // valign: 'middle',
+                formatter: actionFormatter,//对本列数据做格式化*/
+            },{
+                title: '用户id',
+                field: 'product.uid',
+                sortable: true
+            },{
+                title: '状态',
+                field: 'product.state',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (value == 0) {
+                        return '等待揽收';
+                    } else if (value == 1) {
+                        return '已揽收';
+                    } else if (value == 2) {
+                        return '运输中';
+                    }else if (value == 3) {
+                        return '派件中';
+                    }else if (value == 4) {
+                        return '已签收';
+                    }
+                }
+            }, {
+                title: '价格',
+                field: 'prices.price',
+                sortable: true
+                /*field: 'prices.price',
+                title: '价格',
+                align: 'center',
+                // valign: 'middle',
+                formatter: actionFormatter,//对本列数据做格式化*/
+            }],
+            onClickRow: function (row, $element) {
+                //$element是当前tr的jquery对象
+                //$element.css("background-color", "green");
+            },//单击row事件
+            locale: "zh-CN", //中文支持
+            detailView: true, //是否显示详情折叠  会导致表格最开头多出一列
+            detailFormatter: function (index, row, element) {
+                var html = '';
+                $.each(row, function (key, val) {
+                    html += "<p>" + key + ":" + val + "</p>"
+                });
+                return html;
+            }
+        });
+        //语言环境切换
+        $('#locale').change(function () {
+            alert(1);
+            $table.bootstrapTable('refreshOptions', {
+                locale: $(this).val()
+            })
+        })
+
+        //操作栏的格式化,value代表当前单元格中的值，row代表当前行数据，index表示当前行的下标
+        function actionFormatter(value, row, index) {
+            var id = index;
+            var data = JSON.stringify(row);
+            var result = "";
+            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.oid + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            return result;
+
+        }
+    })
+
+    // 当点击【修改】按钮后，把模态框弹出来
+    $("#btn_edit").on("click", function () {
+        url = "orders_update";
+        //选中的数据
+        var data = JSON.stringify($table.bootstrapTable('getSelections'));
+        var data_obj = JSON.parse(data);
+        $("#state").attr("disabled", false);
+        $("#shipping").attr("disabled", false);
+        $("#barcode").attr("disabled", false);
+        $("#payMent").attr("disabled", false);
+        if (data_obj.length > 1) {
+            alert("目前不支持编辑多行数据");
+        } else if (data_obj == 0) {
+            alert("请选择一行");
+        } else {
+            $("#oid").val(data_obj[0].oid);
+            $("#pid").val(data_obj[0].pid);
+            $("#priceid").val(data_obj[0].priceid);
+            $("#shipping").val(data_obj[0].shipping);
+            $("#barcode").val(data_obj[0].barcode);
+            $("#payMent").val(data_obj[0].payment);
+            $("#conditions").val(data_obj[0].conditions);
+
+            $("#addModal").modal({
+                keyboard: true
+            });
+            //$('#addModal').modal('show')
+        }
+    });
+
+    // 当点击【新增】按钮后，把模态框弹出来
+    $("#btn_add").on("click", function () {
+        $("#state").attr("disabled", "disabled");
+        url = "orders_insert";
+        $("#addModalLabel").text("新增");
+        $("#addModal").modal({
+            keyboard: true
+        });
+        //$('#addModal').modal('show')
+        clearForm("#add_form_modal");// 清除表单上一次的输入数据
+    });
+
+    // helper: 重置表单
+    function clearForm(form) {
+        $(form)[0].reset();
+    }
+
+    // 当点击【保存】按钮后，将表单中的数据提交到后台
+    $("#btn_add_submit").on("click", function () {
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../" + url,     //url
+            data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
+            dataType: "text",    //参数返回类型
+            success: function (msg) {
+                alert(msg);     //返回信息
+                $table.bootstrapTable('refresh');    //刷新表格
+            }
+        });
+    });
+
+    /**
+     * 列的格式化函数 在数据从服务端返回装载前进行处理
+     * @param  {[type]} value [description]
+     * @param  {[type]} row   [description]
+     * @param  {[type]} index [description]
+     * @return {[type]}       [description]
+     */
+    // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
+    function EditViewById(row, index) {
+        url = "orders_update";
+        var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        // {#var data_json2 = eval("(" + data+ ")"); #}
+        //console.log(data_json);
+        //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
+        //alert(data_json[0]);
+        //根据index找到对应行数据，填充数据到修改模态框
+        $("#oid").val(data_json[index].oid);
+        $("#pid").val(data_json[index].pid);
+        $("#priceid").val(data_json[index].priceid);
+        $("#shipping").val(data_json[index].shipping);
+        $("#barcode").val(data_json[index].barcode);
+        $("#payMent").val(data_json[index].payment);
+        $("#conditions").val(data_json[index].conditions);
+        $("#uid").val(data_json[index].uid);
+        $("#pvalue").val(data_json[index].pvalue);
+        $("#price").val(data_json[index].price);
+        $("#state").val(data_json[index].state);
+        $("#addModalLabel").text("修改");
+        //弹出修改模态框，非新增模态框
+        $('#addModal').modal('show')
+    }
+
+
+    function LookViewById(row, index) {
+        var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        $("#oids").val(data_json[index].oid);
+        $("#pids").val(data_json[index].pid);
+        $("#priceids").val(data_json[index].priceid);
+        if (data_json[index].state == 1) {
+            $("#shippings").text('陆路');
+        } else if (data_json[index].state == 2) {
+            $("#shippings").text('水路');
+        } else if (data_json[index].state == 3) {
+            $("#shippings").text('空运');
+        }
+        $("#barcodes").attr("src","img/"+data_json[index].barcodes);
+        if (data_json[index].state == 1) {
+            $("#payMents").text('线上支付');
+        } else if (data_json[index].state == 2) {
+            $("#payMents").text('货到付款');
+        }
+        if (data_json[index].state == 1) {
+            $("#conditionss").text('有效');
+        } else if (data_json[index].state == 2) {
+            $("#conditionss").text('无效');
+        }
+        $("#uids").val(data_json[index].uid);
+        $("#pvalues").val(data_json[index].pvalue);
+        $("#prices").val(data_json[index].price);
+        if (data_json[index].state == 0) {
+            $("#states").text('等待揽收');
+        } else if (data_json[index].state == 1) {
+            $("#states").text('已揽收');
+        }else if (data_json[index].state == 2) {
+            $("#states").text('运输中');
+        }else if (data_json[index].state == 3) {
+            $("#states").text('派件中');
+        }else if (data_json[index].state == 4) {
+            $("#states").text('已签收');
+        }
+        //弹出修改模态框，非新增模态框
+        $('#lookModal').modal('show')
+    }
+
+    //当前列删除
+    function DeleteByIds(id) {
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../orders_delete",     //url
+            data: "oids=" + id,     // 收集表单中的数据
+            dataType: "text",    //参数返回类型
+            success: function (obj) {
+                alert(obj);     //返回信息
+                $table.bootstrapTable('refresh');    //刷新表格
+            }
+        });
+    }
+
+
+    // 当点击【删除】按钮后，拼接选中的id
+    $("#btn_delete").on("click", function () {
+        url = "orders_delete";
+        //选中的ids
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.oid
+        })
+        if (ids == "") {
+            alert("至少选中一行");
+        } else {
+            //alert(ids);
+            $.ajax({
+                type: "post",       //请求类型
+                url: "../../" + url,     //url
+                data: "oids=" + ids,     // 收集表单中的数据
+                dataType: "text",    //参数返回类型
+                success: function (obj) {
+                    alert(obj);     //返回信息
+                    $table.bootstrapTable('refresh');    //刷新表格
+                }
+            });
+        }
+    });
+
+</script>
+</html>
