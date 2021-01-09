@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yidu.lixiang.dao.CityDao">
-
     <resultMap id="BaseResultMap" type="com.yidu.entity.City">
         <!--@Table city-->
         <result property="cityid" column="cityId" jdbcType="INTEGER"/>
@@ -38,7 +37,6 @@
             </if>
         </where>
     </select>
-
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
@@ -46,7 +44,6 @@
         from ane.city
         where cityId = #{cityid}
     </select>
-
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
@@ -54,11 +51,10 @@
         from ane.city
         limit #{offset}, #{limit}
     </select>
-
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          cityId, provinceId, cityName
+        cityId, provinceId, cityName
         from ane.city
         <where>
             <if test="cityid != null">
@@ -72,13 +68,11 @@
             </if>
         </where>
     </select>
-
     <!--新增所有列-->
     <insert id="insert" keyProperty="cityid" useGeneratedKeys="true">
         insert into ane.city(provinceId, cityName)
         values (#{provinceid}, #{cityname})
     </insert>
-
     <!--通过主键修改数据-->
     <update id="update">
         update ane.city
@@ -92,10 +86,8 @@
         </set>
         where cityId = #{cityid}
     </update>
-
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ane.city where cityId = #{cityid}
     </delete>
-
 </mapper>

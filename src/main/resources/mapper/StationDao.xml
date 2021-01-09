@@ -39,17 +39,7 @@
         SELECT * FROM station s1,city c1
         <where>
             s1.`cityId`=c1.`cityId`
-            <if test="station.stationid != null">
-                and stationId = #{station.stationid}
-            </if>
-            <if test="station.cityid != null">
-                and cityId = #{station.cityid}
-            </if>
-            <if test="station.stationname != null and station.stationname != ''">
-                and stationName = #{station.stationname}
-            </if>
         </where>
-        limit #{offset}, #{limit}
     </select>
 
     <!--查询单个-->

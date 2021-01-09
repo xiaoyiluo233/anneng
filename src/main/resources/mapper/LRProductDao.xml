@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.LRProductDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Product">
+        <!--@Table product-->
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
+        <result property="uid" column="uid" jdbcType="INTEGER"/>
+        <result property="ptid" column="ptid" jdbcType="INTEGER"/>
+        <result property="pwid" column="pwid" jdbcType="INTEGER"/>
+        <result property="myaid" column="myAid" jdbcType="INTEGER"/>
+        <result property="youaid" column="youAid" jdbcType="INTEGER"/>
+        <result property="times" column="times" jdbcType="VARCHAR"/>
+        <result property="weight" column="weight" jdbcType="OTHER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          pid, pvalue, uid, ptid, pwid, myAid, youAid, times, weight, state
+        from ane.product
+        where pid = #{pid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          pid, pvalue, uid, ptid, pwid, myAid, youAid, times, weight, state
+        from ane.product
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          pid, pvalue, uid, ptid, pwid, myAid, youAid, times, weight, state
+        from ane.product
+        <where>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="pvalue != null and pvalue != ''">
+                and pvalue = #{pvalue}
+            </if>
+            <if test="uid != null">
+                and uid = #{uid}
+            </if>
+            <if test="ptid != null">
+                and ptid = #{ptid}
+            </if>
+            <if test="pwid != null">
+                and pwid = #{pwid}
+            </if>
+            <if test="myaid != null">
+                and myAid = #{myaid}
+            </if>
+            <if test="youaid != null">
+                and youAid = #{youaid}
+            </if>
+            <if test="times != null and times != ''">
+                and times = #{times}
+            </if>
+            <if test="weight != null">
+                and weight = #{weight}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pid" useGeneratedKeys="true">
+        insert into ane.product(pvalue, uid, ptid, pwid, myAid, youAid, times, weight, state)
+        values (#{pvalue}, #{uid}, #{ptid}, #{pwid}, #{myaid}, #{youaid}, #{times}, #{weight}, #{state})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.product
+        <set>
+            <if test="pvalue != null and pvalue != ''">
+                pvalue = #{pvalue},
+            </if>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="ptid != null">
+                ptid = #{ptid},
+            </if>
+            <if test="pwid != null">
+                pwid = #{pwid},
+            </if>
+            <if test="myaid != null">
+                myAid = #{myaid},
+            </if>
+            <if test="youaid != null">
+                youAid = #{youaid},
+            </if>
+            <if test="times != null and times != ''">
+                times = #{times},
+            </if>
+            <if test="weight != null">
+                weight = #{weight},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where pid = #{pid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.product where pid = #{pid}
+    </delete>
+
+</mapper>

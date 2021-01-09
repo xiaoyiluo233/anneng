@@ -1,13 +1,13 @@
 package com.yidu.lixiang.service.impl;
 
+import com.yidu.entity.Employee;
 import com.yidu.entity.Trucks;
-import com.yidu.entity.Trucks;
+import com.yidu.lf.dao.EmployeeDao;
 import com.yidu.lixiang.dao.TrucksDao;
 import com.yidu.lixiang.service.TrucksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,6 +21,45 @@ import java.util.List;
 public class TrucksServiceImpl implements TrucksService {
     @Autowired
     private TrucksDao trucksDao;
+    @Autowired
+    private EmployeeDao employeeDao;
+
+    @Override
+    public int[] getEidByRoleId(int roleid) {
+        //根据角色id查出员工信息
+        List<Employee> employees = employeeDao.selectEmpByRoleId(roleid);
+        //创建员工id数组，长度为员工集合的长度
+        int[] eids=new int[employees.size()];
+        //循环员工集合
+        for (int i = 0; i < employees.size(); i++) {
+            //取出员工实体类
+            Employee employee = employees.get(i);
+            //得到员工id
+            Integer eid = employee.getEid();
+            //将员工id添加进数组
+            eids[i]=eid;
+        }
+        return eids;
+    }
+
+    @Override
+    public String[] getEnameByRoleId(int roleid) {
+        //根据角色id查出员工信息
+        List<Employee> employees = employeeDao.selectEmpByRoleId(roleid);
+        //创建姓名数组，长度为员工集合的长度
+        String[] enames=new String[employees.size()];
+        //循环员工集合
+        for (int i = 0; i < employees.size(); i++) {
+            //取出员工实体类
+            Employee employee = employees.get(i);
+            //得到员工姓名
+            String ename = employee.getEname();
+            //将员工姓名添加进数组
+            enames[i]=ename;
+        }
+        //返回员工姓名数组
+        return enames;
+    }
 
     /**
      * 查询所有货车
@@ -61,7 +100,7 @@ public class TrucksServiceImpl implements TrucksService {
         //创建map集合
         HashMap<String,Object> map=new HashMap<>();
         //添加行数据
-        map.put("rows",trucksDao.queryAllByLimit(offset, limit, tnumbers));
+        map.put("rows",trucksDao.getEmployeeName(offset, limit, tnumbers));
         //添加总行数
         map.put("total",trucksDao.count(tnumbers));
         //返回map集合

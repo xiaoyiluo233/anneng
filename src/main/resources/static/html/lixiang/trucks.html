@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="../../js/sweetAlert.js"></script>
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
@@ -96,19 +96,17 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="tnumber"class="form-control" placeholder="车牌号" id="tnumber">
+                                <input style="padding-left: 16px;padding-left: 12px;"  type="text"name="tnumber"class="form-control" placeholder="车牌号" id="tnumber">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <label class="control-label"for="eid">员工id</label>
+                                <label class="control-label"for="eid">员工名</label>
                             </div>
-
-                            <div class="col-sm-9">
-                                <input type="text"name="eid"class="form-control" placeholder="员工id" id="eid">
-                            </div>
-                            <label class="err-info-modal"></label>
+                            <select class="form-control" style="width: 180px;display: inline-block;margin-left: 14px;" id="eid" name="eid">
+                                <option value="0">请选择员工</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -117,7 +115,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="parcelid"class="form-control" placeholder="包裹id" id="parcelid">
+                                <input style="padding-left: 16px" type="text"name="parcelid"class="form-control" placeholder="包裹id" id="parcelid">
                             </div>
                         </div>
                         <div class="form-group">
@@ -151,6 +149,38 @@
     </div>
 </body>
 <script type="text/javascript">
+    $(function () {
+        getEname();
+    });
+    var eids=[];
+    var names=[];
+    function getEname(){
+        $.ajax({
+            type:"post",
+            data:"roleid=1",
+            url:"../../trucks_getEnamesByRoleid",
+            dataType: "json",
+            success: function (msg){
+                var string=''+msg+'';
+                names = string.split(',');
+                $("#eid").children().remove();
+            }
+        });
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../trucks_getEidsByRoleId",     //url
+            data: "roleid=1",     // 收集表单中的数据
+            dataType: "json",    //参数返回类型
+            success: function (msg){
+                var string=''+msg+'';
+                eids = string.split(',');
+                for (var p=0;p<names.length;p++) {
+                    $("#eid").append("<option value='"+eids[p]+"'>"+names[p]+"</option>");
+                }
+            }
+        });
+
+    }
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
@@ -229,7 +259,7 @@
                 sortable : true
             }, {
                 title : '车辆驾驶员',
-                field : 'eid',
+                field : 'employee.ename',
                 sortable : true
             },{
                 title : '包裹id',
@@ -302,13 +332,17 @@
         var data_obj = JSON.parse(data);
         $("#state").attr("disabled",false);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
+            $("#eid").children().remove();
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
-            $("#eid").val(data_obj[0].eid);
+            for (var o=0;o<names.length;o++) {
+                $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
+            }
+            $("#eid option[value='"+data_obj[0].eid+"']").attr('selected',true);
             $("#parcelid").val(data_obj[0].parcelid);
             $("#state").val(data_obj[0].state);
             $("#addModal").modal({
@@ -321,13 +355,13 @@
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
         $("#state").attr("disabled","disabled");
+        clearForm("#add_form_modal");// 清除表单上一次的输入数据
         url="trucks_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
         });
         //$('#addModal').modal('show')
-        clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
 
     // helper: 重置表单
@@ -343,7 +377,7 @@
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                alert(msg);     //返回信息
+                swal("结果:", msg, "success");
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
@@ -358,6 +392,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
+        $("#eid").children().remove();
         url="trucks_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
@@ -366,9 +401,13 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
+        $("#state").attr("disabled",false);
         $("#tid").val(data_json[index].tid);
         $("#tnumber").val(data_json[index].tnumber);
-        $("#eid").val(data_json[index].eid);
+        for (var o=0;o<names.length;o++) {
+            $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
+        }
+        $("#eid option[value='"+data_json[index].eid+"']").attr('selected',true);
         $("#parcelid").val(data_json[index].parcelid);
         $("#state").val(data_json[index].state);
         $("#addModalLabel").text("修改");
@@ -382,7 +421,7 @@
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         $("#tids").text(data_json[index].tid);
         $("#tnumbers").text(data_json[index].tnumber);
-        $("#eids").text(data_json[index].eid);
+        $("#eids").text(data_json[index].employee.ename);
         $("#parcelids").text(data_json[index].parcelid);
         if (data_json[index].state==0){
             $("#states").text('未发车');
@@ -396,14 +435,29 @@
     }
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../trucks_delete",     //url
-            data: "tids="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../trucks_delete",     //url
+                    data: "tids="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
     }
@@ -417,17 +471,32 @@
             return row.tid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
             //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../"+url,     //url
-                data: "tids="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../"+url,     //url
+                        data: "tids="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
         }

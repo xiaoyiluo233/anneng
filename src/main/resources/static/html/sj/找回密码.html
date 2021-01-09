@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="css/背景.css"/>
+		<link rel="stylesheet" type="text/css" href="css/找回密码.css"/>
+		<!--定时器-->
+		<script src="js/countdown.js" type="text/javascript"></script>
+		<!--JS-->
+		 <script  type="text/javascript" src="js/jquery-1.7.2.js"></script>
+		  <script  type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+		<!--JS判断-->
+		<script type="text/javascript">
+			$(function () {
+				$(".bj").click(function () {
+					countdown(this);
+					var yzm = $("input[name=yzm]").val();
+					$.post('../../userinfo/createCode',"phone="+$("#phone").val(),function (msg) {
+						if(msg){
+							console.log("验证码发送成功！");
+						} else {
+							console.log("验证码发送失败！");
+						}
+
+					},'json');
+				});
+			});
+			function qqq(){
+			  var sjhm = $("input[name=uname]").val();
+			         //alert(sjhm.length);
+			         if(sjhm.length==11){
+			            $("button").removeAttr("disabled");
+						$("button").css("background-color","#f18700");
+			         }else{
+						$("button").attr("disabled","true");
+						$("button").css("background-color","#d8d8d8");
+					 }
+					
+			}
+
+			//判断电话和密码
+			 function panduan(){
+				//alert("66666");
+				var sjhm = $("input[name=uname]").val();
+				var srmm = $("input[name=upassword]").val();
+				var qrmm = $("input[name=qrmm]").val();
+				 var yzm = $("input[name=yzm]").val();
+				//这里以后还要加个判断验证码
+				//判断电话
+				if(sjhm.length!=11){
+					$("span").text("手机号不正确!");
+				}else if(srmm==""||qrmm==""){
+					$("span").text("密码不能为空!")
+				}else if(srmm!=qrmm) {
+					$("span").text("密码不正确!");
+				}else{
+					$.post('../../userinfo/updateByName',$("#formId").serialize(),function (msg) {
+						alert(msg);
+					},'text');
+					$("span").text("");
+				}
+				
+				//判断密码
+				
+				
+			}
+			function fanhui() {
+				window.history.go(-1);
+			}
+		</script>
+		<title>安能无限可能</title>
+		<style>
+		 a{
+		 text-decoration: none;
+		 }
+		 </style>
+	</head>
+	<body id="beijing" background="img\forget-bg.jpg">
+		<!--背景图片-->
+			
+		<!--头部-->
+		<div>
+			<div class="toubu">
+				<img src="img\gym-logo.png" alt="加载不出来">
+			</div>
+			<!--返回按钮-->
+			<div class="yuanjiao">
+				<img src="img\未标题-1.png" width="20%" height="30%" class="jt">
+				<!--返回-->
+				<div class="fh">
+				<a href="javaScript:;" onclick="fanhui()" style="color:#FFFFFF;font-size: 14px">返回</a>
+				</div>
+				<!--返回-->
+			</div>
+		</div>
+		<!--输入账号和密码的白色页面-->
+		<center>
+		<div class="zhucebeijin">
+			<!--空格-->
+			<div class="form-grounp lh60 m-t-30">
+				<!--会员注册图标-->
+				<div class="f-26 c-2 text-left">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;找回账号密码
+				</div>
+				<form id="formId">
+			<!--短信注册方式-->
+				<div class="m-t-10">
+					<!--手机号码-->
+					<div class="login-group">
+						<div class="p-l-10">
+							<div>
+								<img src="img/666.png">
+								&nbsp;&nbsp;
+								<input type="text" name="uname" placeholder="请输入您的手机号码" class="bg-f7" id="phone" onchange="qqq()"/>
+							</div>
+						</div>
+					</div>
+					<!--手机号码-->
+					<!--验证码-->
+					<div class="login-group">
+						<div class="yzmjz">
+							<input type="test" name="yzm" placeholder="请输入验证码" class="bg-f7"/>
+						</div>
+					</div>
+					<!--验证码-->
+					<!--获取验证码-->
+					<button type="button" disabled="disabled" class="bj">获取验证码</button>
+					<!--获取验证码-->
+					<!--输入密码-->
+					<div class="login-group">
+						<div class="p-l-20">
+							<div>
+								<img src="img/2.png">
+								&nbsp;&nbsp;
+								<input type="password" name="upassword" placeholder="输入密码" class="bg-f7"/>
+							</div>
+						</div>
+					</div>
+					<!--输入密码-->
+					<!--确认密码-->
+					<div class="login-group">
+						<div class="p-l-20">
+							<div>
+								<img src="img/2.png">
+								&nbsp;&nbsp;
+								<input type="password" name="qrmm" placeholder="请再次输入密码" class="bg-f7"/>
+							</div>
+						</div>
+					</div>
+					<!--确认密码-->
+					<div class="ppp">
+						密码由8-16位数字、字母组成
+					</div>
+					<!---->
+					<div class="bc">
+						<span style="color: #f18700;font-size: 13px" ></span>
+					</div>
+					<!---->
+					<!--注册会员-->
+					<div class="zchy">
+					<a href="javaScript:;" class="ziti" onclick="panduan()" >保存</a>
+					</div>
+					<!--注册会员-->
+				</div>
+				</form>
+			<!--短信注册方式-->
+			</div>
+		</div>
+		</center>
+		<!--底部-->
+			<div class="f-10">
+				Copyright © 2015-2025 上海安能聚创供应链管理有限公司. All rights reserved. 沪ICP备16019765号-3
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="img/foot-01.png" >
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="img/foot-02.png" >沪公网安备 31011802001067号.
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="img/foot-03.png" >上海工商
+			</div>
+		<!--底部-->
+	</body>
+</html>
