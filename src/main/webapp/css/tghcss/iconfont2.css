@@ -1,0 +1,548 @@
+<style type="text/css">
+			#{
+			margin: 0px;
+			padding: 0px;
+			}
+
+			#dizhifu1{
+				width: 800px;
+				height: 850px;
+				border: 1px red ridge;
+				position:absolute/fixed;
+				left:0;
+				right:0;
+				top:0;
+				bottom:0;
+				margin:auto;
+				z-index: -100000000000;
+				display: none;
+
+			}
+#tou_yg2{
+	width: 130;
+	height:130px ;
+	position: fixed;
+	top: 80px;
+	z-index: 2;
+}
+#tou_ygs2{
+	width:1140px;
+	height: 130px;
+	margin: 0 auto;
+}
+#yg2{
+	margin-left: 975px;
+	background-color: #8f8f8f;
+	border-radius: 5px;
+	width: 128px;
+	height: 88px;
+	z-index: 2;
+	display: none;
+}
+#yg2 a{
+	text-decoration:none;
+}
+#dier2{
+	border-top: 1px dotted azure;
+	border-bottom: 1px dotted azure;
+}
+#yg2 span{
+
+}
+#yg2 dt{
+	font-size: 14px;
+	width: 128px;
+	height: 44px;
+	line-height: 44px;
+	color: white;
+}
+
+
+
+
+
+
+#tou_yg{
+	width: 100%;
+	height:130px ;
+	position: fixed;
+	top: 80px;
+	z-index: 2;
+}
+
+#tou_ygs{
+	width:1140px;
+	height: 130px;
+	margin: 0 auto;
+}
+#yg{
+	margin-left: 982px;
+	background-color: #8f8f8f;
+	border-radius: 5px;
+	width: 128px;
+	height: 134px;
+	z-index: 2;
+	display: none;
+}
+#yg a{
+	text-decoration:none;
+}
+#dier{
+	border-top: 1px dotted azure;
+	border-bottom: 1px dotted azure;
+}
+#yg span{
+
+}
+#yg dt{
+	font-size: 14px;
+	width: 128px;
+	height: 44px;
+	line-height: 44px;
+	color: white;
+}
+			#toubudingwei {
+				width: 1264px;
+				height: 90px;
+				position: fixed;
+				top: 0px;
+				z-index: 99;
+				background:#f7f7f7
+				margin: auto 0;
+
+			}
+
+			#bodymax {
+				width: 1263px;
+				height: 934px;
+				background: #a8a5a5;
+
+			}
+
+			#head1 {
+
+				width: 1140px;
+				height: 65px;
+				margin-left: 100px;
+				margin-top: 20px;
+				margin: 0 auto;
+			}
+
+			#head1>img {
+				cursor: pointer;
+				margin-top: 10px;
+			}
+
+			#headcentre {
+
+				width: 640px;
+				height: 35px;
+				font-size: 15px;
+				margin-top: -58px;
+				color: #212529;
+				margin-left: 289px;
+
+			}
+
+			#headcentre>ul>li {
+				list-style: none;
+				float: left;
+				padding-left: 30px;
+
+			}
+
+			ul>li:hover {
+				cursor: pointer;
+				color: #ffc107;
+			}
+
+			#headright {
+				width: 300px;
+				height: 35px;
+
+				margin-left: 900px;
+				margin-top: -50px;
+			}
+
+			#headright>ul>li {
+				list-style: none;
+				float: left;
+				padding-left: 30px;
+			}
+
+			#headright>ul>li>img {
+				width: 15px;
+				height: 14px;
+			}
+
+			#centerzuoyi {
+				width: 1140px;
+				height: 75px;
+				margin-top: 130px;
+				margin-left: 65px;
+				z-index: -10;
+			}
+
+			#centerzuoyixia {
+				width: 75px;
+				height: 5px;
+				background-color: #F18700;
+			}
+
+			#centerzuoyi2 {
+				width: 1140px;
+				height: 90px;
+				z-index: 1000px;
+			}
+
+			#centerzuoyi2>hr {
+				width: 350px;
+				height: 3px;
+				background-color: darkgrey;
+				margin-left: 37px;
+				margin-top: -20px;
+				color: darkgrey;
+			}
+
+			#body1 {
+				margin-left: 37px;
+				margin-top: 19px;
+				width: 50px;
+				height: 50px;
+
+
+			}
+
+			#body2 {
+				margin-left: 360px;
+				margin-top: -46px;
+				width: 50px;
+				height: 50px;
+
+			}
+
+			#body3 {
+				margin-left: 700px;
+				margin-top: -48px;
+				width: 50px;
+				height: 50px;
+
+			}
+
+			#body4 {
+				margin-left: 1000px;
+				margin-top: -49px;
+				width: 50px;
+				height: 50px;
+			}
+
+			#xinxi {
+				width: 1142px;
+				height: 30px;
+			}
+
+			#xinxi2 {
+				width: 142px;
+				height: 10px;
+				margin-left: 8px;
+				margin-top: 10px;
+
+			}
+
+			#xinxi2>img {
+				width: 296px;
+				height: 80px;
+				margin-left: 59px;
+				margin-top: -177px;
+			}
+
+			#center-zuo1 {
+				width: 1140px;
+				height: 113px;
+				margin-top: 35px;
+			}
+
+			#center-zuo1>span>img {
+				width: 15px;
+				height: 15px;
+				margin-left: 10px;
+			}
+
+			#center-zuo1>span:hover {
+				cursor: pointer;
+			}
+
+			#biaodan {
+				width: 1140px;
+				height: 390px;
+			}
+
+			#biaodanzuoyi {
+				width: 561px;
+				height: 51px;
+				margin-left: 5px;
+				margin-top: 15px;
+			}
+
+			#biaodanzuoyi>input> {
+				width: 561px;
+				height: 51px;
+				border: red 1px ridge;
+			}
+
+			#biaodanzuoer {
+				width: 561px;
+				height: 51px;
+				margin-top: -53px;
+				margin-left: 600px;
+			}
+
+			#biaodanxiayi {
+				width: 561px;
+				height: 70px;
+
+				margin-top: 60px;
+			}
+
+			#biaodanxiaer {
+				width: 561px;
+				height: 71px;
+				margin-top: -45px;
+				margin-left: 600px;
+			}
+
+			#dizhi {
+				width: 1140px;
+				height: 100px;
+			}
+
+			#dizhi2 {
+				width: 190px;
+				height: 50px;
+				margin-top: -45px;
+				margin-left: 20px;
+			}
+
+			#dizhi>input {
+				margin-left: 600px;
+				color: #000000;
+			}
+
+			input {
+				min-width: 0px;
+			}
+
+			#jueduidingwei1 {
+				width: 80px;
+				height: 270px;
+				position: fixed;
+				right: 0px;
+
+			}
+
+			#jueduidingwei2 {
+				width: 80px;
+				height: 80px;
+				background-color: orange;
+				border-radius: 10px 10px 10px 10px;
+				right: 20px;
+				bottom: 80px;
+			}
+
+			#jueduidingwei2>img {
+				width: 30px;
+				height: 30px;
+				margin-left: 20px;
+				border-radius: 10px 10px 10px 10px;
+			}
+
+			#jueduidingwei3 {
+				width: 80px;
+				height: 80px;
+
+				margin-top: 5px;
+				background-color: orange;
+				border-radius: 10px 10px 10px 10px;
+			}
+
+			#jueduidingwei3>img {
+				width: 35px;
+				height: 35px;
+				margin-left: 20px;
+
+			}
+
+			#jueduidingwei4 {
+				width: 80px;
+				height: 80px;
+
+				margin-top: 5px;
+				background-color: orange;
+				border-radius: 10px 10px 10px 10px;
+			}
+
+			#jueduidingwei5 {
+				width: 80px;
+				height: 30px;
+
+				margin-top: 4px;
+				background-color: orange;
+				border-radius: 10px 10px 10px 10px;
+			}
+
+			#jueduidingwei4>img {
+				width: 30px;
+				height: 30px;
+				margin-left: 20px;
+
+			}
+
+			#dibuyi {
+				width: 100%;
+				height: 500px;
+
+				background-color: #222222;
+			}
+
+			#dibuyi table tr td {
+				text-align: center;
+				font-size: 13px;
+				color: #b2b8bb;
+			}
+
+			#dibuyi table tr td:hover {
+				cursor: pointer;
+				color: #f8f9fa;
+			}
+
+			#dibuyi table tr th {
+				text-align: center;
+				color: #f8f9fa;
+
+			}
+
+			table {
+				border-spacing: 0;
+				border-collapse: collapse;
+				margin-left: 60px;
+			}
+
+			#youxiaulli {
+				width: 400px;
+				height: 60px;
+				margin-top: -280px;
+				margin-left: 830px;
+			}
+
+			#youxiaulli>ul>li {
+				float: left;
+				list-style: none;
+				border-radius: 25px;
+				background: orange;
+				padding: 25px;
+				width: 40px;
+				height: 40px;
+				margin-left: 20px;
+			}
+
+			#youxiaulli>ul>li>img {
+				width: 30px;
+				height: 30px;
+				margin-left: -18px;
+				margin-top: -19px;
+			}
+
+			#youxiaulli>ul>.span {
+				border-radius: 25px;
+				background: orange;
+				padding: 25px;
+				height: 55px;
+				width: 150px;
+				line-height: 8px;
+				font-size: 20px;
+			}
+
+			#youxiaulli>ul>li>img {
+				width: 30px;
+				height: 30px;
+				margin-left: -15px;
+				margin-top: -17px;
+			}
+
+			#youxiaulli2 {
+				width: 120px;
+				height: 80px;
+
+				margin-top: 1px;
+				margin-left: 1050px;
+			}
+
+			#dibu_zuixiamian {
+				width: 1150px;
+				height: 22px;
+
+				margin-top: 222px;
+				margin-left: 3px;
+			}
+
+			#weixinchulai {
+				width: 150px;
+				height: 150px;
+				margin-left: -155px;
+				margin-top: -95px;
+				position: fixed;
+				display: none;
+			}
+
+			#weixinchulai>img {
+				width: 150px;
+				height: 150px;
+
+			}
+
+			#juzhong {
+				width: 1140px;
+				height: 700px;
+				margin: 0 auto;
+			}
+
+			#headcentre ul>li>div>dl {
+				width: 128px;
+				height: 218px;
+				letter-spacing: 2px;
+				margin-top: 15px;
+
+			}
+
+			#headcentre ul>li>div>dl>dt {
+				width: 126px;
+				height: 45px;
+				background-color: #ffffff;
+				box-shadow: 0.2px 0.1px 0.2px 0.5px #dcdee5;
+				color: #000;
+				font-size: 14px;
+				text-align: center;
+				line-height: 45px;
+				font-weight: lighter;
+				font-family: 黑体;
+
+
+
+
+			}
+
+			#headcentre ul>li>div>dl>dt:hover {
+				cursor: #f18700;
+				color: orange;
+			}
+			.spa {
+				height: 36px;
+				line-height: 36px;
+				width: 204px;
+				display: inline-block;
+				float: left;
+				font-size: 13px;
+				color: #f38700;
+				text-indent: 10px;
+			}
+		</style>
