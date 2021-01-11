@@ -1,9 +1,7 @@
-package com.yidu.lr.dao;
-
+package com.yidu.zsh.dao;
 
 import com.yidu.entity.Address;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,11 +10,16 @@ import java.util.List;
  * (Address)表数据库访问层
  *
  * @author makejava
- * @since 2021-01-01 15:07:21
+ * @since 2020-12-31 14:21:01
  */
 @Mapper
 @Repository
-public interface LRAddressDao {
+public interface AddressDao {
+    /**
+     * 根据条件查询总行数
+     * @return 总行数
+     */
+    int count(String address);
 
     /**
      * 通过ID查询单条数据
@@ -25,15 +28,6 @@ public interface LRAddressDao {
      * @return 实例对象
      */
     Address queryById(Integer aid);
-
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<Address> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**

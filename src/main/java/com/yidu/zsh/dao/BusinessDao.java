@@ -1,6 +1,6 @@
-package com.yidu.lr.dao;
+package com.yidu.zsh.dao;
 
-import com.yidu.entity.Product;
+import com.yidu.entity.Business;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,22 +8,22 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * (Product)表数据库访问层
+ * (Business)表数据库访问层
  *
  * @author makejava
- * @since 2021-01-01 16:52:46
+ * @since 2021-01-08 14:25:29
  */
 @Mapper
 @Repository
-public interface LRProductDao {
+public interface BusinessDao {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param pid 主键
+     * @param bid 主键
      * @return 实例对象
      */
-    Product queryById(Integer pid);
+    Business queryById(Integer bid);
 
     /**
      * 查询指定行数据
@@ -32,39 +32,39 @@ public interface LRProductDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Product> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Business> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param product 实例对象
+     * @param business 实例对象
      * @return 对象列表
      */
-    List<Product> queryAll(Product product);
+    List<Business> queryAll(Business business);
 
     /**
      * 新增数据
      *
-     * @param product 实例对象
+     * @param business 实例对象
      * @return 影响行数
      */
-    int insert(Product product);
+    int insert(Business business);
 
     /**
      * 修改数据
      *
-     * @param product 实例对象
+     * @param business 实例对象
      * @return 影响行数
      */
-    int update(Product product);
+    int update(Business business);
 
     /**
      * 通过主键删除数据
      *
-     * @param pid 主键
+     * @param bid 主键
      * @return 影响行数
      */
-    int deleteById(Integer pid);
+    int deleteById(Integer bid);
 
 }

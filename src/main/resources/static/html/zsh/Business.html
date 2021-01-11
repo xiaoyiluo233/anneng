@@ -2,47 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>货品类型</title>
+    <title>企业*操作</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
-    <script src="../../js/sweetAlert.js"></script>
 </head>
 <body>
-<div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document"style="margin-top:10%;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="lookModalLabel">查看</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
-                    <tr>
-                        <th>id</th>
-                        <th><span id="ptid">1</span></th>
-                    </tr>
-                    <tr>
-                        <th>货品类型名称</th>
-                        <th><span id="ptype">admin</span></th>
-                    </tr>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- 头部工具栏 -->
 <div id="toolbar" class="btn-group">
     <button id="btn_add" type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
@@ -54,7 +26,8 @@
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
     </button>
 </div>
-<table id="mytable"></table>
+<table id="mytable"></table><!-- Modal -->
+
 <div class="modal fade"id="addModal"tabindex="-1"role="dialog"aria-labelledby="addModalLabel">
     <div class="modal-dialog"role="document"style="margin-top:10%;">
         <div class="modal-content">
@@ -64,24 +37,40 @@
                 <h4 class="modal-title"id="addModalLabel">添加配置信息</h4>
             </div>
             <div class="modal-body">
+
                 <form id="add_form_modal"class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="ptid">id</label>
+                            <label class="control-label"for="bid">id</label>
                         </div>
+
                         <div class="col-sm-9">
-                            <input type="text"name="ptid"class="form-control"id="ptids" placeholder="id自动生成" readonly>
+                            <input type="text"name="bid"class="form-control"id="bid" placeholder="id自动生成" readonly>
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
+
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="ptype">货品类型名称</label>
+                            <label class="control-label"for="bname">企业名称</label>
                         </div>
+
                         <div class="col-sm-9">
-                            <input type="text"name="ptype"class="form-control" placeholder="名称" id="ptypes">
+                            <input type="text"name="bname"class="form-control" placeholder="企业名称" id="bname">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label"for="times">加入时间</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text"name="times"class="form-control" placeholder="时间自动生成" id="times" readonly>
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+
                 </form>
 
                 <div class="modal-footer">
@@ -103,17 +92,12 @@
 </div>
 </body>
 <script type="text/javascript">
-
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
             height: tableHeight()
         })
     })
-    //窗口高度减50
-    function tableHeight() {
-        return $(window).height() - 50;
-    }
     //表格选择器
     $table= $("#mytable");
     //新增修改url
@@ -122,14 +106,15 @@
     //页面加载事件
     $(document).ready(function () {
         $table.bootstrapTable({
-            url: "../../producttype_selectAll",   //请求地址
+            url:"../../business_queryAll",   //请求地址
             height: tableHeight(),//高度调整
             //cardView:true,//卡视图
             search: true,//是否搜索
             pagination: true,//是否分页
             pageSize: 5,//单页记录数
+            searchHighlight: true,
             pageList: [5, 10, 20, 50],//分页步进值
-            sidePagination: "server",//服务端分页
+            //sidePagination: "server",//服务端分页
             contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
             dataType: "json",//期待返回数据类型
             // ajax:function ajaxRequest(params) {
@@ -138,16 +123,11 @@
             //         params.success(res)
             //     })
             // },//ajax
-            toggle: "mytable",
+            toggle:"mytable",
             method: "post",//请求方式
             searchAlign: "left",//查询框对齐方式
             queryParamsType: "limit",//查询参数组织方式
-            // queryParams: function getParams(params) {
-            //     //params obj
-            //     params.other = "otherInfo";
-            //     return params;
-            // },
-            clickToSelect: true,//单击选中
+            clickToSelect:true,//单击选中
             theadClasses: "thead-light",
             detailFormatters: "detailFormatter",//数据格式化
             searchOnEnterKey: false,//回车搜索
@@ -161,27 +141,31 @@
             toolbar: "#toolbar",//指定工具栏
 
             // toolbarAlign: "right",//工具栏对齐方式
-            searchAlign: "right",
+            searchAlign:"right",
             showFullscreen: true,//放大
             showPaginationSwitch: true, //收起
-            bubbles: "btnAdd",//自定义按钮
-            queryParams: function (params) {//上传服务器的参数
+            bubbles:"btnAdd",//自定义按钮
+     /*       queryParams : function(params) {//上传服务器的参数
                 var temp = {
-                    offset: params.offset + 0,// SQL语句起始索引
-                    pageNumber: params.limit,  // 每页显示数量
-                    text: params.search //搜索参数
+                    offset :params.offset + 0,// SQL语句起始索引
+                    pageNumber : params.limit,  // 每页显示数量
+                    avalue : params.avalue //搜索参数
                 };
                 return temp;
-            }, columns: [{
-                checkbox: true  //第一列显示复选框
+            },*/columns : [ {
+                checkbox:true  //第一列显示复选框
+            },{
+                title : 'id',
+                field : 'bid',
+                sortable : true
             }, {
-                title: 'id',
-                field: 'ptid',
-                sortable: true
+                title : '企业名称',
+                field : 'bname',
+                sortable : true
             }, {
-                title: '货品类型名称',
-                field: 'ptype',
-                sortable: true
+                title : '加入时间',
+                field : 'times',
+                sortable : true
             }, {
                 field: 'operate',
                 title: '操作',
@@ -190,16 +174,16 @@
                 // valign: 'middle',
                 formatter: actionFormatter,//对本列数据做格式化
             }],
-            onClickRow: function (row, $element) {
+            onClickRow: function(row, $element) {
                 //$element是当前tr的jquery对象
                 //$element.css("background-color", "green");
             },//单击row事件
             locale: "zh-CN", //中文支持
             detailView: true, //是否显示详情折叠  会导致表格最开头多出一列
-            detailFormatter: function (index, row, element) {
+            detailFormatter: function(index, row, element) {
                 var html = '';
-                $.each(row, function (key, val) {
-                    html += "<p>" + key + ":" + val + "</p>"
+                $.each(row, function(key, val){
+                    html += "<p>" + key + ":" + val +  "</p>"
                 });
                 return html;
             }
@@ -218,13 +202,11 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.ptid+ "')\" title='" +
-                "h-删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.bid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
-    });
-
+    })
 
     //窗口高度减50
     function tableHeight() {
@@ -240,7 +222,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
-        url="producttype_update";
+        url="business_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         // {#var data_json2 = eval("(" + data+ ")"); #}
@@ -248,8 +230,9 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
-        $("#ptids").val(data_json[index].ptid);
-        $("#ptypes").val(data_json[index].ptype);
+        $("#bid").val(data_json[index].bid);
+        $("#bname").val(data_json[index].bname);
+        $("#times").val(data_json[index].times);
         $("#addModalLabel").text("修改");
         //弹出修改模态框，非新增模态框
         $('#addModal').modal('show')
@@ -259,8 +242,9 @@
     function LookViewById(row, index){
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
-        $("#ptid").text(data_json[index].ptid);
-        $("#ptype").text(data_json[index].ptype);
+        $("#bid").val(data_json[index].bid);
+        $("#bname").val(data_json[index].bname);
+        $("#times").val(data_json[index].times);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -274,64 +258,23 @@
         return html.join('')
     }
 
-    //当前列删除
-    function DeleteByIds(id) {
+    //删除
+    function DeleteByIds(bid) {
         swal({
             title: "你确定吗?",
             text: "一旦删除，您将无法恢复该数据！",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    type: "post",       //请求类型
-                    url: "../../producttype_delete",     //url
-                    data: "ptid="+id,     // 收集表单中的数据
-                    dataType: "text",    //参数返回类型
-                    success: function (msg){
-                        swal("OK！您的数据已被删除！", {
-                            icon: "success",
-                        });
-                        $table.bootstrapTable('refresh');    //刷新表格
-                    }
-                });
-            } else {
-                swal("您的数据很安全！");
-            }
-        });
-    }
-
-    //对本列数据做格式化
-    function infoFormatter(value, row, index)
-    {
-        return "ptid:" + row.ptid + " ptype:" + row.ptype;
-    }
-
-
-    // 当点击【删除】按钮后，拼接选中的id
-    $("#btn_delete").on("click",function (){
-        //选中的ids
-        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.ptid
         })
-        if(ids==""){
-            swal("至少选中一行");
-        } else {
-            swal({
-                title: "你确定吗?",
-                text: "一旦删除，您将无法恢复该数据！",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
+            .then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
                         type: "post",       //请求类型
-                        url: "../../producttype_delete",     //url
-                        data: "ptid="+id,     // 收集表单中的数据
+                        url: "../../business_delete ",     //url
+                        data: "bid="+bid,     // 收集表单中的数据
                         dataType: "text",    //参数返回类型
-                        success: function (msg){
+                        success: function (obj){
                             swal("OK！您的数据已被删除！", {
                                 icon: "success",
                             });
@@ -342,22 +285,46 @@
                     swal("您的数据很安全！");
                 }
             });
+    }
+
+
+    // 当点击【删除】按钮后，拼接选中的id
+    $("#btn_delete").on("click",function (){
+        //选中的ids
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.bid
+        })
+
+        if(ids==""){
+            swal("至少选中一行");
+        } else {
+            $.ajax({
+                type: "post",       //请求类型
+                url: "../../business_delete",     //url
+                data: "bid="+ids,     // 收集表单中的数据
+                dataType: "text",    //参数返回类型
+                success: function (obj){
+                    swal("结果:", obj, "success");
+                    $table.bootstrapTable('refresh');    //刷新表格
+                }
+            });
         }
     });
 
     // 当点击【修改】按钮后，把模态框弹出来
     $("#btn_edit").on("click",function (){
-        url="producttype_update";
+        url="business_update";
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
             swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            swal("请选择一行");
+            swal("至少选中一行");
         }else{
-            $("#ptids").val(data_obj[0].ptid);
-            $("#ptypes").val(data_obj[0].ptype);
+            $("#bid").val(data_obj[0].bid);
+            $("#bname").val(data_obj[0].bname);
+            $("#times").val(data_obj[0].times);
             $("#addModal").modal({
                 keyboard: true
             });
@@ -367,7 +334,7 @@
 
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
-        url="producttype_insert";
+        url="business_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
@@ -381,6 +348,7 @@
         $(form)[0].reset();
     }
 
+
     // 当点击【保存】按钮后，将表单中的数据提交到后台
     $("#btn_add_submit").on("click",function (){
         $.ajax({
@@ -388,8 +356,8 @@
             url: "../../"+url,     //url
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
-            success: function (msg){
-                swal("结果:", msg, "success");     //返回信息
+            success: function (obj){
+                swal("结果:", obj, "success");    //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });

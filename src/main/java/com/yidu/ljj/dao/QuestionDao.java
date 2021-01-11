@@ -1,6 +1,7 @@
-package com.yidu.lr.dao;
+package com.yidu.ljj.dao;
 
-import com.yidu.entity.Product;
+
+import com.yidu.entity.Question;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -8,22 +9,30 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * (Product)表数据库访问层
+ * (Question)表数据库访问层
  *
  * @author makejava
- * @since 2021-01-01 16:52:46
+ * @since 2021-01-08 14:53:12
  */
 @Mapper
 @Repository
-public interface LRProductDao {
+public interface QuestionDao {
+
+    /**
+     * 根据条件统计行数
+     *
+     * @param text 条件
+     * @return 总行数
+     */
+    int count(String text);
 
     /**
      * 通过ID查询单条数据
      *
-     * @param pid 主键
+     * @param qid 主键
      * @return 实例对象
      */
-    Product queryById(Integer pid);
+    Question queryById(Integer qid );
 
     /**
      * 查询指定行数据
@@ -32,39 +41,39 @@ public interface LRProductDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Product> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Question> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("text")String text);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param product 实例对象
+     * @param question 实例对象
      * @return 对象列表
      */
-    List<Product> queryAll(Product product);
+    List<Question> queryAll(Question question);
 
     /**
      * 新增数据
      *
-     * @param product 实例对象
+     * @param question 实例对象
      * @return 影响行数
      */
-    int insert(Product product);
+    int insert(Question question);
 
     /**
      * 修改数据
      *
-     * @param product 实例对象
+     * @param question 实例对象
      * @return 影响行数
      */
-    int update(Product product);
+    int update(Question question);
 
     /**
      * 通过主键删除数据
      *
-     * @param pid 主键
+     * @param qid 主键
      * @return 影响行数
      */
-    int deleteById(Integer pid);
+    int deleteById(Integer qid );
 
 }

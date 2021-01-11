@@ -1,6 +1,6 @@
 package com.yidu.entity;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
@@ -8,11 +8,11 @@ import java.io.Serializable;
  * (Product)实体类
  *
  * @author makejava
- * @since 2021-01-06 08:36:38
+ * @since 2021-01-11 11:13:04
  */
-@Controller
+@Component
 public class Product implements Serializable {
-    private static final long serialVersionUID = -67664774417573639L;
+    private static final long serialVersionUID = -47091595889459753L;
     
     private Integer pid;
     
@@ -30,9 +30,12 @@ public class Product implements Serializable {
     
     private String times;
     
-    private double weight;
+    private Double weight;
+    
+    private Integer toOrders;
     
     private Integer state;
+
 
     public Integer getPid() {
         return pid;
@@ -98,12 +101,20 @@ public class Product implements Serializable {
         this.times = times;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
+    }
+
+    public Integer getToOrders() {
+        return toOrders;
+    }
+
+    public void setToOrders(Integer toOrders) {
+        this.toOrders = toOrders;
     }
 
     public Integer getState() {
@@ -113,4 +124,5 @@ public class Product implements Serializable {
     public void setState(Integer state) {
         this.state = state;
     }
+
 }
