@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.ljj.dao.PricesDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Prices">
+        <!--@Table prices-->
+        <result property="priceid" column="priceId" jdbcType="INTEGER"/>
+        <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="days" column="days" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.prices
+        <where>
+            <if test="text!=null and text != ''">
+                pvalue like '%${text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          priceId, pvalue, price, pid, days
+        from ane.prices
+        where priceId = #{priceId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          priceId, pvalue, price, pid, days
+        from ane.prices
+        limit #{offset}, #{limit}
+        <where>
+            <if test="text!=null and text != ''">
+                pvalue like '%${text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          priceId, pvalue, price, pid, days
+        from ane.prices
+        <where>
+            <if test="priceid != null">
+                and priceId = #{priceid}
+            </if>
+            <if test="pvalue != null and pvalue != ''">
+                and pvalue = #{pvalue}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="days != null">
+                and days = #{days}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into ane.prices(priceId, pvalue, price, pid, days)
+        values (#{priceid}, #{pvalue}, #{price}, #{pid}, #{days})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.prices
+        <set>
+            <if test="priceid != null">
+                priceId = #{priceid},
+            </if>
+            <if test="pvalue != null and pvalue != ''">
+                pvalue = #{pvalue},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="days != null">
+                days = #{days},
+            </if>
+        </set>
+        where priceId = #{priceId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.prices where priceId = #{priceId}
+    </delete>
+
+</mapper>
