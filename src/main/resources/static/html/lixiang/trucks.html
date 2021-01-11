@@ -151,6 +151,15 @@
 <script type="text/javascript">
     $(function () {
         getEname();
+        $.ajax({
+            type:"post",
+            data:"roleid=1",
+            url:"../../trucks_getEidsByRoleId",
+            dataType: "json",
+            success: function (msg){
+
+            }
+        });
     });
     var eids=[];
     var names=[];

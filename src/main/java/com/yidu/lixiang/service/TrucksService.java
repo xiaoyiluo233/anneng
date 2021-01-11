@@ -14,6 +14,12 @@ import java.util.List;
  */
 public interface TrucksService {
     /**
+     * 查出所有的车牌号
+     * @return 车牌号数组
+     */
+    String[] getTnumber();
+
+    /**
      * 根据角色id查出员工id
      * @param roleid 角色id
      * @return 员工id数组
