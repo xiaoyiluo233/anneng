@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.ljj.dao.QuestionDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Question">
+        <!--@Table question-->
+        <result property="qid" column="qid" jdbcType="INTEGER"/>
+        <result property="question" column="question" jdbcType="VARCHAR"/>
+        <result property="answer" column="answer" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.question
+        <where>
+            <if test="text!=null and text != ''">
+                question like '%${text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          qid, question, answer
+        from ane.question
+        where qid = #{qid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          qid, question, answer
+        from ane.question
+        limit #{offset}, #{limit}
+        <where>
+            <if test="text!=null and text != ''">
+                question like '%${text}%'
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          qid, question, answer
+        from ane.question
+        <where>
+            <if test="qid != null">
+                and qid = #{qid}
+            </if>
+            <if test="question != null and question != ''">
+                and question = #{question}
+            </if>
+            <if test="answer != null and answer != ''">
+                and answer = #{answer}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into ane.question(qid, question, answer)
+        values (#{qid}, #{question}, #{answer})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.question
+        <set>
+            <if test="qid != null">
+                qid = #{qid},
+            </if>
+            <if test="question != null and question != ''">
+                question = #{question},
+            </if>
+            <if test="answer != null and answer != ''">
+                answer = #{answer},
+            </if>
+        </set>
+        where qid = #{qid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.question where qid = #{qid}
+    </delete>
+
+</mapper>

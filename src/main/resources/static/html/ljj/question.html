@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>货品类型</title>
+    <title>客服回答</title>
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
@@ -27,12 +27,16 @@
             <div class="modal-body">
                 <table class="table">
                     <tr>
-                        <th>id</th>
-                        <th><span id="ptid">1</span></th>
+                        <th>qid</th>
+                        <th><span id="qid">1</span></th>
                     </tr>
                     <tr>
-                        <th>货品类型名称</th>
-                        <th><span id="ptype">admin</span></th>
+                        <th>问题</th>
+                        <th><span id="question">admin</span></th>
+                    </tr>
+                    <tr>
+                        <th>回答</th>
+                        <th><span id="answer">admin</span></th>
                     </tr>
                 </table>
             </div>
@@ -67,19 +71,27 @@
                 <form id="add_form_modal"class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="ptid">id</label>
+                            <label class="control-label"for="qid">id</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text"name="ptid"class="form-control"id="ptids" placeholder="id自动生成" readonly>
+                            <input type="text"name="qid"class="form-control"id="qids" placeholder="id自动生成" readonly>
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="ptype">货品类型名称</label>
+                            <label class="control-label"for="question">问题</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text"name="ptype"class="form-control" placeholder="名称" id="ptypes">
+                            <input type="text"name="question"class="form-control" placeholder="问题" id="questions">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label"for="answer">回答</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <input type="text"name="answer"class="form-control" placeholder="回答" id="answers">
                         </div>
                     </div>
                 </form>
@@ -122,7 +134,7 @@
     //页面加载事件
     $(document).ready(function () {
         $table.bootstrapTable({
-            url: "../../producttype_selectAll",   //请求地址
+            url: "../../question_selectAll",   //请求地址
             height: tableHeight(),//高度调整
             //cardView:true,//卡视图
             search: true,//是否搜索
@@ -176,11 +188,15 @@
                 checkbox: true  //第一列显示复选框
             }, {
                 title: 'id',
-                field: 'ptid',
+                field: 'qid',
                 sortable: true
             }, {
-                title: '货品类型名称',
-                field: 'ptype',
+                title: '问题',
+                field: 'question',
+                sortable: true
+            }, {
+                title: '回答',
+                field: 'answer',
                 sortable: true
             }, {
                 field: 'operate',
@@ -218,13 +234,11 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.ptid+ "')\" title='" +
-                "h-删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.qid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
     });
-
 
     //窗口高度减50
     function tableHeight() {
@@ -240,7 +254,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
-        url="producttype_update";
+        url="question_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         // {#var data_json2 = eval("(" + data+ ")"); #}
@@ -248,8 +262,9 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
-        $("#ptids").val(data_json[index].ptid);
-        $("#ptypes").val(data_json[index].ptype);
+        $("#qids").val(data_json[index].qid);
+        $("#questions").val(data_json[index].question);
+        $("#answers").val(data_json[index].answer);
         $("#addModalLabel").text("修改");
         //弹出修改模态框，非新增模态框
         $('#addModal').modal('show')
@@ -259,8 +274,9 @@
     function LookViewById(row, index){
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
-        $("#ptid").text(data_json[index].ptid);
-        $("#ptype").text(data_json[index].ptype);
+        $("#qid").text(data_json[index].qid);
+        $("#question").text(data_json[index].question);
+        $("#answer").text(data_json[index].answer);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -286,10 +302,10 @@
             if (willDelete) {
                 $.ajax({
                     type: "post",       //请求类型
-                    url: "../../producttype_delete",     //url
-                    data: "ptid="+id,     // 收集表单中的数据
+                    url: "../../question_delete",     //url
+                    data: "qid="+id,     // 收集表单中的数据
                     dataType: "text",    //参数返回类型
-                    success: function (msg){
+                    success: function (obj){
                         swal("OK！您的数据已被删除！", {
                             icon: "success",
                         });
@@ -313,7 +329,7 @@
     $("#btn_delete").on("click",function (){
         //选中的ids
         var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.ptid
+            return row.qid
         })
         if(ids==""){
             swal("至少选中一行");
@@ -328,10 +344,10 @@
                 if (willDelete) {
                     $.ajax({
                         type: "post",       //请求类型
-                        url: "../../producttype_delete",     //url
-                        data: "ptid="+id,     // 收集表单中的数据
+                        url: "../../question_delete",     //url
+                        data: "qid="+ids,     // 收集表单中的数据
                         dataType: "text",    //参数返回类型
-                        success: function (msg){
+                        success: function (obj){
                             swal("OK！您的数据已被删除！", {
                                 icon: "success",
                             });
@@ -342,12 +358,13 @@
                     swal("您的数据很安全！");
                 }
             });
+
         }
     });
 
     // 当点击【修改】按钮后，把模态框弹出来
     $("#btn_edit").on("click",function (){
-        url="producttype_update";
+        url="question_update";
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
@@ -356,8 +373,9 @@
         }else if(data_obj==0){
             swal("请选择一行");
         }else{
-            $("#ptids").val(data_obj[0].ptid);
-            $("#ptypes").val(data_obj[0].ptype);
+            $("#qids").val(data_obj[0].qid);
+            $("#questions").val(data_obj[0].question);
+            $("#answers").val(data_obj[0].answer);
             $("#addModal").modal({
                 keyboard: true
             });
@@ -367,7 +385,7 @@
 
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
-        url="producttype_insert";
+        url="question_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
@@ -375,7 +393,6 @@
         //$('#addModal').modal('show')
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
-
     // helper: 重置表单
     function clearForm(form) {
         $(form)[0].reset();
@@ -389,7 +406,7 @@
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
-                swal("结果:", msg, "success");     //返回信息
+                swal("结果:", msg, "success");   //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
