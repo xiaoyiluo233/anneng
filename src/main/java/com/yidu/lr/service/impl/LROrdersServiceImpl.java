@@ -3,9 +3,9 @@ package com.yidu.lr.service.impl;
 import com.yidu.entity.Orders;
 import com.yidu.lr.dao.LROrdersDao;
 import com.yidu.lr.service.OrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 public class LROrdersServiceImpl implements OrdersService {
-    @Resource
+    @Autowired
     private LROrdersDao ordersDao;
 
     /**

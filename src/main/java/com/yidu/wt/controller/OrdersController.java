@@ -1,6 +1,6 @@
 package com.yidu.wt.controller;
 
-import com.yidu.wt.entity.Orders;
+import com.yidu.entity.Orders;
 import com.yidu.wt.service.OrdersService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

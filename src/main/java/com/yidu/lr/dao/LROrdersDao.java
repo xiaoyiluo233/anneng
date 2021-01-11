@@ -3,6 +3,8 @@ package com.yidu.lr.dao;
 import com.yidu.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 15:02:32
  */
+@Repository
 @Mapper
 public interface LROrdersDao {
 

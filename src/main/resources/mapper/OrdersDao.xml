@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yidu.wt.dao.OrdersDao">
 
-    <resultMap id="BaseResultMap" type="com.yidu.wt.entity.Orders">
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Orders">
         <!--@Table orders-->
         <result property="oid" column="oid" jdbcType="INTEGER"/>
         <result property="priceid" column="priceid" javaType="INTEGER"/>
@@ -11,14 +11,14 @@
         <result property="barcode" column="barcode" jdbcType="VARCHAR"/>
         <result property="payment" column="payMent" jdbcType="INTEGER"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
-        <collection property="prices" column="priceid" javaType="com.yidu.wt.entity.Prices">
+        <collection property="prices" column="priceid" javaType="com.yidu.entity.Prices">
             <result property="priceid" column="priceid" javaType="INTEGER"/>
             <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
             <result property="price" column="price" jdbcType="OTHER"/>
             <result property="pid" column="pid" jdbcType="INTEGER"/>
             <result property="days" column="days" jdbcType="INTEGER"/>
         </collection>
-        <collection property="product" column="pid" javaType="com.yidu.wt.entity.Product">
+        <collection property="product" column="pid" javaType="com.yidu.entity.Product">
             <result property="pid" column="pid" javaType="INTEGER"/>
             <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
             <result property="uid" column="uid" jdbcType="INTEGER"/>

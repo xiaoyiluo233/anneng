@@ -1,7 +1,7 @@
 package com.yidu.wt.service.impl;
 
 import com.yidu.wt.dao.OrdersDao;
-import com.yidu.wt.entity.Orders;
+import com.yidu.entity.Orders;
 import com.yidu.wt.service.OrdersService;
 import org.springframework.stereotype.Service;
 

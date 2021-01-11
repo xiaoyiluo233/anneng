@@ -1,6 +1,6 @@
 package com.yidu.wt.service;
 
-import com.yidu.wt.entity.Orders;
+import com.yidu.entity.Orders;
 
 import java.util.HashMap;
 import java.util.List;

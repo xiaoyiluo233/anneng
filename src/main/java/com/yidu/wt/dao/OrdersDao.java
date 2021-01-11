@@ -1,6 +1,6 @@
 package com.yidu.wt.dao;
 
-import com.yidu.wt.entity.Orders;
+import com.yidu.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;

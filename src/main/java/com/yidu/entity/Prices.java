@@ -1,4 +1,4 @@
-package com.yidu.wt.entity;
+package com.yidu.entity;
 
 import org.springframework.stereotype.Component;
 
