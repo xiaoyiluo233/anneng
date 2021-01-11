@@ -12,6 +12,7 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -273,9 +274,9 @@
     function LookViewById(row, index){
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
-        $("#qid").val(data_json[index].qid);
-        $("#question").val(data_json[index].question);
-        $("#answer").val(data_json[index].answer);
+        $("#qid").text(data_json[index].qid);
+        $("#question").text(data_json[index].question);
+        $("#answer").text(data_json[index].answer);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -291,14 +292,28 @@
 
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../question_delete",     //url
-            data: "qid="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../question_delete",     //url
+                    data: "qid="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
     }
@@ -317,19 +332,33 @@
             return row.qid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
-            //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../question_delete",     //url
-                data: "qid="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../question_delete",     //url
+                        data: "qid="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
+
         }
     });
 
@@ -340,9 +369,9 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $("#qids").val(data_obj[0].qid);
             $("#questions").val(data_obj[0].question);
@@ -364,7 +393,6 @@
         //$('#addModal').modal('show')
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
     });
-
     // helper: 重置表单
     function clearForm(form) {
         $(form)[0].reset();
@@ -377,8 +405,8 @@
             url: "../../"+url,     //url
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
+            success: function (msg){
+                swal("结果:", msg, "success");   //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });

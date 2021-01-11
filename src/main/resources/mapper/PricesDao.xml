@@ -26,7 +26,7 @@
         select
           priceId, pvalue, price, pid, days
         from ane.prices
-        where priceId = #{priceId}
+        where priceId = #{priceid}
     </select>
 
     <!--查询指定行数据-->
@@ -92,12 +92,12 @@
                 days = #{days},
             </if>
         </set>
-        where priceId = #{priceId}
+        where priceId = #{priceid}
     </update>
 
     <!--通过主键删除-->
     <delete id="deleteById">
-        delete from ane.prices where priceId = #{priceId}
+        delete from ane.prices where priceId = #{priceid}
     </delete>
 
 </mapper>

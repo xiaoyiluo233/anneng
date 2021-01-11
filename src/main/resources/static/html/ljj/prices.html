@@ -12,6 +12,7 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -305,13 +306,14 @@
 
 
     function LookViewById(row, index){
+        alert("1");
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
-        $("#priceids").val(data_json[index].priceid);
-        $("#pvalues").val(data_json[index].pvalue);
-        $("#prices").val(data_json[index].price);
-        $("#pids").val(data_json[index].pid);
-        $("#dayss").val(data_json[index].days);
+        $("#priceid").text(data_json[index].priceid);
+        $("#pvalue").text(data_json[index].pvalue);
+        $("#price").text(data_json[index].price);
+        $("#pid").text(data_json[index].pid);
+        $("#days").text(data_json[index].days);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -327,23 +329,34 @@
 
     //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../prices_delete",     //url
-            data: "id="+id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "post",       //请求类型
+                    url: "../../prices_delete",     //url
+                    data: "id="+id,     // 收集表单中的数据
+                    dataType: "text",    //参数返回类型
+                    success: function (obj){
+                        swal("OK！您的数据已被删除！", {
+                            icon: "success",
+                        });
+                        $table.bootstrapTable('refresh');    //刷新表格
+                    }
+                });
+            } else {
+                swal("您的数据很安全！");
             }
         });
     }
 
-    //对本列数据做格式化
-    function infoFormatter(value, row, index)
-    {
-        return "ptid:" + row.ptid + " ptype:" + row.ptype;
-    }
+
+
 
 
     // 当点击【删除】按钮后，拼接选中的id
@@ -353,17 +366,30 @@
             return row.priceid
         })
         if(ids==""){
-            alert("至少选中一行");
+            swal("至少选中一行");
         } else {
-            //alert(ids);
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../prices_delete",     //url
-                data: "id="+ids,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (obj){
-                    alert(obj);     //返回信息
-                    $table.bootstrapTable('refresh');    //刷新表格
+            swal({
+                title: "你确定吗?",
+                text: "一旦删除，您将无法恢复该数据！",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../prices_delete",     //url
+                        data: "id="+ids,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！您的数据已被删除！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
                 }
             });
         }
@@ -376,9 +402,9 @@
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
         if(data_obj.length>1){
-            alert("目前不支持编辑多行数据");
+            swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
-            alert("请选择一行");
+            swal("请选择一行");
         }else{
             $("#priceids").val(data_obj[0].priceid);
             $("#pvalues").val(data_obj[0].pvalue);
@@ -413,11 +439,11 @@
         $.ajax({
             type: "post",       //请求类型
             url: "../../"+url,     //url
-            data: $("#add_form_modal").serializeArray(),                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       // 收集表单中的数据
+            data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
-            success: function (obj){
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
+            success: function (msg){
+                swal("结果:", msg, "success");    //返回信息
+                $table.bootstrapTable('refresh');//刷新表格
             }
         });
     });

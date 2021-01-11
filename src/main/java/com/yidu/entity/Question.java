@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Component
 public class Question implements Serializable {
     private static final long serialVersionUID = -99290767099788829L;
-    
+
     private Integer qid;
     
     private String question;
