@@ -1,4 +1,4 @@
-package com.yidu.lr.dao;
+package com.yidu.zsh.dao;
 
 import com.yidu.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
@@ -11,11 +11,11 @@ import java.util.List;
  * (Product)表数据库访问层
  *
  * @author makejava
- * @since 2021-01-01 16:52:46
+ * @since 2021-01-05 15:47:47
  */
 @Mapper
 @Repository
-public interface LRProductDao {
+public interface ProductDao {
 
     /**
      * 通过ID查询单条数据

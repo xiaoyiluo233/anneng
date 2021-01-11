@@ -1,6 +1,5 @@
 package com.yidu.luoxiao.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.yidu.entity.Signin;
 import com.yidu.luoxiao.service.SigninService;
 import org.springframework.beans.factory.annotation.Autowired;
