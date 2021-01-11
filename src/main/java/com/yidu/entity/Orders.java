@@ -1,6 +1,5 @@
 package com.yidu.entity;
 
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -9,12 +8,11 @@ import java.io.Serializable;
  * (Orders)实体类
  *
  * @author makejava
- * @since 2021-01-01 15:02:32
+ * @since 2021-01-06 08:35:59
  */
-@Data
 @Component
 public class Orders implements Serializable {
-    private static final long serialVersionUID = -11518778079375231L;
+    private static final long serialVersionUID = 354443239816182494L;
     
     private Integer oid;
     
@@ -27,7 +25,34 @@ public class Orders implements Serializable {
     private String barcode;
     
     private Integer payment;
+    private Integer conditions;
 
+    private Prices prices;
+    private Product product;
+
+    public Prices getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Prices prices) {
+        this.prices = prices;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(Integer conditions) {
+        this.conditions = conditions;
+    }
 
     public Integer getOid() {
         return oid;

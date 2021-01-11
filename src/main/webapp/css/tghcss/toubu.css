@@ -1,0 +1,160 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+#head_tou{
+	width: 100%;
+	height: 82.2px;
+	background-color: rgba(256,256,256,2);
+	position: fixed;
+	top: 0px;
+	opacity: 0.1;
+	z-index:2;
+}
+	
+#head1{
+	width: 100%px;
+	height: 82.2px;
+	position: fixed;
+	top: 0px;
+	z-index: 3;
+	
+}
+#head_toub{
+	width: 1140px;
+	height: 60px;
+	position: fixed;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+#head1 img{
+	float: left;
+	margin-top: 18px;
+	
+}
+#head1 dl{
+	float: left;
+	margin-left:213px;
+	margin-top: -63px;
+}
+#head1 dl dt{
+	float: left;
+	
+	font-size: 15px;
+	margin-top: 5px;
+	margin-left: 20px;
+	padding-bottom: 15px;
+	color: #000000;
+	position: relative;
+}
+
+.navmenu{
+	padding:24px 10px;
+}
+.tou_imgs{
+	padding: 24px;
+}
+ #head1 dl dt:hover{
+	height: 80px;
+	cursor:pointer;
+	color: #F18700;
+	border-top: #F18700 0.1px solid;
+	
+} 
+#head1 dl dt:hover .head_sjx img{
+	display: block;
+}
+#head_toub dl img{
+	width:16px;
+	height: 16px;
+	margin-top: 3px;
+	margin-right: 4px;
+}
+
+#head_toub ul{
+	border-radius: 3px;
+	display: none;
+	position: absolute;
+	border:#f1f1f1 1px solid;
+	margin-left:-33px;
+	z-index: 3;
+	background-color: white;
+	left: o;
+}
+#head_toub ul a{
+	text-decoration:none;
+}
+#zh{
+	position: relative;
+	left: 17px;
+}
+#head_toub ul li:hover{
+	color: #F18700;
+}
+#head_toub ul li{
+	
+	color: #000;
+	list-style-type: none;
+	border-bottom: #f1f1f1 1px solid;
+	width: 126.4px;
+	height: 41.8px;
+	text-align: center;
+	font-size: 15px;
+	line-height: 41px;
+}
+.head_sjx{
+	height: 20px;
+	margin-left:-33px;
+	
+}
+#sjx_zh{
+	padding-left: 63px;
+}
+.head_sjx img{
+	z-index: 3;
+	display: inline-block;
+	width: 10px;
+	display: none;
+	padding-left: 54px;
+	padding-top: 8px;
+	
+}
+#tou_yg{
+	width: 100%;
+	height:130px ;
+	position: fixed;
+	top: 80px;
+	z-index: 2;
+}
+#tou_ygs{
+	width:1140px;
+	height: 130px;
+	margin: 0 auto;
+}
+#yg{
+	margin-left: 982px;
+	background-color: #8f8f8f;
+	border-radius: 5px;
+	width: 128px;
+	height: 134px;
+	z-index: 2;
+	display: none;
+}
+#yg a{
+	text-decoration:none;
+}
+#dier{
+	border-top: 1px dotted azure;
+	border-bottom: 1px dotted azure;
+}
+#yg span{
+
+}
+#yg dt{
+	font-size: 14px;
+	width: 128px;
+	height: 44px;
+	line-height: 44px;
+	color: white;
+}
