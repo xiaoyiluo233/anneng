@@ -1,7 +1,7 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Parcel;
-import com.yidu.lr.dao.ParcelDao;
+import com.yidu.lr.dao.LRParcelDao;
 import com.yidu.lr.service.ParcelService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 17:39:15
  */
-@Service("parcelService")
-public class ParcelServiceImpl implements ParcelService {
+@Service
+public class LRParcelServiceImpl implements ParcelService {
     @Resource
-    private ParcelDao parcelDao;
+    private LRParcelDao parcelDao;
 
     /**
      * 通过ID查询单条数据

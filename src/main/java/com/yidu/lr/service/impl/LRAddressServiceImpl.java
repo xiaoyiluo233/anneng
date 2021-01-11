@@ -1,7 +1,7 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Address;
-import com.yidu.lr.dao.AddressDao;
+import com.yidu.lr.dao.LRAddressDao;
 import com.yidu.lr.service.AddressService;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +14,10 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-01 15:07:21
  */
-@Service("addressService")
-public class AddressServiceImpl implements AddressService {
+@Service
+public class LRAddressServiceImpl implements AddressService {
     @Resource
-    private AddressDao addressDao;
+    private LRAddressDao addressDao;
 
     /**
      * 通过ID查询单条数据

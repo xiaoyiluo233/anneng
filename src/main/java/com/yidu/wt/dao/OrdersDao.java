@@ -1,6 +1,6 @@
-package com.yidu.lr.dao;
+package com.yidu.wt.dao;
 
-import com.yidu.entity.Orders;
+import com.yidu.wt.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
@@ -9,11 +9,22 @@ import java.util.List;
  * (Orders)表数据库访问层
  *
  * @author makejava
- * @since 2021-01-01 15:02:32
+ * @since 2021-01-06 08:36:00
  */
 @Mapper
 public interface OrdersDao {
+    /**
+     * 连表查询所有
+     * @return 相连表所有数据
+     */
+    List<Orders> selectAll();
 
+
+    /**
+     * 统计总行数
+     * @return 总行数
+     */
+    int count();
     /**
      * 通过ID查询单条数据
      *
@@ -29,7 +40,7 @@ public interface OrdersDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Orders> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Orders> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("pvalue") String pvalue);
 
 
     /**
