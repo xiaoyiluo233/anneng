@@ -37,6 +37,7 @@ public class WarehouseServiceImpl implements WarehouseService {
      *
      * @param offset 查询起始位置
      * @param limit 查询条数
+     * @param name 查询值
      * @return 对象列表
      */
     @Override
