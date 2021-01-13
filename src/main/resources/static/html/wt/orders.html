@@ -12,7 +12,7 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
@@ -482,19 +482,41 @@
     }
 
     // 当点击【保存】按钮后，将表单中的数据提交到后台
-    $("#btn_add_submit").on("click", function () {
+    /*$("#btn_add_submit").on("click", function () {
         $.ajax({
             type: "post",       //请求类型
             url: "../../" + url,     //url
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg) {
-                alert(msg);     //返回信息
+                swal("结果:", msg, "success");;     //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
         });
+    });*/
+    // 当点击【保存】按钮后，将表单中的数据提交到后台
+    $("#btn_add_submit").on("click",function (){
+        $.ajax({
+            type: "post",
+            url: "../../"+url,     //url
+            data:$("#add_form_modal").serializeArray(),
+            dataType: "text",    //参数返回类型
+            success:function (msg) {
+                swal("结果：",msg,"success")
+                $table.bootstrapTable('refresh');
+            }
+        });
     });
-
+    $.ajax({
+        type: "post",       //请求类型
+        url: "../../"+url,     //url
+        data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
+        dataType: "text",    //参数返回类型
+        success: function (msg){
+            alert(msg);     //返回信息
+            $table.bootstrapTable('refresh');    //刷新表格
+        }
+    });
     /**
      * 列的格式化函数 在数据从服务端返回装载前进行处理
      * @param  {[type]} value [description]
@@ -570,21 +592,33 @@
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
-
-    //当前列删除
     function DeleteByIds(id) {
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../orders_delete",     //url
-            data: "oids=" + id,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (obj) {
-                alert(obj);     //返回信息
-                $table.bootstrapTable('refresh');    //刷新表格
-            }
-        });
+        swal({
+            title: "你确定吗?",
+            text: "一旦删除，您将无法恢复该数据！",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "post",       //请求类型
+                        url: "../../orders_delete",     //url
+                        data: "oids="+id,     // 收集表单中的数据
+                        dataType: "text",    //参数返回类型
+                        success: function (obj){
+                            swal("OK！"+obj+"！", {
+                                icon: "success",
+                            });
+                            $table.bootstrapTable('refresh');    //刷新表格
+                        }
+                    });
+                } else {
+                    swal("您的数据很安全！");
+                }
+            });
     }
-
 
     // 当点击【删除】按钮后，拼接选中的id
     $("#btn_delete").on("click", function () {
@@ -603,7 +637,7 @@
                 data: "oids=" + ids,     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (obj) {
-                    alert(obj);     //返回信息
+                    swal("结果：",obj,"success")    //返回信息
                     $table.bootstrapTable('refresh');    //刷新表格
                 }
             });
