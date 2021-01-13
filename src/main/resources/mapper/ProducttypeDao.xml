@@ -13,7 +13,7 @@
         select count(0) from ane.producttype
         <where>
             <if test="text!=null and text != ''">
-                    ptype like '%#{text}%'
+                    ptype like '%${text}%'
             </if>
         </where>
     </select>

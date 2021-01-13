@@ -3,6 +3,8 @@ package com.yidu.lr.dao;
 import com.yidu.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -12,6 +14,7 @@ import java.util.List;
  * @since 2021-01-01 16:52:46
  */
 @Mapper
+@Repository
 public interface LRProductDao {
 
     /**

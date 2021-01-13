@@ -8,17 +8,17 @@ import java.io.Serializable;
  * (Prices)实体类
  *
  * @author makejava
- * @since 2021-01-06 08:36:24
+ * @since 2021-01-08 16:26:49
  */
 @Component
 public class Prices implements Serializable {
-    private static final long serialVersionUID = -30623617114820462L;
+    private static final long serialVersionUID = 151549521496606632L;
     
     private Integer priceid;
     
     private String pvalue;
     
-    private double price;
+    private Double price;
     
     private Integer pid;
     
@@ -41,11 +41,11 @@ public class Prices implements Serializable {
         this.pvalue = pvalue;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

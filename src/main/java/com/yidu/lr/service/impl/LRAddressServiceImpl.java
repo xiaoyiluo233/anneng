@@ -3,6 +3,7 @@ package com.yidu.lr.service.impl;
 import com.yidu.entity.Address;
 import com.yidu.lr.dao.LRAddressDao;
 import com.yidu.lr.service.AddressService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Service
 public class LRAddressServiceImpl implements AddressService {
-    @Resource
+    @Autowired
     private LRAddressDao addressDao;
 
     /**

@@ -1,8 +1,11 @@
 package com.yidu.lr.dao;
 
+
 import com.yidu.entity.Address;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -12,6 +15,7 @@ import java.util.List;
  * @since 2021-01-01 15:07:21
  */
 @Mapper
+@Repository
 public interface LRAddressDao {
 
     /**
