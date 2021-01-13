@@ -17,7 +17,7 @@ public interface TrucksService {
      * 查出所有的车牌号
      * @return 车牌号数组
      */
-    String[] getTnumber();
+    String[] getTnumber(Trucks trucks);
 
     /**
      * 根据角色id查出员工id

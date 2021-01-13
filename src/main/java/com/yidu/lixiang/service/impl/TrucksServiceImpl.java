@@ -25,9 +25,9 @@ public class TrucksServiceImpl implements TrucksService {
     private EmployeeDao employeeDao;
 
     @Override
-    public String[] getTnumber() {
+    public String[] getTnumber(Trucks truck) {
         //查出车辆的所有信息
-        List<Trucks> trucks = trucksDao.queryAll(null);
+        List<Trucks> trucks = trucksDao.queryAll(truck);
         //创建车牌号数组
         String[] tnumbers=new String[trucks.size()];
         //循环车辆集合
@@ -37,7 +37,6 @@ public class TrucksServiceImpl implements TrucksService {
             //添加到数组中
             tnumbers[i]=tnumber;
         }
-        System.out.println("tnumbers = " + tnumbers);
         return tnumbers;
     }
 

@@ -28,7 +28,6 @@ public class TrucksController {
     @ResponseBody
     @RequestMapping("trucks_getEidsByRoleId")
     public int[] getEidsByRoleId(int roleid){
-        trucksService.getTnumber();
         return trucksService.getEidByRoleId(roleid);
     }
 
