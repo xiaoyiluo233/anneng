@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.wt.dao.OrdersDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Orders">
+        <!--@Table orders-->
+        <result property="oid" column="oid" jdbcType="INTEGER"/>
+        <result property="priceid" column="priceid" javaType="INTEGER"/>
+        <result property="pid" column="pid" javaType="INTEGER"/>
+        <result property="shipping" column="shipping" jdbcType="INTEGER"/>
+        <result property="barcode" column="barcode" jdbcType="VARCHAR"/>
+        <result property="payment" column="payMent" jdbcType="INTEGER"/>
+        <result property="conditions" column="conditions" jdbcType="INTEGER"/>
+        <collection property="prices" column="priceid" javaType="com.yidu.entity.Prices">
+            <result property="priceid" column="priceid" javaType="INTEGER"/>
+            <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
+            <result property="price" column="price" jdbcType="OTHER"/>
+            <result property="pid" column="pid" jdbcType="INTEGER"/>
+            <result property="days" column="days" jdbcType="INTEGER"/>
+        </collection>
+        <collection property="product" column="pid" javaType="com.yidu.entity.Product">
+            <result property="pid" column="pid" javaType="INTEGER"/>
+            <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
+            <result property="uid" column="uid" jdbcType="INTEGER"/>
+            <result property="ptid" column="ptid" jdbcType="INTEGER"/>
+            <result property="pwid" column="pwid" jdbcType="INTEGER"/>
+            <result property="myaid" column="myAid" jdbcType="INTEGER"/>
+            <result property="youaid" column="youAid" jdbcType="INTEGER"/>
+            <result property="times" column="times" jdbcType="VARCHAR"/>
+            <result property="weight" column="weight" jdbcType="OTHER"/>
+            <result property="state" column="state" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <!--统计总行数-->
+    <select id="count" resultType="int">
+        select count(*) from orders;
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM orders o1,prices p1,product p2 WHERE
+         o1.pid=p2.pid AND o1.priceid=p1.priceId
+    </select>
+     <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          oid, pid, priceid, shipping, barcode, payMent
+        from ane.orders
+        where oid = #{oid}
+    </select>
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select * from orders o1,prices p1,product p2 where
+        <choose>
+            <when test="pvalue!=null">
+                o1.priceid=p1.priceid and o1.pid=p2.pid  and p2.pvalue like '%${pvalue}%' limit #{offset}, #{limit}
+            </when>
+            <otherwise>
+                o1.priceid=p1.priceid and o1.pid=p2.pid limit #{offset}, #{limit}
+            </otherwise>
+        </choose>
+    </select>
+    <!--查询指定行数据-->
+    <!--<select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          oid, pid, priceid, shipping, barcode, payMent
+        from ane.orders
+        limit #{offset}, #{limit}
+    </select>-->
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          oid, pid, priceid, shipping, barcode, payMent,conditions
+        from ane.orders
+        <where>
+            <if test="oid != null">
+                and oid = #{oid}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="priceid != null">
+                and priceid = #{priceid}
+            </if>
+            <if test="shipping != null">
+                and shipping = #{shipping}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                and barcode = #{barcode}
+            </if>
+            <if test="payment != null">
+                and payMent = #{payment}
+            </if>
+            <if test="conditions != null">
+                and conditions = #{conditions}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="oid" useGeneratedKeys="true">
+        insert into ane.orders(pid, priceid, shipping, barcode, payMent,conditions)
+        values (#{pid}, #{priceid}, #{shipping}, #{barcode}, #{payment},#{conditions})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.orders
+        <set>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="priceid != null">
+                priceid = #{priceid},
+            </if>
+            <if test="shipping != null">
+                shipping = #{shipping},
+            </if>
+            <if test="barcode != null and barcode != ''">
+                barcode = #{barcode},
+            </if>
+            <if test="payment != null">
+                payMent = #{payment},
+            </if>
+            <if test="conditions != null">
+                conditions = #{conditions},
+            </if>
+        </set>
+        where oid = #{oid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.orders where oid = #{oid}
+    </delete>
+
+</mapper>

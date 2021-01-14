@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.LRCityDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.City">
+        <!--@Table city-->
+        <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+        <result property="provinceid" column="provinceId" jdbcType="INTEGER"/>
+        <result property="cityname" column="cityName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!-- 市级与省级的一对一关系映射 -->
+    <resultMap id="getProvinceMapper" type="com.yidu.entity.City">
+        <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+        <result property="provinceid" column="provinceId" jdbcType="INTEGER"/>
+        <result property="cityname" column="cityName" jdbcType="VARCHAR"/>
+        <association property="province" javaType="com.yidu.entity.Province">
+            <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+            <result property="provincename" column="provincename" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <select id="getCityIdByCityName" resultType="int">
+        select cityId from city where cityName=#{cityname}
+    </select>
+    <!-- 根据城市名查出城市id -->
+    <select id="getProvince" resultMap="getProvinceMapper">
+        SELECT * FROM city c1,province p1
+        <where>
+            c1.`provinceId`=p1.`provinceId`
+            <if test="cityid != null">
+                and cityId = #{cityid}
+            </if>
+            <if test="provinceid != null">
+                and provinceId = #{provinceid}
+            </if>
+            <if test="cityname != null and cityname != ''">
+                and cityName = #{cityname}
+            </if>
+        </where>
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          cityId, provinceId, cityName
+        from ane.city
+        where cityId = #{cityid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          cityId, provinceId, cityName
+        from ane.city
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          cityId, provinceId, cityName
+        from ane.city
+        <where>
+            <if test="cityid != null">
+                and cityId = #{cityid}
+            </if>
+            <if test="provinceid != null">
+                and provinceId = #{provinceid}
+            </if>
+            <if test="cityname != null and cityname != ''">
+                and cityName = #{cityname}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="cityid" useGeneratedKeys="true">
+        insert into ane.city(provinceId, cityName)
+        values (#{provinceid}, #{cityname})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.city
+        <set>
+            <if test="provinceid != null">
+                provinceId = #{provinceid},
+            </if>
+            <if test="cityname != null and cityname != ''">
+                cityName = #{cityname},
+            </if>
+        </set>
+        where cityId = #{cityid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.city where cityId = #{cityid}
+    </delete>
+
+</mapper>

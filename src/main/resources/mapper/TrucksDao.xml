@@ -10,10 +10,42 @@
         <result property="parcelid" column="parcelId" jdbcType="INTEGER"/>
         <result property="state" column="state" jdbcType="INTEGER"/>
     </resultMap>
+    <resultMap id="getTrucksAndEmployee" type="com.yidu.entity.Trucks">
+        <!--@Table trucks-->
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="tnumber" column="tnumber" jdbcType="VARCHAR"/>
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="parcelid" column="parcelId" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <association property="employee" javaType="com.yidu.entity.Employee">
+            <result property="eid" column="eid" jdbcType="INTEGER"/>
+            <result property="ename" column="ename" jdbcType="VARCHAR"/>
+            <result property="epassword" column="epassword" jdbcType="VARCHAR"/>
+            <result property="eage" column="eage" jdbcType="INTEGER"/>
+            <result property="esex" column="esex" jdbcType="VARCHAR"/>
+            <result property="ephone" column="ephone" jdbcType="VARCHAR"/>
+            <result property="districtid" column="districtId" jdbcType="INTEGER"/>
+            <result property="state" column="state" jdbcType="INTEGER"/>
+        </association>
+    </resultMap>
+
+    <select id="getEmployeeName" resultMap="getTrucksAndEmployee">
+        select
+        t1.*,e1.`ename`
+        from trucks t1,employee e1
+        <where>
+            t1.`eid`=e1.`eid`
+            <if test="tnumbers != null and tnumbers != ''">
+                and tnumber like '%${tnumbers}%'
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
 
     <select id="count" resultType="int">
-        select count(1) from ane.trucks
+        select count(1) from trucks t1,employee e1
         <where>
+            t1.`eid`=e1.`eid`
             <if test="tnumbers != null and tnumbers != ''">
                 and tnumber like '%${tnumbers}%'
             </if>

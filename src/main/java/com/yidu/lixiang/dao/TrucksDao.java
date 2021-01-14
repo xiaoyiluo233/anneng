@@ -16,6 +16,16 @@ import java.util.List;
 @Repository
 @Mapper
 public interface TrucksDao {
+
+    /**
+     * 查询指定行数据
+     *
+     * @param offset 查询起始位置
+     * @param limit 查询条数
+     * @return 对象列表
+     */
+    List<Trucks> getEmployeeName(@Param("offset") int offset, @Param("limit") int limit,@Param("tnumbers")String tnumbers);
+
     /**
      * 根据条件查询总行数
      * @return 总行数

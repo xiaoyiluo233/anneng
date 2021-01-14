@@ -26,17 +26,10 @@ public class StationServiceImpl implements StationService {
     private CityDao cityDao;
 
     @Override
-    public HashMap<String,Object> stationAndCity(int offset,int pageNumber,Station station) {
-        //创建map集合
-        HashMap<String,Object> map=new HashMap<>();
+    public List<Station> stationAndCity() {
         //调用查询所有的方法
-        List<Station> stations = stationDao.stationAndCity(offset,pageNumber,station);
-        //调用统计行数的方法
-        int count = stationDao.count(station);
-        //添加进map集合中
-        map.put("rows",stations);
-        map.put("total",count);
-        return map;
+        List<Station> stations = stationDao.stationAndCity();
+        return stations;
     }
 
     /**

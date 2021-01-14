@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.RolemenuDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Rolemenu">
+        <!--@Table rolemenu-->
+        <result property="rmid" column="rmid" jdbcType="INTEGER"/>
+        <result property="roleid" column="roleId" jdbcType="INTEGER"/>
+        <result property="menuid" column="menuId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          rmid, roleId, menuId
+        from ane.rolemenu
+        where rmid = #{rmid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          rmid, roleId, menuId
+        from ane.rolemenu
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          rmid, roleId, menuId
+        from ane.rolemenu
+        <where>
+            <if test="rmid != null">
+                and rmid = #{rmid}
+            </if>
+            <if test="roleid != null">
+                and roleId = #{roleid}
+            </if>
+            <if test="menuid != null and menuid != ''">
+                and menuId = #{menuid}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="rmid" useGeneratedKeys="true">
+        insert into ane.rolemenu(roleId, menuId)
+        values (#{roleid}, #{menuid})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.rolemenu
+        <set>
+            <if test="roleid != null">
+                roleId = #{roleid},
+            </if>
+            <if test="menuid != null and menuid != ''">
+                menuId = #{menuid},
+            </if>
+        </set>
+        where rmid = #{rmid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.rolemenu where rmid = #{rmid}
+    </delete>
+
+    <!--通过角色id删除-->
+    <delete id="deleteByRoleId">
+        delete from ane.rolemenu where roleId = #{roleId}
+    </delete>
+
+    <!--根据角色id查询菜单id-->
+    <select id="selectMenuIdByRoleId" resultType="String">
+        select
+            menuId
+        from ane.rolemenu
+        where roleId=#{roleId} AND menuId NOT IN (SELECT menuId FROM ane.menu WHERE levelId='root');
+    </select>
+</mapper>

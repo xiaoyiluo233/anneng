@@ -3,7 +3,6 @@ package com.yidu.entity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * @description: 线路表实体类
@@ -14,13 +13,13 @@ import java.util.List;
 @Component
 public class Path implements Serializable {
     private static final long serialVersionUID = -71825607840554894L;
-    
+
     private Integer pathid;
-    
+
     private Integer startstation;
-    
+
     private String stationids;
-    
+
     private Integer destination;
 
     private Station station;
