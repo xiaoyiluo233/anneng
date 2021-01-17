@@ -1,7 +1,10 @@
 package com.yidu.lr.service;
 
 import com.yidu.entity.Parcel;
+import com.yidu.lr.controller.vo.ParcelStationVo;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Parcel)表服务接口
@@ -52,4 +55,15 @@ public interface ParcelService {
      */
     boolean deleteById(Integer parcelid);
 
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param parcel 实例对象
+     * @return 对象列表
+     */
+    List<Parcel> queryAll(Parcel parcel);
+
+    List<Map<String,Object>> OidFindIn(String[] OidStrArray);
+
+    List<ParcelStationVo> selectConnect();
 }

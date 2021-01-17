@@ -1,9 +1,13 @@
 package com.yidu.lr.dao;
 
 import com.yidu.entity.Parcel;
+import com.yidu.lr.controller.vo.ParcelStationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Parcel)表数据库访问层
@@ -64,4 +68,7 @@ public interface LRParcelDao {
      */
     int deleteById(Integer parcelid);
 
+    List<Map<String,Object>> OidFindIn(String[] OidStrArray);
+
+    List<ParcelStationVo> selectConnect();
 }

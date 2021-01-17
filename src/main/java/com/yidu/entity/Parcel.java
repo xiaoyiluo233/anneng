@@ -25,4 +25,5 @@ public class Parcel implements Serializable {
     private Integer upstation;
 
     private Integer state;
+
 }
