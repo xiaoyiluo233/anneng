@@ -525,16 +525,17 @@
         var centers=data_json[index].stationsCenter;
         var shuzu=centers.split("-");
         var bb=[];
-        var persons = new Object();
-        persons.keyword=data_json[index].startStation;
-        bb[0]=persons;
+        var persons1 = new Object();
+        persons1.keyword=data_json[index].startStation;
+        bb[0]=persons1;
         for (let i = 0; i < shuzu.length; i++) {
             var person = new Object();
             person.keyword=shuzu[i];
             bb[i+1]=person;
         }
-        persons.keyword=data_json[index].destinationName;
-        bb[bb.length]=persons;
+        var persons2 = new Object();
+        persons2.keyword=data_json[index].destinationName;
+        bb[bb.length]=persons2;
         driving.search(
             bb
         , function(status, result) {
