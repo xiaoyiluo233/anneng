@@ -1,23 +1,15 @@
-package com.yidu.lixiang.service;
+package com.yidu.lr.service;
 
 import com.yidu.entity.Station;
-
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * @description: 中转站业务层
- * @author: lixiang
- * @date: 2020-12-28 14:59:59
- * @version 1.0
+ * (Station)表服务接口
+ *
+ * @author makejava
+ * @since 2021-01-12 14:06:28
  */
 public interface StationService {
-
-    /**
-     * 中转站与市级表的一对一关系的查询所有
-     * @return 中转站集合
-     */
-    List<Station> stationAndCity();
 
     /**
      * 通过ID查询单条数据
@@ -40,24 +32,32 @@ public interface StationService {
      * 新增数据
      *
      * @param station 实例对象
-     * @return 新增成功
+     * @return 实例对象
      */
-    String insert(Station station,String citynames);
+    Station insert(Station station);
 
     /**
      * 修改数据
      *
      * @param station 实例对象
-     * @return 修改成功
+     * @return 实例对象
      */
-    String update(Station station,String citynames);
+    Station update(Station station);
 
     /**
      * 通过主键删除数据
      *
-     * @param stationids 主键
+     * @param stationid 主键
      * @return 是否成功
      */
-    String deleteById(String stationids);
+    boolean deleteById(Integer stationid);
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param station 实例对象
+     * @return 对象列表
+     */
+    List<Station> queryAll(Station station);
 
+    List<Station> queryByArray(String[] array);
 }

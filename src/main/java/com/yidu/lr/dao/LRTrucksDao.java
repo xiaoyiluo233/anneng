@@ -1,36 +1,18 @@
-package com.yidu.lixiang.dao;
+package com.yidu.lr.dao;
 
 import com.yidu.entity.Trucks;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
- * @description: 车辆表持久层
- * @author: lixiang
- * @date: 2020-12-29 10:32:52
- * @version 1.0
+ * (Trucks)表数据库访问层
+ *
+ * @author makejava
+ * @since 2021-02-22 09:19:37
  */
-@Repository
 @Mapper
-public interface TrucksDao {
-
-    /**
-     * 查询指定行数据
-     *
-     * @param offset 查询起始位置
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    List<Trucks> getEmployeeName(@Param("offset") int offset, @Param("limit") int limit,@Param("tnumbers")String tnumbers);
-
-    /**
-     * 根据条件查询总行数
-     * @return 总行数
-     */
-    int count(String tnumbers);
+public interface LRTrucksDao {
 
     /**
      * 通过ID查询单条数据
@@ -47,7 +29,7 @@ public interface TrucksDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Trucks> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("tnumbers")String tnumbers);
+    List<Trucks> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
