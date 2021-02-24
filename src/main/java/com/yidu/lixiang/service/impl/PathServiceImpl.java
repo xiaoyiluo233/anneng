@@ -157,7 +157,12 @@ public class PathServiceImpl implements PathService {
         //查询出终点中转站的所有信息
         stations=stationDao.queryAll(station);
         //得到终点中转站的id
-        Integer destinationId = stations.get(0).getStationid();
+        Integer destinationId = null;
+        try {
+            destinationId = stations.get(0).getStationid();
+        } catch (Exception e) {
+            destinationId=0;
+        }
         //将起点站id设置进线路实体类中
         path.setDestination(destinationId);
         //3、截取出经过的中转站

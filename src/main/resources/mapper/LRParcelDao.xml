@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yidu.lr.dao.ParcelDao">
+<mapper namespace="com.yidu.lr.dao.LRParcelDao">
 
     <resultMap id="BaseResultMap" type="com.yidu.entity.Parcel">
         <!--@Table parcel-->
@@ -9,11 +9,11 @@
         <result property="nextstation" column="nextStation" jdbcType="INTEGER"/>
         <result property="upstation" column="upStation" jdbcType="INTEGER"/>
     </resultMap>
-
+    <sql id="sqlProperty">parcelId,oId, nextStation,upStation,state,s1.stationId nextStationId,s2.stationId upStationId,s1.cityId nextCityId,s2.cityId upCityId,s1.stationName nextStationName,s2.stationName upStationName</sql>
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          parcelId, oid, nextStation, upStation
+          parcelId, oid, nextStation, upStation, state
         from ane.parcel
         where parcelId = #{parcelid}
     </select>
@@ -21,15 +21,21 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          parcelId, oid, nextStation, upStation
+          parcelId, oid, nextStation, upStation, state
         from ane.parcel
         limit #{offset}, #{limit}
     </select>
-
+    <select id="selectConnect" resultType="com.yidu.lr.controller.vo.ParcelStationVo">
+        SELECT
+        <include refid="sqlProperty"/>
+        FROM parcel p1
+        LEFT JOIN station s1 ON p1.nextStation=s1.stationId
+        LEFT JOIN station s2 ON p1.upStation=s2.stationId
+    </select>
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          parcelId, oid, nextStation, upStation
+          parcelId, oid, nextStation, upStation, state
         from ane.parcel
         <where>
             <if test="parcelid != null">
@@ -44,13 +50,21 @@
             <if test="upstation != null">
                 and upStation = #{upstation}
             </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
         </where>
     </select>
-
+    <select id="OidFindIn"  resultType="map">
+        SELECT * FROM orders o,product p WHERE o.pid=p.pid AND oid in
+        <foreach collection="OidStrArray" item="cc" open="(" separator="," close=")" >
+            #{cc}
+        </foreach>
+    </select>
     <!--新增所有列-->
     <insert id="insert" keyProperty="parcelid" useGeneratedKeys="true">
-        insert into ane.parcel(oid, nextStation, upStation)
-        values (#{oid}, #{nextstation}, #{upstation})
+        insert into ane.parcel(oid, nextStation, upStation,state)
+        values (#{oid}, #{nextstation}, #{upstation},#{state})
     </insert>
 
     <!--通过主键修改数据-->
@@ -65,6 +79,9 @@
             </if>
             <if test="upstation != null">
                 upStation = #{upstation},
+            </if>
+            <if test="state != null">
+                state = #{state},
             </if>
         </set>
         where parcelId = #{parcelid}

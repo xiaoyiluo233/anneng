@@ -1,6 +1,5 @@
 package com.yidu.entity;
 
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -9,12 +8,11 @@ import java.io.Serializable;
  * (Product)实体类
  *
  * @author makejava
- * @since 2021-01-01 16:52:46
+ * @since 2021-01-11 11:13:04
  */
-@Data
 @Component
 public class Product implements Serializable {
-    private static final long serialVersionUID = 250365025763754887L;
+    private static final long serialVersionUID = -47091595889459753L;
     
     private Integer pid;
     
@@ -32,7 +30,99 @@ public class Product implements Serializable {
     
     private String times;
     
-    private double weight;
+    private Double weight;
+    
+    private Integer toOrders;
     
     private Integer state;
+
+
+    public Integer getPid() {
+        return pid;
+    }
+
+    public void setPid(Integer pid) {
+        this.pid = pid;
+    }
+
+    public String getPvalue() {
+        return pvalue;
+    }
+
+    public void setPvalue(String pvalue) {
+        this.pvalue = pvalue;
+    }
+
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+
+    public Integer getPtid() {
+        return ptid;
+    }
+
+    public void setPtid(Integer ptid) {
+        this.ptid = ptid;
+    }
+
+    public Integer getPwid() {
+        return pwid;
+    }
+
+    public void setPwid(Integer pwid) {
+        this.pwid = pwid;
+    }
+
+    public Integer getMyaid() {
+        return myaid;
+    }
+
+    public void setMyaid(Integer myaid) {
+        this.myaid = myaid;
+    }
+
+    public Integer getYouaid() {
+        return youaid;
+    }
+
+    public void setYouaid(Integer youaid) {
+        this.youaid = youaid;
+    }
+
+    public String getTimes() {
+        return times;
+    }
+
+    public void setTimes(String times) {
+        this.times = times;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Integer getToOrders() {
+        return toOrders;
+    }
+
+    public void setToOrders(Integer toOrders) {
+        this.toOrders = toOrders;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
 }

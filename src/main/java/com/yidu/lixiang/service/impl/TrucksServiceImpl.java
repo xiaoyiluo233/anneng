@@ -25,6 +25,22 @@ public class TrucksServiceImpl implements TrucksService {
     private EmployeeDao employeeDao;
 
     @Override
+    public String[] getTnumber(Trucks truck) {
+        //查出车辆的所有信息
+        List<Trucks> trucks = trucksDao.queryAll(truck);
+        //创建车牌号数组
+        String[] tnumbers=new String[trucks.size()];
+        //循环车辆集合
+        for (int i = 0; i < trucks.size(); i++) {
+            //得到车牌号
+            String tnumber = trucks.get(i).getTnumber();
+            //添加到数组中
+            tnumbers[i]=tnumber;
+        }
+        return tnumbers;
+    }
+
+    @Override
     public int[] getEidByRoleId(int roleid) {
         //根据角色id查出员工信息
         List<Employee> employees = employeeDao.selectEmpByRoleId(roleid);
@@ -130,7 +146,6 @@ public class TrucksServiceImpl implements TrucksService {
 
     /**
      * 修改数据
-     *
      * @param trucks 实例对象
      * @return 实例对象
      */
@@ -162,6 +177,7 @@ public class TrucksServiceImpl implements TrucksService {
         for (int i = 0; i < split.length; i++) {
             //调用删除的方法
             int deleteById = trucksDao.deleteById(Integer.parseInt(split[i]));
+            //判断是否删除成功
             if (deleteById>0){
                 result++;
             }

@@ -56,7 +56,6 @@ public class TrucksController {
     @RequestMapping(value = "trucks_insert",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String insert(Trucks trucks){
-        System.out.println("trucks = " + trucks);
         //调用新增的方法
         String insert = trucksService.insert(trucks);
         return insert;
