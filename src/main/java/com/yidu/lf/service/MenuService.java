@@ -67,4 +67,10 @@ public interface MenuService {
      * @return  返回tree所需数据
      */
     List<Node> queryAllMenu();
+
+    /**
+     *
+     * @return
+     */
+    String delete(String menuid);
 }

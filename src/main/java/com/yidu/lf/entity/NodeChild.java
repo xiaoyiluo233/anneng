@@ -1,7 +1,7 @@
 package com.yidu.lf.entity;
 
 /**
- * @description:
+ * @description: Tree子节点类
  * @author: LvFang
  * date:2021/1/5 16:18
  * version:1.0

@@ -11,14 +11,14 @@
 	opacity: 0.1;
 	z-index:2;
 }
-	
+
 #head1{
 	width: 100%px;
 	height: 82.2px;
 	position: fixed;
 	top: 0px;
 	z-index: 3;
-	
+
 }
 #head_toub{
 	width: 1140px;
@@ -31,7 +31,7 @@
 #head1 img{
 	float: left;
 	margin-top: 18px;
-	
+
 }
 #head1 dl{
 	float: left;
@@ -40,7 +40,7 @@
 }
 #head1 dl dt{
 	float: left;
-	
+
 	font-size: 15px;
 	margin-top: 5px;
 	margin-left: 20px;
@@ -55,13 +55,13 @@
 .tou_imgs{
 	padding: 24px;
 }
- #head1 dl dt:hover{
+#head1 dl dt:hover{
 	height: 80px;
 	cursor:pointer;
 	color: #F18700;
 	border-top: #F18700 0.1px solid;
-	
-} 
+
+}
 #head1 dl dt:hover .head_sjx img{
 	display: block;
 }
@@ -71,7 +71,22 @@
 	margin-top: 3px;
 	margin-right: 4px;
 }
-
+@font-face {
+	font-family: 'iconfont';
+	src: url('iconfont.eot');
+	src: url('iconfont.eot?#iefix') format('embedded-opentype'),
+	url('iconfont.woff2') format('woff2'),
+	url('iconfont.woff') format('woff'),
+	url('iconfont.ttf') format('truetype'),
+	url('iconfont.svg#iconfont') format('svg');
+}
+.iconfont {
+	font-family: "iconfont" !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 #head_toub ul{
 	border-radius: 3px;
 	display: none;
@@ -93,7 +108,7 @@
 	color: #F18700;
 }
 #head_toub ul li{
-	
+
 	color: #000;
 	list-style-type: none;
 	border-bottom: #f1f1f1 1px solid;
@@ -106,7 +121,7 @@
 .head_sjx{
 	height: 20px;
 	margin-left:-33px;
-	
+
 }
 #sjx_zh{
 	padding-left: 63px;
@@ -118,7 +133,7 @@
 	display: none;
 	padding-left: 54px;
 	padding-top: 8px;
-	
+
 }
 #tou_yg{
 	width: 100%;
@@ -133,7 +148,7 @@
 	margin: 0 auto;
 }
 #yg{
-	margin-left: 982px;
+	margin-left: 1004px;
 	background-color: #8f8f8f;
 	border-radius: 5px;
 	width: 128px;
@@ -157,4 +172,54 @@
 	height: 44px;
 	line-height: 44px;
 	color: white;
+}
+#head_img{
+	width: 100%;
+	height: 420px;
+	position: absolute;
+	top: 0px;
+
+}
+
+#tou_img img{
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 4420px;
+	background-color: rgba(0,0,0,.3);
+}
+#tou_hy{
+	width: 100%;
+	height:130px ;
+	position: fixed;
+	top: 80px;
+	z-index: 2;
+}
+#tou_hys{
+	width:1140px;
+	height: 130px;
+	margin: 0 auto;
+}
+#hy{
+	margin-left: 838px;
+	background-color: #8f8f8f;
+	border-radius: 5px;
+	width: 128px;
+	height: 91px;
+	z-index: 2;
+	display: none;
+}
+#hy a{
+	text-decoration:none;
+}
+#hy dt{
+	font-size: 14px;
+	color: white;
+	width: 128px;
+	height: 44px;
+	text-align: center;
+	line-height: 44px;
+}
+#xiang{
+	border-top: 1px dotted azure;
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.yidu.entity.Menu;
 import com.yidu.lf.dao.MenuDao;
+import com.yidu.lf.dao.RolemenuDao;
 import com.yidu.lf.entity.Node;
 import com.yidu.lf.entity.NodeChild;
 import com.yidu.lf.service.MenuService;
@@ -25,6 +26,9 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuDao menuDao;
+
+    @Autowired
+    private RolemenuDao rolemenuDao;
 
     /**
      * 通过ID查询单条数据
@@ -101,31 +105,82 @@ public class MenuServiceImpl implements MenuService {
      */
     @Override
     public List<Node> queryAllMenu() {
+        //创建一个菜单对象
         Menu menu=new Menu();
+        //设置上级为root
         menu.setLevelid("root");
-        List<Menu> menuLists = menuDao.queryAll(menu);
-        for (Menu menuList : menuLists) {
+        //根据菜单对象查询所有父级菜单并用集合接收
+        List<Menu> menuParentList = menuDao.queryAll(menu);
+        //遍历所有父级菜单集合
+        for (Menu menuList : menuParentList) {
+            //得到父级菜单的主键
             String menuid = menuList.getMenuid();
-            Menu menu1=new Menu();
-            menu1.setLevelid(menuid);
-            List<Menu> menus = menuDao.queryAll(menu1);
+            //创建一个子菜单对象
+            Menu menuChild=new Menu();
+            //设置子菜单对象的上级为父级菜单主键
+            menuChild.setLevelid(menuid);
+            //根据子菜单查询子菜单集合
+            List<Menu> menus = menuDao.queryAll(menuChild);
+            //将子菜单集合设置到父级菜单中
             menuList.setChildMenuList(menus);
         }
+        //声明一个节点集合
         List<Node> nodeList=new ArrayList<>();
-        for (Menu menuParent : menuLists) {
+        //遍历父级菜单集合
+        for (Menu menuParent : menuParentList) {
+            //创建一个节点对象
             Node node=new Node();
+            //将父级菜单的主键设置为节点id
             node.setId(menuParent.getMenuid());
+            //将父级菜单的标题设置为节点文本
             node.setText(menuParent.getTitle());
+            //声明一个子节点集合
             List<NodeChild> nodes=new ArrayList<>();
+            //遍历父级菜单中的子菜单集合
             for (Menu menuChild : menuParent.getChildMenuList()) {
+                //创建一个子节点对象
                 NodeChild nodeChild=new NodeChild();
+                //将子菜单的主键设置为子节点id
                 nodeChild.setId(menuChild.getMenuid());
+                //将子菜单的标题设置为子节点文本
                 nodeChild.setText(menuChild.getTitle());
+                //将子节点存入子节点集合中
                 nodes.add(nodeChild);
             }
+            //将子节点集合设置到节点对象中
             node.setNodes(nodes);
+            //将节点对象添加到节点集合中
             nodeList.add(node);
         }
+        //返回节点集合
         return nodeList;
+    }
+
+    @Override
+    public String delete(String menuid) {
+        //将菜单id切割
+        String[] split = menuid.split(",");
+        //删除结果
+        boolean result=true;
+        //遍历切割后的菜单id
+        for (String id : split) {
+            //根据菜单id删除菜单并接收返回值
+            int insert = this.menuDao.deleteById(id);
+            //判断删除是否不成功
+            if (insert<1){
+                //删除结果改为假
+                result=false;
+                //结束循环
+                break;
+            }else {
+                this.rolemenuDao.deleteByMenuId(id);
+            }
+        }
+        //判断删除结果是否成功
+        if (result){
+            return "删除成功";
+        }else{
+            return "删除失败";
+        }
     }
 }

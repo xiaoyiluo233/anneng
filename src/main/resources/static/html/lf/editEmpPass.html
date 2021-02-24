@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
+    <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
+    <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
+    <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../../assets/dist/bootstrap-table.js"></script>
+    <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
+    <style>
+        .form-group{
+            height: 60px;
+        }
+        .form-control{
+            height: 50px;
+        }
+        label{
+            line-height: 60px;
+        }
+        .col-sm-2{
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 50%; margin:5% auto;">
+    <form>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label">旧密码</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="password"name="oldPass"class="form-control"id="oldPass" placeholder="旧密码">
+            </div>
+            <label class="err-info-modal"></label>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label">新密码</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="password"name="newPass"class="form-control" placeholder="新密码" id="newPass">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+                <label class="control-label">确认密码</label>
+            </div>
+            <div class="col-sm-9">
+                <input type="password"name="newsPass"class="form-control" placeholder="确认新密码" id="newsPass">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-2">
+               <input type="button" value="修改" class="form-control btn-info" id="editPass">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    $("#editPass").click(function () {
+        var newPass=$("#newPass").val();
+        var newsPass=$("#newsPass").val();
+        if (newPass!=newsPass){
+            swal("两次新密码不一致!", "", "error").then(function () {
+               $("#newsPass").val("");
+               $("#newsPass").focus();
+            });
+        }else{
+            var oldPass=$("#oldPass").val();
+            $.ajax({
+               type:"post",
+
+            });
+        }
+    });
+</script>
