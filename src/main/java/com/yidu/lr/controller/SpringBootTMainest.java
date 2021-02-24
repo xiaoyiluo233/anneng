@@ -28,10 +28,6 @@ public class SpringBootTMainest {
     @Resource
     private DistrictService districtService;
 
-    //线路服务对象
-    @Resource
-    private PathService pathService;
-
     //订单服务对象
     @Autowired
     private OrdersServiceImpl ordersService;

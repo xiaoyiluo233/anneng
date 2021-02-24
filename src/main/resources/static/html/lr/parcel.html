@@ -524,8 +524,13 @@
         }else {
             $("#upstations").text(data_json[index].upStationName);
         }
-
-        $("#states").text(data_json[index].state);
+        if(data_json[index].state==1){
+            $("#states").text("省包裹");
+        }else if(data_json[index].state==2){
+            $("#states").text("市包裹");
+        }else{
+            $("#states").text("区包裹");
+        }
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
