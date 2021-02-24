@@ -1,15 +1,13 @@
 package com.yidu.lr.service;
 
 import com.yidu.entity.Path;
-import org.apache.ibatis.annotations.Mapper;
-
 import java.util.List;
 
 /**
  * (Path)表服务接口
  *
  * @author makejava
- * @since 2021-01-01 14:54:48
+ * @since 2021-01-11 10:12:32
  */
 public interface PathService {
 
@@ -53,5 +51,13 @@ public interface PathService {
      * @return 是否成功
      */
     boolean deleteById(Integer pathid);
+
+    /**
+     * 通过实体作为筛选条件查询
+     *
+     * @param path 实例对象
+     * @return 对象列表
+     */
+    List<Path> queryAll(Path path);
 
 }
