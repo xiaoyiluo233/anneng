@@ -4,6 +4,7 @@ import com.yidu.entity.Route;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 import com.yidu.lr.dao.LRRouteDao;
 import com.yidu.lr.service.RouteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @Service("routeService")
 public class LRRouteServiceImpl implements RouteService {
-    @Resource
+    @Autowired
     private LRRouteDao routeDao;
 
     @Override
