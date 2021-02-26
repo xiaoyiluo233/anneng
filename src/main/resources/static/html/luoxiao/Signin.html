@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ane工单状态查询</title>
+    <title>ane订单物流查询</title>
     <link rel="stylesheet" href="../../assets/dist/bootstrap-table.css"/>
     <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.min.css"/>
     <script src="../../jquery-3.3.1/jquery-3.3.1.min.js"></script>
-    <script src="../../https://unpkg.com/tableexport.jquery.plugin/tableExport.min.js"></script>
     <!--    <script src="https://cdn.bootcss.com/popper.js/1.14.7/umd/popper.min.js"></script>-->
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../assets/dist/bootstrap-table.js"></script>
@@ -27,33 +26,33 @@
             <div class="modal-body">
                 <table class="table">
                     <tr>
-                        <th>工单表id </th>
-                        <th><span id="jids">1</span></th>
+                        <th>快递签收表id</th>
+                        <th><span id="signIds">1</span></th>
                     </tr>
                     <tr>
-                        <th>  订单表id </th>
-                        <th><span id="oids">admin</span></th>
+                        <th>签收时间</th>
+                        <th><span id="timess">admin</span></th>
                     </tr>
                     <tr>
-                        <th>上一个负责的员工</th>
-                        <th><span id="upEids">123</span></th>
+                        <th>员工id</th>
+                        <th><span id="eids">123</span></th>
                     </tr>
                     <tr>
-                        <th>现在负责的员工</th>
-                        <th><span id="nowEids">123</span></th>
+                        <th>签收方式</th>
+                        <th><span id="types">123</span></th>
                     </tr>
                     <tr>
-                        <th> 工单接收时间</th>
-                        <th><span id="timess">123</span></th>
+                        <th>签收人</th>
+                        <th><span id="persons">123</span></th>
                     </tr>
                     <tr>
-                        <th>工单状态</th>
-                        <th><span id="states">123</span></th>
+                        <th>订单id</th>
+                        <th><span id="oids">123</span></th>
                     </tr>
 
                     <tr>
-                        <th>未完的原因</th>
-                        <th><span id="remarks">123</span></th>
+                        <th> 签收情况</th>
+                        <th><span id="conditions">123</span></th>
                     </tr>
                 </table>
             </div>
@@ -91,74 +90,74 @@
                     <!---->
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"    for="jid"> 工单表id </label>
+                            <label class="control-label"    for="signid">快递签收表id</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="jid"class="form-control"id="jid" placeholder="id自动生成" readonly>
+                            <input type="text"name="signid"class="form-control"id="signid" placeholder="id自动生成" readonly>
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
-                    <!---->
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="oid">订单表id  </label>
+                            <label class="control-label"for="times">签收时间</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="oid"class="form-control" placeholder="订单表id  " id="oid">
+                            <input type="text"name="times"class="form-control" placeholder="签收时间" id="times">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="upeid">上一个负责的人</label>
+                            <label class="control-label"for="eid">员工id</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="upeid"class="form-control" placeholder="上一个负责的人" id="upeid">
-                        </div>
-                        <label class="err-info-modal"></label>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label class="control-label"for="noweid">现在负责的人</label>
-                        </div>
-
-                        <div class="col-sm-9">
-                            <input type="text"name="noweid"class="form-control" placeholder="现在负责的人" id="noweid">
+                            <input type="text"name="eid"class="form-control" placeholder="员工id" id="eid">
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="times"> 接收工单的时间</label>
+                            <label class="control-label"for="type">签收方式</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="times"class="form-control" placeholder=" 接收工单的时间" id="times">
+                            <input type="text"name="type"class="form-control" placeholder="签收方式" id="type">
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label" for="state">车辆状态</label>
+                            <label class="control-label"for="person">签收人</label>
                         </div>
-                        <select class="form-control" style="width: 180px;margin-left: 164px" id="state" name="state">
-                            <option value="1">已完成</option>
-                            <option value="2">未完成</option>
-                        </select>
+
+                        <div class="col-sm-9">
+                            <input type="text"name="person"class="form-control" placeholder="签收人" id="person">
+                        </div>
+                        <label class="err-info-modal"></label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="remark">未完成的原因</label>
+                            <label class="control-label"for="oid">订单id</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="text"name="oid"class="form-control" placeholder="订单id" id="oid">
+                        </div>
+                        <label class="err-info-modal"></label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label"for="condition">签收情况</label>
                         </div>
                         <div class="col-sm-9">
-                            <input type="text"name="remark"class="form-control" placeholder="未完成的原因" id="remark">
+                            <input type="text"name="condition"class="form-control" placeholder="签收或未签收" id="condition">
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
@@ -199,7 +198,7 @@
     var url="";
     $(document).ready(function () {
         $table.bootstrapTable({
-            url:"../../joborders_querAll",   //请求地址
+            url:"../../signin_queryAllByLimit",   //请求地址
             height: tableHeight(),//高度调整
             //cardView:true,//卡视图
             search: true,//是否搜索
@@ -210,12 +209,12 @@
             /*sidePagination: "server",//服务端分页*/
             contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
             dataType: "json",//期待返回数据类型
-            /*  // ajax:function ajaxRequest(params) {
-              //     var url = 'user/selectAll'
-              //     $.get(url + '?' + $.param(params.data)).then(function (res) {
-              //         params.success(res)
-              //     })
-              // },//ajax*/
+          /*  // ajax:function ajaxRequest(params) {
+            //     var url = 'user/selectAll'
+            //     $.get(url + '?' + $.param(params.data)).then(function (res) {
+            //         params.success(res)
+            //     })
+            // },//ajax*/
             toggle:"mytable",
             method: "post",//请求方式
             searchAlign: "left",//查询框对齐方式
@@ -253,39 +252,32 @@
             },*/columns : [ {
                 checkbox:true  //第一列显示复选框
             },{
-                title : '工单表id',
-                field : 'jid',
+                title : '快递签收表id',
+                field : 'signid',
                 sortable : true
             }, {
-                title : '订单表id',
-                field : 'oid',
-                sortable : true
-            }, {
-                title : '上一个负责员工的id',
-                field : 'upeid',
-                sortable : true
-            },{
-                title : '现在负责员工的id',
-                field : 'noweid',
-                sortable : true
-            },{
-                title : ' 接收工单的时间',
+                title : '签收时间',
                 field : 'times',
                 sortable : true
+            }, {
+                title : '员工id',
+                field : 'ename',
+                sortable : true
             },{
-                title : '状态',
-                field : 'state',
-                sortable : true,
-                formatter:function (value,row,index) {
-                    if (value==1){
-                        return '已完成';
-                    }else if(value==2){
-                        return '未完成';
-                    }
-                }
+                title : '签收方式',
+                field : 'type',
+                sortable : true
             },{
-                title : '备注   未完成的原因',
-                field : 'remark',
+                title : '签收人',
+                field : 'person',
+                sortable : true
+            },{
+                title : '订单id',
+                field : 'oid',
+                sortable : true
+            },{
+                title : '签收情况',
+                field : 'condition',
                 sortable : true
             },{
                 field: 'operate',
@@ -323,7 +315,7 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.jid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.signid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
@@ -331,24 +323,24 @@
 
     // 当点击【修改】按钮后，把模态框弹出来
     $("#btn_edit").on("click",function (){
-        $("#times").attr("disabled","disabled");
-        url="joborders_update";
+        url="signin_update";
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
-        $("#jid").attr("disabled",false);
+        $("#signid").attr("disabled",false);
+        $("#times").attr("readonly",true);
         if(data_obj.length>1){
             swal("目前不支持编辑多行数据");
         }else if(data_obj==0){
             swal("请选择一行");
         }else{
-            $("#jid").val(data_obj[0].jid);
-            $("#oid").val(data_obj[0].oid);
-            $("#upeid").val(data_obj[0].upeid);
-            $("#noweid").val(data_obj[0].noweid);
+            $("#signid").val(data_obj[0].signid);
             $("#times").val(data_obj[0].times);
-            $("#state").val(data_obj[0].state);
-            $("#remark").val(data_obj[0].remark);
+            $("#eid").val(data_obj[0].eid);
+            $("#type").val(data_obj[0].type);
+            $("#person").val(data_obj[0].person);
+            $("#oid").val(data_obj[0].oid);
+            $("#condition").val(data_obj[0].condition);
             $("#addModal").modal({
                 keyboard: true
             });
@@ -358,8 +350,9 @@
 
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
-        $("#jid").attr("disabled","disabled");
-        url="joborders_insert";
+        $("#signid").attr("disabled","disabled");
+        $("#times").attr("readonly",true);
+        url="signin_insert";
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
@@ -375,7 +368,7 @@
 
     // 当点击【保存】按钮后，将表单中的数据提交到后台
     $("#btn_add_submit").on("click",function (){
-        console.log( $("#add_form_modal").serializeArray());
+       console.log( $("#add_form_modal").serializeArray());
         $.ajax({
             type: "post",       //请求类型
             url: "../../"+url,     //url
@@ -397,8 +390,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
-        $("#times").attr("disabled","disabled");
-        url="joborders_update";
+        url="signin_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         // {#var data_json2 = eval("(" + data+ ")"); #}
@@ -406,13 +398,13 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
-        $("#jid").val(data_json[index].jid);
-        $("#oid").val(data_json[index].oid);
-        $("#upeid").val(data_json[index].upeid);
-        $("#noweid").val(data_json[index].noweid);
+        $("#signid").val(data_json[index].signid);
         $("#times").val(data_json[index].times);
-        $("#state").val(data_json[index].state);
-        $("#remark").val(data_json[index].remark);
+        $("#eid").val(data_json[index].eid);
+        $("#type").val(data_json[index].type);
+        $("#person").val(data_json[index].person);
+        $("#oid").val(data_json[index].oid);
+        $("#condition").val(data_json[index].condition);
         $("#addModalLabel").text("修改");
         //弹出修改模态框，非新增模态框
         $('#addModal').modal('show')
@@ -422,23 +414,18 @@
     function LookViewById(row, index){
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
-        $("#jids").text(data_json[index].jid);
-        $("#oids").text(data_json[index].oid);
-        $("#upeids").text(data_json[index].upeid);
-        $("#noweids").text(data_json[index].noweid);
+        $("#signIds").text(data_json[index].signid);
         $("#timess").text(data_json[index].times);
-        if (data_json[index].state==1){
-            $("#states").text('已完成');
-        }else if (data_json[index].state==2){
-            $("#states").text('未完成');
-        }
-        $("#remark").text(data_json[index].remark);
+        $("#eids").text(data_json[index].eid);
+        $("#types").text(data_json[index].type);
+        $("#persons").text(data_json[index].person);
+        $("#oids").text(data_json[index].oid);
+        $("#conditions").text(data_json[index].condition);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
     //当前列删除
     function DeleteByIds(id) {
-        alert(id);
         swal({
             title: "你确定吗?",
             text: "一旦删除，您将无法恢复该数据！",
@@ -450,8 +437,8 @@
                 if (willDelete) {
                     $.ajax({
                         type: "post",       //请求类型
-                        url: "../../joborders_delete",     //url
-                        data: "jid="+id,     // 收集表单中的数据
+                        url: "../../signin_delete",     //url
+                        data: "signid="+id,     // 收集表单中的数据
                         dataType: "text",    //参数返回类型
                         success: function (obj){
                             swal("OK！您的数据已被删除！", {
@@ -469,10 +456,10 @@
 
     // 当点击【删除】按钮后，拼接选中的id
     $("#btn_delete").on("click",function (){
-        url="joborders_deletes";
+        url="signin_deletes";
         //选中的ids
         var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.jid
+            return row.signid
         })
         if(ids==""){
             swal("请至少选择一行");
@@ -481,7 +468,7 @@
             $.ajax({
                 type: "post",       //请求类型
                 url: "../../"+url,     //url
-                data: "jid="+ids,     // 收集表单中的数据
+                data: "signid="+ids,     // 收集表单中的数据
                 dataType: "text",    //参数返回类型
                 success: function (obj){
                     swal("结果:", obj, "success"); //返回信息
