@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * (Userinfo)表控制层
+ * 用户表控制层
  *
- * @author makejava
+ * @author sj
  * @since 2021-01-08 09:12:56
  */
 @RestController
@@ -26,35 +26,50 @@ public class UserinfoController {
     @Resource
     private UserinfoService userinfoService;
 
+    /**
+     * 注册
+     * @param request
+     * @param userinfo
+     * @param yzm
+     * @return
+     */
     @PostMapping("intoUserInfo")
     public String intoUserInfo(HttpServletRequest request,Userinfo userinfo,String yzm){
-        System.out.println("userinfo = " + userinfo + ", yzm = " + yzm);
         return userinfoService.insert(request,userinfo,yzm);
     };
 
+    /**
+     * 登陆
+     * @param request
+     * @param userinfo
+     * @param yzm
+     * @return
+     */
     @GetMapping("login")
     public String login(HttpServletRequest request,Userinfo userinfo,String yzm){
         return userinfoService.login(request,userinfo,yzm);
     };
 
+    /**
+     * 生成验证码
+     * @param request
+     * @param phone
+     * @return
+     */
     @PostMapping("createCode")
     public boolean createCode(HttpServletRequest request,String phone){
         return userinfoService.createCode(request,phone);
     };
 
+    /**
+     * 修改密码
+     * @param request
+     * @param userinfo
+     * @param yzm
+     * @return
+     */
     @PostMapping("updateByName")
     public String updateByName(HttpServletRequest request,Userinfo userinfo,String yzm){
         return userinfoService.updateByName(request,userinfo,yzm);
     };
-
-    public static void main(String[] args) {
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println(Math.round((Math.random()+1) * 1000));
-            System.out.println(new Random().nextInt(9999));
-            System.out.println(String.format("%04d",new Random().nextInt(9999)));
-        }
-
-    }
-
 }
