@@ -2,7 +2,7 @@ package com.yidu.lr.controller;
 
 import com.yidu.entity.*;
 import com.yidu.lr.service.*;
-import com.yidu.lr.service.impl.OrdersServiceImpl;
+import com.yidu.lr.service.impl.LROrdersServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,13 +28,9 @@ public class SpringBootTMainest {
     @Resource
     private DistrictService districtService;
 
-    //线路服务对象
-    @Resource
-    private PathService pathService;
-
     //订单服务对象
     @Autowired
-    private OrdersServiceImpl ordersService;
+    private LROrdersServiceImpl ordersService;
 
     //地址服务对象
     @Resource

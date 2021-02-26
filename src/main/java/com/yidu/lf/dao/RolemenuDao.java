@@ -76,6 +76,14 @@ public interface RolemenuDao {
     int deleteByRoleId(Integer roleId);
 
     /**
+     * 通过菜单id删除数据
+     *
+     * @param menuid 菜单id
+     * @return 影响行数
+     */
+    int deleteByMenuId(String menuid);
+
+    /**
      * 通过角色id查询菜单id
      * @param roleId 角色id
      * @return 菜单集合

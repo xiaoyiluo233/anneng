@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.LRStationDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Station">
+        <!--@Table station-->
+        <result property="stationid" column="stationId" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityId" jdbcType="INTEGER"/>
+        <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">stationId,cityId,stationName</sql>
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          stationId, cityId, stationName
+        from ane.station
+        where stationId = #{stationid}
+    </select>
+    
+    <select id="queryByArray" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        from ane.station
+        WHERE stationId IN
+        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          stationId, cityId, stationName
+        from ane.station
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          stationId, cityId, stationName
+        from ane.station
+        <where>
+            <if test="stationid != null">
+                and stationId = #{stationid}
+            </if>
+            <if test="cityid != null">
+                and cityId = #{cityid}
+            </if>
+            <if test="stationname != null and stationname != ''">
+                and stationName = #{stationname}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="stationid" useGeneratedKeys="true">
+        insert into ane.station(cityId, stationName)
+        values (#{cityid}, #{stationname})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.station
+        <set>
+            <if test="cityid != null">
+                cityId = #{cityid},
+            </if>
+            <if test="stationname != null and stationname != ''">
+                stationName = #{stationname},
+            </if>
+        </set>
+        where stationId = #{stationid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.station where stationId = #{stationid}
+    </delete>
+
+</mapper>
