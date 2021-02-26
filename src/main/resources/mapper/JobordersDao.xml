@@ -13,6 +13,13 @@
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <!-- 连表查询 -->
+    <select id="getName" resultType="Hashmap">
+        select j1.`jid`,o1.`oid`, e1.`ename`  upeid,e2.`ename` noweid,j1.`times`,j1.`state`,j1.`remark` from joborders j1
+  left join orders o1 on j1.`oid`=o1.`oid`
+  left join employee e1 on j1.`upEid`=e1.`eid`
+   left join employee e2 on j1.`nowEid`=e2.`eid`
+    </select>
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
