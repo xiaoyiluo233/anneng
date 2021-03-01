@@ -1,0 +1,69 @@
+/**
+ * 背景图片
+ */
+#beijing{
+	margin: 0 auto;
+	
+}
+/**
+ * 头部
+ */
+.toubu{
+	 position:fixed;
+	 top:60px;
+	 left:250px;
+	 height:50px;
+	 width:200px;
+	 
+}
+/**
+ * 返回按钮
+ */
+.yuanjiao{
+	border-radius:100px;
+	background:#f18700;
+	height:40px;
+	width:120px;
+	position:fixed;
+	top:55px;
+	right:400px;
+}
+.yuanjiao a{
+	  margin: 0;
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%);
+}
+/**
+ * 白色背景
+ */
+.baisebeijin{
+	border-radius:10px;
+	background:#ffffff;
+	height:450px;
+	width:380px;
+	position:fixed;
+	top:160px;
+	right:400px;
+}
+/**
+ * 会员登录
+ */
+.form-grounp {
+    width: 300px;
+}
+.lh60 {
+    height: 60px;
+    line-height: 60px;
+}
+.m-t-10 {
+    margin-top: 10px;
+}
+.f-26 {
+    font-size: 26px;
+}
+.c-2 {
+    color: #222222;
+}

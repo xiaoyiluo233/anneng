@@ -1,6 +1,7 @@
 package com.yidu.lixiang.service;
 
 import com.yidu.entity.Path;
+import com.yidu.entity.StationMain;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,14 +18,13 @@ public interface PathService {
      * @param cityName 市级名
      * @return 中转站数组
      */
-    public String[] queryStation(String cityName);
+    String[] queryStation(String cityName);
 
     /**
      * 查询所有
-     * @param path 线路实体类
-     * @return 线路集合
+     * @return 实体类
      */
-    HashMap<String,Object> queryAll(Path path);
+    List<StationMain> queryAll();
 
     /**
      * 通过ID查询单条数据
@@ -44,12 +44,13 @@ public interface PathService {
     List<Path> queryAllByLimit(int offset, int limit);
 
     /**
-     * 新增数据
-     *
-     * @param path 实例对象
-     * @return 实例对象
+     * 新增线路
+     * @param startStation 起点站
+     * @param destinationName 经过的中转站
+     * @param stationCenters 终点站
+     * @return 新增成功
      */
-    Path insert(Path path);
+    String insert(String startStation,String destinationName,String stationCenters);
 
     /**
      * 修改数据
@@ -61,10 +62,9 @@ public interface PathService {
 
     /**
      * 通过主键删除数据
-     *
-     * @param pathid 主键
-     * @return 是否成功
+     * @param ids 主键字符串
+     * @return 删除成功
      */
-    boolean deleteById(Integer pathid);
+    String deleteById(String ids);
 
 }

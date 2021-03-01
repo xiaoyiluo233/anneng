@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Component
 public class StationMain implements Serializable {
 
-    private int pathId;
+    private Integer pathId;
 
     private String startStation;
 

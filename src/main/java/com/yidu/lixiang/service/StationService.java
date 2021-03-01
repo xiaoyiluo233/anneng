@@ -15,10 +15,9 @@ public interface StationService {
 
     /**
      * 中转站与市级表的一对一关系的查询所有
-     * @param station 中转站实体类
      * @return 中转站集合
      */
-    HashMap<String,Object> stationAndCity(int offset,int pageNumber,Station station);
+    List<Station> stationAndCity();
 
     /**
      * 通过ID查询单条数据
@@ -56,7 +55,7 @@ public interface StationService {
     /**
      * 通过主键删除数据
      *
-     * @param stationid 主键
+     * @param stationids 主键
      * @return 是否成功
      */
     String deleteById(String stationids);

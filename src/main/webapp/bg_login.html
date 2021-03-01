@@ -3,7 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>后台登录系统</title>
-		<link rel="icon" href="LFimg/favicon-16x16.png" type="image/png" sizes="16*16" />
+		<link rel="icon" href="img/LFimg/favicon-16x16.png" type="image/png" sizes="16*16" />
+		<script src="js/sweetAlert.js"></script>
 		<style>
 			*{
 				margin: 0px;
@@ -96,14 +97,14 @@
 					<img src="img/LFimg/16eefdea82498f8abe27fd0408797d7d.png" style="width: 210px; height: 48px;margin-bottom: 20px;" />
 					<div>
 						<img src="img/LFimg/yhGray.png" />
-						<input type="text" id="uname" placeholder="用户名" />
+						<input type="text" id="ename" placeholder="用户名" />
 					</div>
 					<div style="margin-bottom: 40px;">
 						<img src="img/LFimg/suoGray.png" />
-						<input type="password" id="upass" placeholder="密码" />
+						<input type="password" id="epass" placeholder="密码" />
 					</div>
 					<p class="msg">系统提示： 用户名或密码不正确</p>
-					<div onclick="login()">登录</div>
+					<div onclick="login()" style="cursor: pointer">登录</div>
 				</div>
 				<p>
 					Copyright © ANE
@@ -130,18 +131,21 @@
 		}
 	});
 	function login(){
-		var name=$("#uname").val();
-		var pass=$("#upass").val();
+		var name=$("#ename").val();
+		var pass=$("#epass").val();
 		$.ajax({
 			type:"post",
 			url:"emp_login",
 			async:true,
-			data:"uname="+name+"&upassword="+pass,
+			data:"ename="+name+"&epassword="+pass,
 			dataType:"text",
 			success:function(msg){
-				alert(msg);
 				if (msg=="登录成功") {
-					window.location.href="bg_index.jsp";
+					swal(msg, "", "success").then(function () {
+						window.location.href="bg_index.jsp";
+					});
+
+
 				}else{
 					$(".msg").css("display","block");
 				}

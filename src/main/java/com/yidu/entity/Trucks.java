@@ -24,6 +24,8 @@ public class Trucks implements Serializable {
     
     private Integer state;
 
+    private Employee employee;
+
     @Override
     public String toString() {
         return "Trucks{" +
@@ -33,6 +35,14 @@ public class Trucks implements Serializable {
                 ", parcelid=" + parcelid +
                 ", state=" + state +
                 '}';
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public Integer getTid() {

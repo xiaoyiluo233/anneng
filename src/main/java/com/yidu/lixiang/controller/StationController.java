@@ -44,8 +44,8 @@ public class StationController {
 
     @ResponseBody
     @RequestMapping("station_stationAndCity")
-    public HashMap<String, Object> stationAndCity(int offset,int pageNumber,Station station){
-        return stationService.stationAndCity(offset,pageNumber,station);
+    public List<Station> stationAndCity(){
+        return stationService.stationAndCity();
     }
 
     /**

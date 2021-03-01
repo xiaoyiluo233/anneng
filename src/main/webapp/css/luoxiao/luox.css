@@ -1,0 +1,223 @@
+		* {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		body {
+			background-color: #dfe0e1;
+			height: 100vh;
+			
+		}
+		
+		.branch>a:hover{
+			
+		}
+		
+		#backcolor {
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, .5);
+			display: block;
+			position: fixed;
+			display: none;
+		}
+		
+		button {
+			border: none;
+			outline:none;
+		}
+		
+		
+		#black {
+			background-color: #222222;
+			width: 100%;
+			height: 315px;
+			position: absolute;
+			z-index: -1;
+		}
+		
+		#head {
+			width: 1140px;
+			height: 95px;
+			z-index: 2;
+		}
+		
+		#log {
+			margin-top: 32.5px;
+			float: left;
+			padding-left: 3rem !important;
+		}
+		
+		#hean-message {
+			margin-top: 30px;
+			float: right;
+		}
+		
+		#hean-message>h5 {
+			margin-top: 10px;
+			float: left;
+			color: white;
+		}
+		
+		#center {
+			width: 1140px;
+			height: 736px;
+		}
+		
+		#function {
+			margin: 1.5px;
+			margin-top: 20px;
+			float: left;
+			width: 285px;
+			height: 685px;
+			background-color: #dfe0e1;
+		}
+		
+		#message {
+			margin: 1.5px;
+			margin-top: 20px;
+			float: left;
+			width: 845px;
+			height: 685px;
+			background-color: #f0f0f0;
+		}
+		#kong{
+		margin: 1.5px;
+			margin-top: 20px;
+			float: left;
+			width: 845px;
+			height: 685px;
+			background-color: #f0f0f0;
+		}
+		#dingdan{
+			width: 500px;
+			height: 200px;
+			float: left;
+			z-index: 99999;
+			
+		}
+		
+		.branch>img {
+			width: 40px;
+			height: 40px;
+			margin: 5px;
+		}
+		
+				
+		#head_portrait {
+			width: 285px;
+			height: 200px;
+			background-color: #222222;
+		}
+		
+		#touxk {
+			width: 120px;
+			height: 120px;
+			position: absolute;
+			z-index: 1;
+			margin-left: -10px;
+			margin-top: -10px;
+		}
+		
+		#head_portrait>h2 {
+			margin-top: 50px;
+			color: white;
+		}
+		
+		#userimg {
+			width: 840px;
+			height: 150px;
+			margin-top: 2px;
+		}
+		
+		#userimg>img {
+			float: left;
+			margin-top: 30px;
+			margin-left: 20px;
+		}
+		
+		.tishi {
+			font-size: 10px;
+		}
+		
+		#data {
+			margin-top: 30px;
+			margin-left: 30px;
+			float: left;
+		}
+		
+		#data>h3 {
+			margin-left: -110px;
+		}
+		
+		#data.tishi {
+			margin-left: 20px;
+		}
+		
+		#updatemessage {
+			margin-top: 70px;
+			margin-right: 10px;
+			float: right;
+			width: 100px;
+			height: 31px;
+			background-color: #ffffff;
+			line-height: 31px;
+		}
+		
+		.update {
+			width: 842.5px;
+			height: 87px;
+			border: solid 0.5px #e8e8e8;
+		}
+		
+		.update>img {
+			width: 45px;
+			height: 45px;
+			margin-top: 20px;
+			margin-left: 10px;
+			float: left;
+		}
+		
+		.update>h3 {
+			float: left;
+			text-align: left;
+			margin-top: 20px;
+			margin-left: 10px;
+		}
+		
+		.updatemessages {
+			margin-top: 30px;
+			margin-right: 10px;
+			float: right;
+			width: 100px;
+			height: 31px;
+			background-color: #ffffff;
+			line-height: 31px;
+		}
+		
+		.update>h3>span {
+			font-size: 15px;
+			float: left;
+			font-family: "宋体";
+			font-weight: 100;
+		}
+		
+		.tail1 {
+			font-size: 10px;
+			float: left;
+			line-height: 28px;
+			color: #999999;
+		}
+		
+		.tail2 {
+			font-size: 10px;
+			color: #999999;
+			line-height: 28px;
+		}
+		
+		.tail3 {
+			font-size: 10px;
+			float: right;
+			line-height: 28px;
+			color: #999999;
+		}

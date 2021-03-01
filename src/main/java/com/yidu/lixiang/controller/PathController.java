@@ -1,12 +1,14 @@
 package com.yidu.lixiang.controller;
 
 import com.yidu.entity.Path;
+import com.yidu.entity.StationMain;
 import com.yidu.lixiang.service.PathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @description: 线路表控制层
@@ -22,6 +24,18 @@ public class PathController {
     @Autowired
     private PathService pathService;
 
+    @RequestMapping(value = "path_delete",produces = {("application/json;charset=utf-8")})
+    @ResponseBody
+    public String delete(String ids){
+        return pathService.deleteById(ids);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "path_insert",produces = {("application/json;charset=utf-8")})
+    public String insert(String startStation,String destinationName,String stationCenters){
+        return pathService.insert(startStation, destinationName, stationCenters);
+    }
+
     @RequestMapping("path_queryStation")
     @ResponseBody
     public String[] queryStation(String cityName){
@@ -30,8 +44,8 @@ public class PathController {
 
     @ResponseBody
     @RequestMapping("path_queryAll")
-    public HashMap<String,Object> queryAll(Path path){
-        return pathService.queryAll(path);
+    public List<StationMain> queryAll(){
+        return pathService.queryAll();
     }
 
     /**
