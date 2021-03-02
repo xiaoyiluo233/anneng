@@ -81,28 +81,8 @@ public class MenuController {
     @ResponseBody
     @RequestMapping("/menu_delete")
     public String delete(String menuid){
-        //将菜单id切割
-        String[] split = menuid.split(",");
-        //删除结果
-        boolean result=true;
-        //遍历切割后的菜单id
-        for (String id : split) {
-            //根据菜单id删除菜单并接收返回值
-            boolean insert = this.menuService.deleteById(id);
-            //判断删除是否不成功
-            if (!insert){
-                //删除结果改为假
-                result=false;
-                //结束循环
-                break;
-            }
-        }
-        //判断删除结果是否成功
-        if (result){
-            return "删除成功";
-        }else{
-            return "删除失败";
-        }
+        //调用删除方法
+        return menuService.delete(menuid);
     }
 
     /**
@@ -112,6 +92,7 @@ public class MenuController {
     @ResponseBody
     @RequestMapping("menu_queryAllMenu")
     public List<Node> queryAllMenu(){
+        //调用查询方法
         return menuService.queryAllMenu();
     }
 }

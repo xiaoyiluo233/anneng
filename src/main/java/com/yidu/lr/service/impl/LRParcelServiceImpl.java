@@ -1,12 +1,15 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Parcel;
+import com.yidu.lr.controller.vo.ParcelStationVo;
 import com.yidu.lr.dao.LRParcelDao;
 import com.yidu.lr.service.ParcelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Parcel)表服务实现类
@@ -16,7 +19,7 @@ import java.util.List;
  */
 @Service
 public class LRParcelServiceImpl implements ParcelService {
-    @Resource
+    @Autowired
     private LRParcelDao parcelDao;
 
     /**
@@ -75,5 +78,20 @@ public class LRParcelServiceImpl implements ParcelService {
     @Override
     public boolean deleteById(Integer parcelid) {
         return this.parcelDao.deleteById(parcelid) > 0;
+    }
+
+    @Override
+    public List<Parcel> queryAll(Parcel parcel) {
+        return parcelDao.queryAll(parcel);
+    }
+
+    @Override
+    public List<Map<String,Object>> OidFindIn(String[] OidStrArray) {
+        return parcelDao.OidFindIn(OidStrArray);
+    }
+
+    @Override
+    public List<ParcelStationVo> selectConnect() {
+        return parcelDao.selectConnect();
     }
 }

@@ -6,7 +6,14 @@
   url('iconfont.ttf?t=1609298997801') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
   url('iconfont.svg?t=1609298997801#iconfont') format('svg'); /* iOS 4.1- */
 }
-
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1614059973457'); /* IE9 */
+  src: url('iconfont.eot?t=1614059973457#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAANUAAsAAAAABzwAAAMHAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDBgqCIIIgATYCJAMMCwgABCAFhG0HOhtqBsgOJQnBwAghCQBoBI/7ofeSFNG1CtESqSHJsZ9t5cZGoZCAepLIsRF/yC6bDcSJdOwCezGzt3eenYsqYevAbd4d1UWoHuy+/PoPLqf/3xScB5TLmoPaOCbFCQY01qYo0QJJ0FtkF3FFLPIwgUb9cjEb1Y2dwEuBRgXiqiSywCujVRrSQ71QW7GwiHvc1afr6Qh3g+/Hf3PhRVKToYkHzlcJoPSXz5/7rtPVrkEPwRvPDGUZGROAQpyrtJ7gGkUnuGq0xG52PlCrCGmswP+KgGuLa/EfHkkQtVBqMxgRYolfjZSbyO7z/LM+KINaFJwF7EHK7r4XpVm/kAB2tfvxycWb/puZnoMPORvKnemwl1fT1zz55u17926K12fuKeF33sVfT3fuvj17u3DVn9cfrx6Guaw9Uu7JyvX5e3Yf+gTceMwwHz8eP319fdTVuyMfbo6lO1eJTVVxCU+Tle9xVduk43dl5XkCTri3qbJOcZT2dqtqiuVzM+rNe5XG5yugzslPE6ri0vcnAythZaC3RRWsAl+PDJTF6GPKUpWQ8ZAbOlFhGhFqZL6+34mREaa2i7D85lom1R2MAqh+5inXhCD+L6/nnB/xG9f2xd+MtBX+q/ct4NupJ594d/WzAFgyUC8B5r12HrCm2AKky8XkUq5rzxZ7RhIabYcKcnb60l/Zc2vxUK8ngaROH2T1BtBCmIAaTRagVr1laDSuZnmTLoSrKA0Ys8BBaPcIklYvIWt3jBbCZ6jR6y/Uag9XaHQsQjdsMhSSTwVBLEUC5CahxNusmBioT5jejkSnmSVpQUDpRkSWAlCr0uQTNciKyBhT5DFRRymGmNgssJo7DpnNNmgnNiPiqcpAqT1frcZVL1LxNgvwsY5AWBQigDiTIAnPxgp7rSmfwufbISInMxZpKGgxd0MImdQ+pKWiAaA1Uiuo4FqekY0R6VAUBmGEjQVUzZkRM47aQPbqfkYIj1Ix9Ajb5VMLjTBUqppfbnmAHKUEtFWOFDmK2gtO1spJnganNBlpAAAA') format('woff2'),
+  url('iconfont.woff?t=1614059973457') format('woff'),
+  url('iconfont.ttf?t=1614059973457') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1614059973457#iconfont') format('svg'); /* iOS 4.1- */
+}
 .iconfont {
   font-family: "iconfont" !important;
   font-size: 16px;
@@ -14,7 +21,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 .icon-jiagebaozhang:before {
   content: "\e661";
 }
@@ -38,4 +51,13 @@
 .icon-agora_mianxiangyonglidejiejuefangan:before {
   content: "\e67c";
 }
+
+
+.icon-huiyuan:before {
+  content: "\e60a";
+}
+.icon-guanbi:before {
+  content: "\e6a6";
+}
+
 

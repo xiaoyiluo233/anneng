@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.LRTrucksDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Trucks">
+        <!--@Table trucks-->
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="tnumber" column="tnumber" jdbcType="VARCHAR"/>
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="parcelid" column="parcelId" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          tid, tnumber, eid, parcelId, state
+        from ane.trucks
+        where tid = #{tid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          tid, tnumber, eid, parcelId, state
+        from ane.trucks
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          tid, tnumber, eid, parcelId, state
+        from ane.trucks
+        <where>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="tnumber != null and tnumber != ''">
+                and tnumber = #{tnumber}
+            </if>
+            <if test="eid != null">
+                and eid = #{eid}
+            </if>
+            <if test="parcelid != null">
+                and parcelId = #{parcelid}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="tid" useGeneratedKeys="true">
+        insert into ane.trucks(tnumber, eid, parcelId, state)
+        values (#{tnumber}, #{eid}, #{parcelid}, #{state})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.trucks
+        <set>
+            <if test="tnumber != null and tnumber != ''">
+                tnumber = #{tnumber},
+            </if>
+            <if test="eid != null">
+                eid = #{eid},
+            </if>
+            <if test="parcelid != null">
+                parcelId = #{parcelid},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where tid = #{tid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.trucks where tid = #{tid}
+    </delete>
+
+</mapper>

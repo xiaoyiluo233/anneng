@@ -73,6 +73,11 @@
         delete from ane.rolemenu where roleId = #{roleId}
     </delete>
 
+    <!--通过菜单id删除-->
+    <delete id="deleteByMenuId">
+        delete from ane.rolemenu where menuId = #{menuid}
+    </delete>
+
     <!--根据角色id查询菜单id-->
     <select id="selectMenuIdByRoleId" resultType="String">
         select

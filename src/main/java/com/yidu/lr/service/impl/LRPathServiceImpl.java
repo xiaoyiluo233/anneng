@@ -1,8 +1,9 @@
 package com.yidu.lr.service.impl;
 
 import com.yidu.entity.Path;
-import com.yidu.lixiang.dao.PathDao;
+import com.yidu.lr.dao.LRPathDao;
 import com.yidu.lr.service.PathService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,8 +17,8 @@ import java.util.List;
  */
 @Service
 public class LRPathServiceImpl implements PathService {
-    @Resource
-    private PathDao pathDao;
+    @Autowired
+    private LRPathDao pathDao;
 
     /**
      * 通过ID查询单条数据
@@ -75,5 +76,10 @@ public class LRPathServiceImpl implements PathService {
     @Override
     public boolean deleteById(Integer pathid) {
         return this.pathDao.deleteById(pathid) > 0;
+    }
+
+    @Override
+    public List<Path> queryAll(Path path) {
+        return pathDao.queryAll(path);
     }
 }

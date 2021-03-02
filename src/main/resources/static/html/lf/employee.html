@@ -12,11 +12,11 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../js/sweetAlert.js"></script>
 </head>
 <body>
 <div class="modal fade" id="lookModal" tabindex="-1" role="dialog" aria-labelledby="lookModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document"style="margin-top:10%;">
+    <div class="modal-dialog" role="document"style="margin-top:5%;margin-bottom: 0px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -81,7 +81,7 @@
 </div>
 <table id="mytable"></table>
 <div class="modal fade"id="addModal"tabindex="-1"role="dialog"aria-labelledby="addModalLabel">
-    <div class="modal-dialog"role="document"style="margin-top:10%;">
+    <div class="modal-dialog"role="document"style="margin-top:5%;margin-bottom: 0px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button"class="close"data-dismiss="modal"aria-label="Close"><span
@@ -263,15 +263,12 @@
             }, {
                 title : '姓名',
                 field : 'ename',
-                sortable : true
             }, {
                 title : '密码',
                 field : 'epassword',
-                sortable : true
             },{
                 title : '年龄',
                 field : 'eage',
-                sortable : true,
                 /*//value代表当前单元格中的值，row代表当前行数据，index表示当前行的下标
                 formatter:function (value,row,index) {
                     return '<img src="img/'+value+'" width="20px" class="img-rounded"/>';
@@ -279,15 +276,12 @@
             },{
                 title : '性别',
                 field : 'esex',
-                sortable : true
             },{
                 title : '电话',
                 field : 'ephone',
-                sortable : true
             },{
                 title : '区级id',
                 field : 'districtid',
-                sortable : true
             },{
                 title : '状态',
                 field : 'state',
@@ -360,6 +354,7 @@
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
         url="emp_update";
+        $("#addModalLabel").text("修改");
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         // {#var data_json2 = eval("(" + data+ ")"); #}
@@ -484,6 +479,7 @@
     // 当点击【修改】按钮后，把模态框弹出来
     $("#btn_edit").on("click",function (){
         url="emp_update";
+        $("#addModalLabel").text("修改");
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);

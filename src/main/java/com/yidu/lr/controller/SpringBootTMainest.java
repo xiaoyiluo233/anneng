@@ -2,10 +2,8 @@ package com.yidu.lr.controller;
 
 import com.yidu.entity.*;
 import com.yidu.lr.service.*;
-import com.yidu.lr.service.impl.LRCityServiceImpl;
-import com.yidu.lr.service.impl.LRDistrictServiceImpl;
 import com.yidu.lr.service.impl.LROrdersServiceImpl;
-import com.yidu.lr.service.impl.LRProvinceServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +17,16 @@ import java.util.*;
 @SpringBootTest
 public class SpringBootTMainest {
     //省服务对象
-    @Autowired
-    private LRProvinceServiceImpl provinceService;
+    @Resource
+    private ProvinceService provinceService;
 
     //市服务对象
-    @Autowired
-    private LRCityServiceImpl cityService;
+    @Resource
+    private CityService cityService;
 
     //区服务对象
-    @Autowired
-    private LRDistrictServiceImpl districtService;
-
-    //线路服务对象
     @Resource
-    private PathService pathService;
+    private DistrictService districtService;
 
     //订单服务对象
     @Autowired
