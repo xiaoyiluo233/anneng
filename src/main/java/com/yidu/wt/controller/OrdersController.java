@@ -2,14 +2,20 @@ package com.yidu.wt.controller;
 
 import com.yidu.entity.Orders;
 import com.yidu.wt.service.OrdersService;
+import com.yidu.wt.util.BarCodeUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 /**
  * (Orders)表控制层
@@ -24,6 +30,8 @@ public class OrdersController {
      */
     @Resource
     private OrdersService ordersService;
+
+   // private String barcode="";
 
     /**
      * 查询所有
@@ -48,13 +56,40 @@ public class OrdersController {
     public HashMap<String,Object> selectLimit(int offset, int limit,String pvalue){
         return  ordersService.queryAllByLimit(offset,limit,pvalue);
     }
+
+    /**
+     * 新增订单
+     * @param orders 订单对象
+     * @return 返回结果
+     */
     @ResponseBody
     @RequestMapping("orders_insert")
-    public String insert(Orders orders){
+    public String insert(Orders orders,HttpServletRequest request){
+        //得到当前项目地址
+        String path=request.getServletContext().getRealPath("/");
+        File filePath = new File(path + "/myFile");
+        //判断指定地址是否存在
+        if(!filePath.exists()){
+            filePath.mkdir();
+            System.out.println("创建文件夹地址:"+filePath.getAbsolutePath());
+        }
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddhhmmss");
+        String imgname = df.format(new Date()) + ".png";
+        Random random=new Random();
+        int ran = random.nextInt(899999999) + 10000000;
+        String txm=ran+"s";
+        BarCodeUtils.getBarCode(txm,filePath+"\\"+imgname);
+        orders.setBarcode(imgname);
         //调用新增的方法
         String insert = ordersService.insert(orders);
         return insert;
     }
+
+    /**
+     * 修改订单
+     * @param orders 订单对象
+     * @return 返回结果
+     */
     @ResponseBody
     @RequestMapping("orders_update")
     public String update(Orders orders){
@@ -62,6 +97,12 @@ public class OrdersController {
         String update = ordersService.update(orders);
         return update;
     }
+
+    /**
+     * 删除订单
+     * @param oids 主键
+     * @return 返回结果
+     */
     @ResponseBody
     @RequestMapping("orders_delete")
     public String delete(String oids){
@@ -77,6 +118,7 @@ public class OrdersController {
      */
     @GetMapping("selectOne")
     public Orders selectOne(Integer id) {
+
         return this.ordersService.queryById(id);
     }
 
