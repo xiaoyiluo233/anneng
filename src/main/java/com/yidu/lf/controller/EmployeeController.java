@@ -163,4 +163,24 @@ public class EmployeeController {
         //调用查询方法并用返回结果
         return this.employeeService.selectEmpByRoleId(roleid);
     }
+
+    /**
+     * 判断旧密码是否正确而修改新密码
+     * @param oldPass 旧密码
+     * @param newPass 新密码
+     * @return 修改结果
+     */
+    @ResponseBody
+    @RequestMapping("emp_editPass")
+    public String eidtEmpPassByEid(String oldPass,String newPass,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Employee employee = (Employee) session.getAttribute("employee");
+        if(employee.getEpassword().equals(oldPass)){
+            //调用修改密码方法并用返回结果
+            return this.employeeService.editPassByEid(employee.getEid(),newPass);
+        }else{
+            return "no";
+        }
+
+    }
 }
