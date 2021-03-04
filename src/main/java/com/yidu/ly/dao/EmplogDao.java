@@ -1,31 +1,30 @@
 package com.yidu.ly.dao;
 
-import com.yidu.entity.Warehouse;
+import com.yidu.entity.Emplog;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 /**
- * (Warehouse)入库表持久层
+ * (Emplog) 日志表持久层
  *
  * @author makejava
- * @since 2020-12-31 13:53:28
+ * @since 2021-01-11 09:54:50
  */
 @Mapper
 @Repository
-public interface WarehouseDao {
-
-    int count(String name);
+public interface EmplogDao {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 实例对象
      */
-    Warehouse queryById(Integer wid);
+    Emplog queryById(Integer elid);
 
     /**
      * 查询指定行数据
@@ -35,38 +34,45 @@ public interface WarehouseDao {
      * @param name 查询值
      * @return 对象列表
      */
-    List<Warehouse> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit, @Param("name") String name);
+    List<Emplog> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit, @Param("type") Integer type);
+
+    /**
+     * 统计行数
+     *
+     * @return 影响行数
+     */
+    int count();
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 对象列表
      */
-    List<Warehouse> queryAll(Warehouse warehouse);
+    List<Emplog> queryAll(Emplog emplog);
 
     /**
      * 新增数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 影响行数
      */
-    int insert(Warehouse warehouse);
+    int insert(Emplog emplog);
 
     /**
      * 修改数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 影响行数
      */
-    int update(Warehouse warehouse);
+    int update(Emplog emplog);
 
     /**
      * 通过主键删除数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 影响行数
      */
-    int deleteById(Integer wid);
+    int deleteById(Integer elid);
 
 }

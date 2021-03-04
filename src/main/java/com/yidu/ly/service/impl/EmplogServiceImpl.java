@@ -1,35 +1,34 @@
 package com.yidu.ly.service.impl;
 
-import com.yidu.entity.Warehouse;
-import com.yidu.ly.dao.WarehouseDao;
-import com.yidu.ly.service.WarehouseService;
+import com.yidu.entity.Emplog;
+import com.yidu.ly.dao.EmplogDao;
+import com.yidu.ly.service.EmplogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
- * (Warehouse)入库表业务实现层
+ * (Emplog) 员工表业务实现层
  *
  * @author makejava
- * @since 2020-12-31 13:53:29
+ * @since 2021-01-11 09:54:50
  */
 @Service
-public class WarehouseServiceImpl implements WarehouseService {
+public class EmplogServiceImpl implements EmplogService {
 
     @Autowired
-    private WarehouseDao warehouseDao;
+    private EmplogDao emplogDao;
 
     /**
      * 通过ID查询单条数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 实例对象
      */
     @Override
-    public Warehouse queryById(Integer wid) {
-        return this.warehouseDao.queryById(wid);
+    public Emplog queryById(Integer elid) {
+        return emplogDao.queryById(elid);
     }
 
     /**
@@ -41,23 +40,23 @@ public class WarehouseServiceImpl implements WarehouseService {
      * @return 对象列表
      */
     @Override
-    public HashMap<String,Object> queryAllByLimit(int offset, int limit, String name) {
+    public HashMap<String,Object> queryAllByLimit(int offset, int limit, Integer name) {
         HashMap<String,Object> map=new HashMap<>();
-        map.put("rows",warehouseDao.queryAllByLimit(offset,limit,name));
-        map.put("total",warehouseDao.count(name));
+        map.put("rows",emplogDao.queryAllByLimit(offset, limit, name));
+        map.put("total",emplogDao.count());
         return map;
     }
 
     /**
      * 新增数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 实例对象
      */
     @Override
-    public String insert(Warehouse warehouse) {
+    public String insert(Emplog emplog) {
         String one;
-        if (warehouseDao.insert(warehouse)>0){
+        if (emplogDao.insert(emplog)>0){
             one="新增成功";
         }else {
             one="新增失败";
@@ -68,13 +67,13 @@ public class WarehouseServiceImpl implements WarehouseService {
     /**
      * 修改数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 实例对象
      */
     @Override
-    public String update(Warehouse warehouse) {
+    public String update(Emplog emplog) {
         String one;
-        if (warehouseDao.update(warehouse)>0){
+        if (emplogDao.update(emplog)>0){
             one="修改成功";
         }else {
             one="修改失败";
@@ -85,16 +84,16 @@ public class WarehouseServiceImpl implements WarehouseService {
     /**
      * 通过主键删除数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 是否成功
      */
     @Override
-    public String deleteById(Integer wid) {
+    public String deleteById(Integer elid) {
         String one;
-        if (warehouseDao.deleteById(wid)>0){
+        if (emplogDao.deleteById(elid)>0){
             one="删除成功";
         }else {
-            one="删除失败";
+            one="删除成功";
         }
         return one;
     }
