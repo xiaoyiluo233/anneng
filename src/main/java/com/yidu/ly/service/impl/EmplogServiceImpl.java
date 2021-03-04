@@ -55,7 +55,13 @@ public class EmplogServiceImpl implements EmplogService {
      */
     @Override
     public String insert(Emplog emplog) {
-        return emplogDao.insert(emplog)>0?"新增成功":"新增失败";
+        String one;
+        if (emplogDao.insert(emplog)>0){
+            one="新增成功";
+        }else {
+            one="新增失败";
+        }
+        return one;
     }
 
     /**
@@ -66,7 +72,13 @@ public class EmplogServiceImpl implements EmplogService {
      */
     @Override
     public String update(Emplog emplog) {
-        return emplogDao.update(emplog)>0?"修改成功":"修改失败";
+        String one;
+        if (emplogDao.update(emplog)>0){
+            one="修改成功";
+        }else {
+            one="修改失败";
+        }
+        return one;
     }
 
     /**
@@ -77,7 +89,13 @@ public class EmplogServiceImpl implements EmplogService {
      */
     @Override
     public String deleteById(Integer elid) {
-        return emplogDao.deleteById(elid) > 0?"删除成功":"删除失败";
+        String one;
+        if (emplogDao.deleteById(elid)>0){
+            one="删除成功";
+        }else {
+            one="删除成功";
+        }
+        return one;
     }
 
 }

@@ -29,7 +29,7 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public Warehouse queryById(Integer wid) {
-        return warehouseDao.queryById(wid);
+        return this.warehouseDao.queryById(wid);
     }
 
     /**
@@ -56,7 +56,13 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String insert(Warehouse warehouse) {
-        return warehouseDao.insert(warehouse)>0?"新增成功":"新增失败";
+        String one;
+        if (warehouseDao.insert(warehouse)>0){
+            one="新增成功";
+        }else {
+            one="新增失败";
+        }
+        return one;
     }
 
     /**
@@ -67,7 +73,13 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String update(Warehouse warehouse) {
-        return warehouseDao.update(warehouse)>0?"修改成功":"修改失败";
+        String one;
+        if (warehouseDao.update(warehouse)>0){
+            one="修改成功";
+        }else {
+            one="修改失败";
+        }
+        return one;
     }
 
     /**
@@ -78,7 +90,13 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String deleteById(Integer wid) {
-        return warehouseDao.deleteById(wid)>0?"删除成功":"删除失败";
+        String one;
+        if (warehouseDao.deleteById(wid)>0){
+            one="删除成功";
+        }else {
+            one="删除失败";
+        }
+        return one;
     }
 
 }
