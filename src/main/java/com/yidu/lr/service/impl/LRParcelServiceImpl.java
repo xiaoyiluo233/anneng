@@ -4,6 +4,7 @@ import com.yidu.entity.Parcel;
 import com.yidu.lr.controller.vo.ParcelStationVo;
 import com.yidu.lr.dao.LRParcelDao;
 import com.yidu.lr.service.ParcelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 @Service
 public class LRParcelServiceImpl implements ParcelService {
-    @Resource
+    @Autowired
     private LRParcelDao parcelDao;
 
     /**

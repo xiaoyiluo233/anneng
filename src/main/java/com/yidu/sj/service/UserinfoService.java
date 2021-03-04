@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * (Userinfo)表服务接口
+ * 用户表服务接口
  *
  * @author makejava
  * @since 2021-01-08 09:12:56

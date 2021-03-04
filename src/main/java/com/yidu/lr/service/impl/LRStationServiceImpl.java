@@ -3,6 +3,7 @@ package com.yidu.lr.service.impl;
 import com.yidu.entity.Station;
 import com.yidu.lr.dao.LRStationDao;
 import com.yidu.lr.service.StationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 @Service("stationService")
 public class LRStationServiceImpl implements StationService {
-    @Resource
+    @Autowired
     private LRStationDao stationDao;
 
     /**

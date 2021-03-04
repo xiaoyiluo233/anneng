@@ -146,7 +146,6 @@ public class TrucksServiceImpl implements TrucksService {
 
     /**
      * 修改数据
-     *
      * @param trucks 实例对象
      * @return 实例对象
      */
@@ -178,6 +177,7 @@ public class TrucksServiceImpl implements TrucksService {
         for (int i = 0; i < split.length; i++) {
             //调用删除的方法
             int deleteById = trucksDao.deleteById(Integer.parseInt(split[i]));
+            //判断是否删除成功
             if (deleteById>0){
                 result++;
             }

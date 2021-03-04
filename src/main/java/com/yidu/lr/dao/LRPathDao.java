@@ -13,6 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-11 10:12:32
  */
+@Repository
 @Mapper
 public interface LRPathDao {
 

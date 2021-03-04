@@ -4,6 +4,7 @@ import com.yidu.entity.Parcel;
 import com.yidu.lr.controller.vo.ParcelStationVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
  * @author makejava
  * @since 2021-01-01 17:39:15
  */
+@Repository
 @Mapper
 public interface LRParcelDao {
 

@@ -36,8 +36,11 @@
         select count(*) from orders;
     </select>
     <select id="selectAll" resultMap="BaseResultMap">
-        SELECT * FROM orders o1,prices p1,product p2 WHERE
-         o1.pid=p2.pid AND o1.priceid=p1.priceId
+        /*SELECT * FROM orders o1,prices p1,product p2 WHERE
+         o1.pid=p2.pid AND o1.priceid=p1.priceId*/
+         SELECT * FROM orders o1
+         left join prices p1 on o1.priceid=p1.priceId
+         left join product p2 on o1.pid=p2.pid
     </select>
      <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">

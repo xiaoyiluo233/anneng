@@ -4,6 +4,8 @@ import com.yidu.entity.Route;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -12,6 +14,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-01-11 16:23:49
  */
+@Repository
 @Mapper
 public interface LRRouteDao {
 

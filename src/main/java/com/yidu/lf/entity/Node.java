@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @description:
+ * @description: Tree节点类
  * @author: LvFang
  * date:2021/1/5 15:39
  * version:1.0

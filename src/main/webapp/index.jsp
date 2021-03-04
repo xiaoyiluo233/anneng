@@ -12,6 +12,7 @@
     <link rel="icon" href="img/LFimg/favicon-16x16.png" type="image/png" sizes="16*16" />
     <link rel="stylesheet" href="css/LFcss/index.css" />
     <link rel="stylesheet" href="css/toubu.css">
+    <link rel="stylesheet" href="css/iconfont.css">
     <script type="text/javascript" src="js/LFjs/jquery-1.10.2.js" ></script>
     <script type="text/javascript" src="js/LFjs/jquery.ui.effect.js" ></script>
     <script type="text/javascript" src="js/LFjs/jquery.numscroll.js" ></script>
@@ -47,7 +48,7 @@
 </div>
 <div id="head1">
     <div id="head_toub">
-        <a href="javaScript:;"><img src="img/LFimg/gym-logo.png"></a>
+        <a href="javaScript:;"><img src="img/gym-logo.png"></a>
         <dl>
             <dt class="navmenu">首页</dt>
             <dt class="navmenu">自助服务
@@ -110,7 +111,7 @@
                     <a href="javaScript:;"><li>开放平台</li></a>
                 </ul>
             </dt>
-            <a href="javaScript:;"><dt class="tou_imgs"><i class="iconfont icon-yuangong"></i>&nbsp;快速登陆/注册</dt></a>
+            <a href="javaScript:;"><dt id="hys" class="tou_imgs"><i class="iconfont icon-yuangong"></i>&nbsp;快速登陆/注册</dt></a>
             <dt id="ygs" class="tou_imgs"><i class="iconfont icon-diannao"></i>&nbsp;员工专区</dt>
         </dl>
     </div>
@@ -132,6 +133,58 @@
         </div>
     </div>
 </div>
+<div id="tou_hy">
+    <div id="tou_hys">
+        <div id="hy">
+            <a href="javaScript:;">
+                <dt><i class="iconfont icon-huiyuan"></i>&nbsp;会员中心</dt>
+            </a>
+            <a href="javaScript:;">
+                <dt id="xiang"><i class="iconfont icon-guanbi"></i>&nbsp;退出账号</dt>
+            </a>
+        </div>
+    </div>
+</div>
+<script>
+    window.onscroll= function(){
+
+        var t = document.documentElement.scrollTop||document.body.scrollTop;
+        var scrollup = document.getElementById('head_tou');
+        //alert(scrollup);
+        //当滚动到距离顶部100px时，返回顶部的锚点显示
+        if(t>=100){
+            scrollup.style.opacity="1";
+        }else{          //恢复正常
+            scrollup.style.opacity="0.1";
+        }
+    }
+    $(function(){
+        $("#ygs").click(function(){//按钮绑定点击事件
+            if(document.getElementById("yg").style.display=="block"){
+                document.getElementById("yg").style.display="none";
+            }else{
+                document.getElementById("yg").style.display="block";
+            }
+        });
+    });
+    $(function(){
+        $("#hys").click(function(){//按钮绑定点击事件
+            if(document.getElementById("hy").style.display=="block"){
+                document.getElementById("hy").style.display="none";
+            }else{
+                document.getElementById("hy").style.display="block";
+            }
+        });
+    });
+    $(function() {
+        $('.navmenu').mouseover(function() {
+            $(this).children('ul').show();
+        });
+        $('.navmenu').mouseout(function() {
+            $(this).children('ul').hide();
+        });
+    })
+</script>
 <a name="one"></a>
 <div style="height: 70%;"></div>
 <div id="content">

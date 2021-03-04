@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lr.dao.LRRouteDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Route">
+        <!--@Table route-->
+        <result property="routeid" column="routeId" jdbcType="INTEGER"/>
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="pathid" column="pathId" jdbcType="INTEGER"/>
+        <result property="starttime" column="startTime" jdbcType="VARCHAR"/>
+        <result property="arrivetime" column="arriveTime" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="sql">routeid,tnumber,s1.stationName startstationName,stationIds,s2.stationName endstationName,startTime,arriveTime</sql>
+    <select id="selectAll" resultType="com.yidu.lr.controller.vo.RouteTrucksPathVo">
+       SELECT <include refid="sql"></include> FROM route r
+              LEFT JOIN trucks t ON r.`tid`=t.`tid`
+              LEFT JOIN path p ON r.`pathId`=p.`pathId`
+              LEFT JOIN station s1 ON p.`startStation`=s1.`stationId`
+              LEFT JOIN station s2 ON p.`destination`=s2.`stationId`;
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          routeId, tid, pathId, startTime, arriveTime
+        from ane.route
+        where routeId = #{routeid}
+    </select>
+
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          routeId, tid, pathId, startTime, arriveTime
+        from ane.route
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          routeId, tid, pathId, startTime, arriveTime
+        from ane.route
+        <where>
+            <if test="routeid != null">
+                and routeId = #{routeid}
+            </if>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="pathid != null">
+                and pathId = #{pathid}
+            </if>
+            <if test="starttime != null and starttime != ''">
+                and startTime = #{starttime}
+            </if>
+            <if test="arrivetime != null and arrivetime != ''">
+                and arriveTime = #{arrivetime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="routeid" useGeneratedKeys="true">
+        insert into ane.route(tid, pathId, startTime, arriveTime)
+        values (#{tid}, #{pathid}, #{starttime}, #{arrivetime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.route
+        <set>
+            <if test="tid != null">
+                tid = #{tid},
+            </if>
+            <if test="pathid != null">
+                pathId = #{pathid},
+            </if>
+            <if test="starttime != null and starttime != ''">
+                startTime = #{starttime},
+            </if>
+            <if test="arrivetime != null and arrivetime != ''">
+                arriveTime = #{arrivetime},
+            </if>
+        </set>
+        where routeId = #{routeid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.route where routeId = #{routeid}
+    </delete>
+
+</mapper>

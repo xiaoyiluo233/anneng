@@ -2,16 +2,13 @@ package com.yidu.lr.controller;
 
 import com.yidu.entity.*;
 import com.yidu.lr.service.*;
-import com.yidu.lr.service.impl.LRCityServiceImpl;
-import com.yidu.lr.service.impl.LRDistrictServiceImpl;
 import com.yidu.lr.service.impl.LROrdersServiceImpl;
-import com.yidu.lr.service.impl.LRProvinceServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -19,28 +16,17 @@ import java.util.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootTMainest {
-
-    @Autowired
-    Parcel parcel1;
-    @Autowired
-    Parcel parcel2;
-    @Autowired
-    Parcel parcel3;
     //省服务对象
-    @Autowired
-    private LRProvinceServiceImpl provinceService;
+    @Resource
+    private ProvinceService provinceService;
 
-    //市服务对象开始你的表演                                      k
-    @Autowired
-    private LRCityServiceImpl cityService;
+    //市服务对象
+    @Resource
+    private CityService cityService;
 
     //区服务对象
-    @Autowired
-    private LRDistrictServiceImpl districtService;
-
-    //线路服务对象
     @Resource
-    private PathService pathService;
+    private DistrictService districtService;
 
     //订单服务对象
     @Autowired
@@ -65,17 +51,12 @@ public class SpringBootTMainest {
     //省信息暂存集合
     List<Province> listProvince = new ArrayList<>();
     //订单信息暂存集合
-    List<Orders> ordersList = new ArrayList<>();
+    List<Orders> orders = new ArrayList<>();
 
     //创建省市区set集合
     HashSet<Integer> setprovince=new HashSet<>();
     HashSet<Integer> setcity=new HashSet<>();
     HashSet<Integer> setdistrict=new HashSet<>();
-
-    //创建省市区中转站set集合
-    HashSet<Integer> provincestation=new HashSet<>();
-    HashSet<Integer> setcitystation=new HashSet<>();
-    HashSet<Integer> setdistrictstation=new HashSet<>();
 
     //创建省市区map集合
     HashMap provincemap = new HashMap();
@@ -105,7 +86,7 @@ public class SpringBootTMainest {
 
 
         //循环订单列表
-        for (Orders order : ordersList) {
+        for (Orders order : orders) {
             //单个订单信息 （根据订单货物id查询货物信息）
             Product product = productService.queryById(order.getPid());
 
@@ -159,78 +140,35 @@ public class SpringBootTMainest {
             }
             count++;
         }
-        //新增包裹数据
         //输出省
         Set set = provincemap.keySet();
         for (Object o : set) {
-
             System.out.println("省id"+o+"="+provincemap.get(o));
-            parcel1.setOid(provincemap.get(o).toString());
-            parcel1.setState(1);
-            System.out.println("parcel = " + parcel1);
-            parcelService.insert(parcel1);
-
         }
         //输出市
         Set set1 = citymap.keySet();
         for (Object o : set1) {
             System.out.println("市id"+o+"="+citymap.get(o));
-            parcel2.setOid(citymap.get(o).toString());
-            parcel2.setState(2);
-            parcelService.insert(parcel2);
-
         }
         //输出区
         Set set2 = districtmap.keySet();
         for (Object o : set2) {
             System.out.println("区id"+o+"="+districtmap.get(o));
-            parcel3.setOid(districtmap.get(o).toString());
-            parcel3.setState(3);
-            parcelService.insert(parcel3);
-
         }
+
     }
 
-    @Test
-    public void forinsertSet(){
-        //输出省
-        Set set = provincemap.keySet();
-        for (Object o : set) {
-            System.out.println("省id"+o+"="+provincemap.get(o));
-            parcel1.setOid(provincemap.get(o).toString());
-            parcel1.setState(1);
-            System.out.println("parcel = " + parcel1);
-            parcelService.insert(parcel1);
 
-        }
-        //输出市
-        Set set1 = citymap.keySet();
-        for (Object o : set1) {
-            System.out.println("市id"+o+"="+citymap.get(o));
-            parcel2.setOid(citymap.get(o).toString());
-            parcel2.setState(2);
-            parcelService.insert(parcel2);
 
-        }
-        //输出区
-        Set set2 = districtmap.keySet();
-        for (Object o : set2) {
-            System.out.println("区id"+o+"="+districtmap.get(o));
-            parcel3.setOid(districtmap.get(o).toString());
-            parcel3.setState(3);
-            parcelService.insert(parcel3);
-
-        }
-    }
 
 
     @Test
     public void forOrders(){
         //所有订单对象列表
-        ordersList = ordersService.queryAll(null);
+        orders = ordersService.queryAll(null);
 
         //循环
-        for (Orders order : ordersList) {
+        for (Orders order : orders) {
             //单个订单信息 （根据订单货物id查询货物信息）
             Product product = productService.queryById(order.getPid());
 
@@ -259,9 +197,17 @@ public class SpringBootTMainest {
 
     @Test
     public void test01(){
-        System.out.println(parcelService.queryAll(null));
+        String[] str1="1-2-3".split("-");
+        for (int i = 0; i < str1.length; i++) {
+            System.out.println("str1[i] = " + str1[i]);
+        }
 
+        String[] str2="1-2-3-".split("-");
+        for (int i = 0; i < str2.length; i++) {
+            System.out.println("str2[i] = " + str2[i]);
+        }
 
+        
     }
 
 }

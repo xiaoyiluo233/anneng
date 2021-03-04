@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Service
 public class LRPathServiceImpl implements PathService {
-    @Resource
+    @Autowired
     private LRPathDao pathDao;
 
     /**
