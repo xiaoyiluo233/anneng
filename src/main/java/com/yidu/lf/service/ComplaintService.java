@@ -1,6 +1,8 @@
 package com.yidu.lf.service;
 
-import com.yidu.lf.entity.Complaint;
+import com.yidu.entity.Complaint;
+
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,23 +28,23 @@ public interface ComplaintService {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Complaint> queryAllByLimit(int offset, int limit);
+    HashMap<String,Object> queryAllByLimit(int offset, int limit , String text);
 
     /**
      * 新增数据
      *
      * @param complaint 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
-    Complaint insert(Complaint complaint);
+    boolean insert(Complaint complaint);
 
     /**
      * 修改数据
      *
      * @param complaint 实例对象
-     * @return 实例对象
+     * @return 是否成功
      */
-    Complaint update(Complaint complaint);
+    boolean update(Complaint complaint);
 
     /**
      * 通过主键删除数据

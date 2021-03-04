@@ -175,8 +175,6 @@ public class EmployeeController {
     public String eidtEmpPassByEid(String oldPass,String newPass,HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("employee");
-        System.out.println("oldPass = " + oldPass);
-        System.out.println("employee.getEpassword() = " + employee.getEpassword());
         if(employee.getEpassword().equals(oldPass)){
             //调用修改密码方法并用返回结果
             return this.employeeService.editPassByEid(employee.getEid(),newPass);

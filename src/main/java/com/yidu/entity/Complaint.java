@@ -1,5 +1,7 @@
 package com.yidu.entity;
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
 /**
@@ -8,6 +10,7 @@ import java.io.Serializable;
  * @author makejava
  * @since 2021-03-03 13:58:48
  */
+@Component
 public class Complaint implements Serializable {
     private static final long serialVersionUID = 334144165412279573L;
     
@@ -28,6 +31,8 @@ public class Complaint implements Serializable {
     private String ordersid;
     
     private String content;
+
+    private Integer state;
 
 
     public Integer getComplaintid() {
@@ -102,4 +107,11 @@ public class Complaint implements Serializable {
         this.content = content;
     }
 
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
 }

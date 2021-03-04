@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yidu.dao.ComplaintDao">
+<mapper namespace="com.yidu.lf.dao.ComplaintDao">
 
     <resultMap id="BaseResultMap" type="com.yidu.entity.Complaint">
         <!--@Table complaint-->
@@ -13,12 +13,13 @@
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="ordersid" column="ordersId" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content
+          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
         from ane.complaint
         where complaintId = #{complaintid}
     </select>
@@ -26,15 +27,20 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content
+        complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
         from ane.complaint
+        <where>
+            <if test="text != null and text != ''">
+                and ordersId like '%${text}%'
+            </if>
+        </where>
         limit #{offset}, #{limit}
     </select>
 
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content
+          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
         from ane.complaint
         <where>
             <if test="complaintid != null">
@@ -63,6 +69,9 @@
             </if>
             <if test="content != null and content != ''">
                 and content = #{content}
+            </if>
+            <if test="state != null">
+                and state = #{state}
             </if>
         </where>
     </select>
@@ -101,6 +110,9 @@
             <if test="content != null and content != ''">
                 content = #{content},
             </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
         </set>
         where complaintId = #{complaintid}
     </update>
@@ -110,4 +122,13 @@
         delete from ane.complaint where complaintId = #{complaintid}
     </delete>
 
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.complaint
+        <where>
+            <if test="text!=null and text != ''">
+                ordersId like '%${text}%'
+            </if>
+        </where>
+    </select>
 </mapper>

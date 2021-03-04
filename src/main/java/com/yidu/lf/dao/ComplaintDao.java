@@ -1,7 +1,11 @@
 package com.yidu.lf.dao;
 
-import com.yidu.lf.entity.Complaint;
+import com.yidu.entity.Complaint;
+import com.yidu.entity.Complaint;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -10,6 +14,8 @@ import java.util.List;
  * @author makejava
  * @since 2021-03-03 13:55:23
  */
+@Repository
+@Mapper
 public interface ComplaintDao {
 
     /**
@@ -27,7 +33,7 @@ public interface ComplaintDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<Complaint> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<Complaint> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit,@Param("text") String text);
 
 
     /**
@@ -61,5 +67,12 @@ public interface ComplaintDao {
      * @return 影响行数
      */
     int deleteById(Integer complaintid);
+
+    /**
+     * 统计行数
+     * @param text 查询文本
+     * @return 行数
+     */
+    int count(String text);
 
 }

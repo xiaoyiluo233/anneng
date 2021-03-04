@@ -123,7 +123,7 @@ WHERE e1.`eid`=e2.`eid` AND r1.`roleId`=e2.`roleId` AND r1.`roleId`=#{roleid};
 
     </select>
 
-    <!--通过主键删除-->
+    <!--通过主键修改密码-->
     <update id="editPassByEid">
         update ane.employee set epassword=#{newPass} where eid = #{eid}
     </update>
