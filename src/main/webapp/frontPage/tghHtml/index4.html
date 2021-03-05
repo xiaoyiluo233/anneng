@@ -7,6 +7,7 @@
 		<!--可无视-->
 		<link href="../../css/tghcss/main.css" rel="stylesheet" type="text/css" />
 		<link href="../../css/tghcss/iconfont4.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/tghcss/iconfontimg.css" rel="stylesheet" type="text/css" />
 		<!-- <script type="text/javascript" src="js/num-alignment.js"></script> -->
 		<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
 		<!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
@@ -15,8 +16,16 @@
 		<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<link href="../../tghcss/css/city-picker.css" rel="stylesheet" type="text/css" />
 
+<style>
+	.iconfont {
+	  font-family: "iconfont" !important;
+	  font-size: 16px;
+	  font-style: normal;
+	  -webkit-font-smoothing: antialiased;
+	  -moz-osx-font-smoothing: grayscale;
+	}
 
-		</style>
+</style>
 	</head>
 	<body style="background: rgb(247, 247, 247);">
 		<div id="bodymax1">
@@ -116,43 +125,48 @@
 					</li>
 				</ul>
 			</div>
-			<div id="tou_yg">
-				<div id="tou_ygs">
-					<div id="yg">
-						<dl>
-							<a href="javaScript:;"><dt>&nbsp;&nbsp;OA登录
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
-							</dt></a>
-							<a href="javaScript:;"><dt id="dier">&nbsp;&nbsp;企业邮箱
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
-							</dt></a>
-							<a href="javaScript:;"><dt>&nbsp;&nbsp;网点信息门户
-								&nbsp;<span>&gt;</span>
-							</dt></a>
-						</dl>
-					</div>
-				</div>
-			</div>
-			
-			<div id="tou_yg2">
-				<div id="tou_ygs2">
-					<div id="yg2">
-						<dl>
-							<a href="javaScript:;"><dt>&nbsp;&nbsp;会员中心
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
-							</dt></a>
-							<a href="javaScript:;"><dt id="dier2">&nbsp;&nbsp;退出账号
-								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span>
-							</dt></a>
-							
-						</dl>
-					</div>
-				</div>
-			</div>
 			<div id="headright">
 				<ul>
-					<li id="ygs2"><img src="../../img/tghimg/用户.png">18373457821</li>
-					<li id="ygs"><img src="../../img/tghimg/电脑.png">员工专区</li>
+					<li id="yy1"><img src="../../img/tghimg/用户.png">18373457821</li>
+					<div id="yonghu" style="width: 128px; height: 88px;  ridge;position: fixed; display: none;
+				margin-top: 60px;margin-left: 10px;border-radius: 5px 5px 5px 5px; background-color: #8f8f8f;">
+						<dl style=" text-decoration:none;"><a style=" text-decoration:none;" href="javaScript:;">
+								<dt style="font-size: 14px;color: white;width: 128px;
+							height: 44px;text-align: center;line-height: 44px;font-weight: 400;">
+									<i class="iconfont">&#xe611;</i>&nbsp;&nbsp;&nbsp;会员中心
+				
+								</dt></a>
+							<a style=" text-decoration: none;" href="javaScript:;">
+								<dt style="font-size: 14px;color: white;width: 128px;
+							height: 44px;text-align: center;line-height: 44px;font-weight: 400;">
+									<i class="iconfont">&#xe615;</i>&nbsp;&nbsp;&nbsp;退出账号
+								</dt></a>
+						</dl>
+				
+					</div>
+				
+					<li id="yy11"><img src="../../img/tghimg/电脑.png">员工专区</li>
+					<div id="yonghu1" style="width: 125px; height: 135px;  ridge;position: fixed; display: none;
+									margin-top: 60px;margin-left: 135px;border-radius: 5px 5px 5px 5px; background-color: #8f8f8f;">
+						<dl><a style=" text-decoration: none;" href="javaScript:;">
+								<dt style="font-size: 14px;color: white;width: 128px;
+												height: 44px;text-align: center;line-height: 44px; font-weight: 400;">OA登录
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&gt;</span></dt>
+								</dt></a><!-- font-weight: lighter; -->
+				
+							<a style=" text-decoration: none;" href="javaScript:;"><dt style="font-size: 14px;color: white;width: 128px;
+												height: 44px;text-align: center;line-height: 44px; font-weight: 400;">
+									企业邮箱&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<span>&gt;</span></dt>
+								</dt></a>
+							<a style=" text-decoration: none;" href="javaScript:;"><dt style="font-size: 14px;color: white;width: 128px;
+												height: 44px;text-align: center;line-height: 44px; font-weight: 400;">
+									网点信息门户
+									<span>&gt;</span></dt>
+								</dt></a>
+						</dl>
+				
+					</div>
 				</ul>
 			</div>
 		</div>
@@ -601,24 +615,31 @@
 			}
 		})
 		
-		$(function(){
-				    $("#ygs").click(function(){//按钮绑定点击事件
-				        if(document.getElementById("yg").style.display=="block"){
-							document.getElementById("yg").style.display="none";
-				        }else{
-							document.getElementById("yg").style.display="block";
-							
-				        }
-				    });	
-				});
-				$(function(){
-				    $("#ygs2").click(function(){//按钮绑定点击事件
-				        if(document.getElementById("yg2").style.display=="block"){
-							document.getElementById("yg2").style.display="none";
-				        }else{
-							document.getElementById("yg2").style.display="block";
-				        }
-				    });	
-				});
+		/* 点击事件, */
+		$(function() {
+			$("#yy1").click(function() { //按钮绑定点击事件
+				if (document.getElementById("yonghu").style.display == "block") {
+					document.getElementById("yonghu").style.display = "none";
+		
+				} else {
+					document.getElementById("yonghu").style.display = "block";
+		
+				}
+			});
+		});
+		
+		
+		/* 点击事件, */
+		$(function() {
+			$("#yy11").click(function() { //按钮绑定点击事件
+				if (document.getElementById("yonghu1").style.display == "block") {
+					document.getElementById("yonghu1").style.display = "none";
+		
+				} else {
+					document.getElementById("yonghu1").style.display = "block";
+		
+				}
+			});
+		});
 	</script>
 </html>
