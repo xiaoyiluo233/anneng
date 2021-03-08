@@ -6,6 +6,7 @@ import com.yidu.lixiang.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -24,6 +25,20 @@ public class StationController {
      */
     @Autowired
     private StationService stationService;
+
+    @RequestMapping("station_getStation")
+    public ModelAndView getStation(City city){
+        System.out.println("StationController.getStation");
+        //创建一个返回类
+        ModelAndView mv=new ModelAndView();
+        //调用得到中转站的方法
+        List<Station> stations = stationService.stationAndCity(city);
+        //设置到返回类中
+        mv.addObject("stations",stations);
+        //设置返回页面
+        mv.setViewName("frontPage/test");
+        return mv;
+    }
 
     @RequestMapping(value = "station_delete",produces = {("application/json;charset=utf-8")})
     @ResponseBody
