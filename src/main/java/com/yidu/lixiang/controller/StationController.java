@@ -26,9 +26,13 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
+    /**
+     * 连接前台页面的方法
+     * @param city 市级实体类
+     * @return ModelAndView
+     */
     @RequestMapping("station_getStation")
     public ModelAndView getStation(City city){
-        System.out.println("StationController.getStation");
         //创建一个返回类
         ModelAndView mv=new ModelAndView();
         //调用得到中转站的方法
@@ -40,24 +44,46 @@ public class StationController {
         return mv;
     }
 
+    /**
+     * 根据id数组删除指定的中转站
+     * @param stationids 中转站id数组
+     * @return 删除成功
+     */
     @RequestMapping(value = "station_delete",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String delete(String stationids){
         return stationService.deleteById(stationids);
     }
 
+    /**
+     * 修改中转站的信息
+     * @param station 中转站实体类
+     * @param citynames 市级名
+     * @return 修改成功
+     */
     @ResponseBody
     @RequestMapping(value = "station_update",produces = {("application/json;charset=utf-8")})
     public String update(Station station,String citynames){
         return stationService.update(station, citynames);
     }
 
+    /**
+     * 新增中转站
+     * @param station 中转站实体类
+     * @param citynames 市级名
+     * @return 新增成功
+     */
     @ResponseBody
     @RequestMapping(value = "station_insert",produces = {("application/json;charset=utf-8")})
     public String insert(Station station,String citynames){
         return stationService.insert(station,citynames);
     }
 
+    /**
+     * 查出所有的中转站以及对应的市级
+     * @param city 市级实体类
+     * @return 中转站集合
+     */
     @ResponseBody
     @RequestMapping("station_stationAndCity")
     public List<Station> stationAndCity(City city){

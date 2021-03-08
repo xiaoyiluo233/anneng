@@ -27,7 +27,7 @@ public class StationServiceImpl implements StationService {
 
     /**
      * 查询所有的中转站以及对应的城市实体类
-     * @return
+     * @return 中转站集合
      */
     @Override
     public List<Station> stationAndCity(City city) {

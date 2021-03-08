@@ -10,7 +10,11 @@ import java.util.List;
  * @version 1.0
  */
 public interface CityService {
-
+    /**
+     * 得到省级名称
+     * @param city 市级实体类
+     * @return 省级名称
+     */
     String getProvinceName(City city);
 
     /**
