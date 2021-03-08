@@ -30,9 +30,9 @@ public class StationServiceImpl implements StationService {
      * @return
      */
     @Override
-    public List<Station> stationAndCity() {
+    public List<Station> stationAndCity(City city) {
         //调用查询所有的方法
-        List<Station> stations = stationDao.stationAndCity();
+        List<Station> stations = stationDao.stationAndCity(city);
         return stations;
     }
 

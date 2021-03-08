@@ -1,5 +1,6 @@
 package com.yidu.lixiang.controller;
 
+import com.yidu.entity.City;
 import com.yidu.entity.Station;
 import com.yidu.lixiang.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,8 @@ public class StationController {
 
     @ResponseBody
     @RequestMapping("station_stationAndCity")
-    public List<Station> stationAndCity(){
-        return stationService.stationAndCity();
+    public List<Station> stationAndCity(City city){
+        return stationService.stationAndCity(city);
     }
 
     /**
