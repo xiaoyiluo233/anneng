@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lf.dao.ComplaintDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Complaint">
+        <!--@Table complaint-->
+        <result property="complaintid" column="complaintId" jdbcType="INTEGER"/>
+        <result property="questiontype" column="questionType" jdbcType="INTEGER"/>
+        <result property="customertype" column="customerType" jdbcType="INTEGER"/>
+        <result property="complaint" column="complaint" jdbcType="INTEGER"/>
+        <result property="customername" column="customerName" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="ordersid" column="ordersId" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
+        from ane.complaint
+        where complaintId = #{complaintid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+        complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
+        from ane.complaint
+        <where>
+            <if test="text != null and text != ''">
+                and ordersId like '%${text}%'
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          complaintId, questionType, customerType, complaint, customerName, phone, email, ordersId, content, state
+        from ane.complaint
+        <where>
+            <if test="complaintid != null">
+                and complaintId = #{complaintid}
+            </if>
+            <if test="questiontype != null">
+                and questionType = #{questiontype}
+            </if>
+            <if test="customertype != null">
+                and customerType = #{customertype}
+            </if>
+            <if test="complaint != null">
+                and complaint = #{complaint}
+            </if>
+            <if test="customername != null and customername != ''">
+                and customerName = #{customername}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="ordersid != null and ordersid != ''">
+                and ordersId = #{ordersid}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="complaintid" useGeneratedKeys="true">
+        insert into ane.complaint(questionType, customerType, complaint, customerName, phone, email, ordersId, content)
+        values (#{questiontype}, #{customertype}, #{complaint}, #{customername}, #{phone}, #{email}, #{ordersid}, #{content})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.complaint
+        <set>
+            <if test="questiontype != null">
+                questionType = #{questiontype},
+            </if>
+            <if test="customertype != null">
+                customerType = #{customertype},
+            </if>
+            <if test="complaint != null">
+                complaint = #{complaint},
+            </if>
+            <if test="customername != null and customername != ''">
+                customerName = #{customername},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="ordersid != null and ordersid != ''">
+                ordersId = #{ordersid},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where complaintId = #{complaintid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.complaint where complaintId = #{complaintid}
+    </delete>
+
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(0) from ane.complaint
+        <where>
+            <if test="text!=null and text != ''">
+                ordersId like '%${text}%'
+            </if>
+        </where>
+    </select>
+</mapper>

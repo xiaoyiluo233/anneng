@@ -1,25 +1,24 @@
 package com.yidu.ly.service;
 
-import com.yidu.entity.Warehouse;
+import com.yidu.entity.Emplog;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
- * (Warehouse)入库表业务层
+ * (Emplog) 员工表业务层
  *
  * @author makejava
- * @since 2020-12-31 13:53:29
+ * @since 2021-01-11 09:54:50
  */
-public interface WarehouseService {
+public interface EmplogService {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 实例对象
      */
-    Warehouse queryById(Integer wid);
+    Emplog queryById(Integer elid);
 
     /**
      * 查询多条数据
@@ -29,30 +28,30 @@ public interface WarehouseService {
      * @param name 查询值
      * @return 对象列表
      */
-    HashMap<String,Object> queryAllByLimit(int offset, int limit, String name);
+    HashMap<String,Object> queryAllByLimit(int offset, int limit, Integer name);
 
     /**
      * 新增数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 实例对象
      */
-    String insert(Warehouse warehouse);
+    String insert(Emplog emplog);
 
     /**
      * 修改数据
      *
-     * @param warehouse 实例对象
+     * @param emplog 实例对象
      * @return 实例对象
      */
-    String update(Warehouse warehouse);
+    String update(Emplog emplog);
 
     /**
      * 通过主键删除数据
      *
-     * @param wid 主键
+     * @param elid 主键
      * @return 是否成功
      */
-    String deleteById(Integer wid);
+    String deleteById(Integer elid);
 
 }
