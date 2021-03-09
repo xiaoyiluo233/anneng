@@ -175,7 +175,7 @@ margin: auto 0;
 #centerzuoyi2 {
 	width: 1140px;
 	height: 90px;
-	z-index: 1000px;
+	z-index: 1000;
 }
 
 #centerzuoyi2>hr {

@@ -3,7 +3,7 @@
 padding: 0px;
 }
 #tou_yg2{
-	width: 130;
+	width: 130px;
 	height:130px ;
 	position: fixed;
 	top: 80px;
@@ -174,7 +174,7 @@ margin: auto 0;
 #centerzuoyi2 {
 	width: 1140px;
 	height: 90px;
-	z-index: 1000px;
+	z-index: 1000;
 }
 
 #centerzuoyi2>hr {
@@ -916,7 +916,7 @@ table {
 	box-shadow: 2px 10px 12px -9px rgba(251, 135, 0, 0.4);
 	margin-left: 10px;
 	color: #666666;
-	;
+
 
 }
 

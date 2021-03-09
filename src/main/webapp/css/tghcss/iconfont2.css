@@ -7,8 +7,8 @@
 			#dizhifu1{
 				width: 800px;
 				height: 850px;
-				border: 1px red ridge;
-				position:absolute/fixed;
+				border: 1px #ff0000 ridge;
+				position:fixed;
 				left:0;
 				right:0;
 				top:0;
@@ -107,7 +107,7 @@
 				position: fixed;
 				top: 0px;
 				z-index: 99;
-				background:#f7f7f7
+				background:#f7f7f7;
 				margin: auto 0;
 
 			}
@@ -192,7 +192,7 @@
 			#centerzuoyi2 {
 				width: 1140px;
 				height: 90px;
-				z-index: 1000px;
+				z-index: 1000;
 			}
 
 			#centerzuoyi2>hr {
@@ -287,7 +287,7 @@
 			#biaodanzuoyi>input> {
 				width: 561px;
 				height: 51px;
-				border: red 1px ridge;
+				border: #ff0000 1px ridge;
 			}
 
 			#biaodanzuoer {
