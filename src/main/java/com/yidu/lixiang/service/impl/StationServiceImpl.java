@@ -25,16 +25,19 @@ public class StationServiceImpl implements StationService {
     @Autowired
     private CityDao cityDao;
 
+    /**
+     * 查询所有的中转站以及对应的城市实体类
+     * @return
+     */
     @Override
-    public List<Station> stationAndCity() {
+    public List<Station> stationAndCity(City city) {
         //调用查询所有的方法
-        List<Station> stations = stationDao.stationAndCity();
+        List<Station> stations = stationDao.stationAndCity(city);
         return stations;
     }
 
     /**
      * 通过ID查询单条数据
-     *
      * @param stationid 主键
      * @return 实例对象
      */
@@ -45,7 +48,6 @@ public class StationServiceImpl implements StationService {
 
     /**
      * 查询多条数据
-     *
      * @param offset 查询起始位置
      * @param limit 查询条数
      * @return 对象列表
@@ -57,7 +59,6 @@ public class StationServiceImpl implements StationService {
 
     /**
      * 新增数据
-     *
      * @param station 实例对象
      * @return 实例对象
      */
@@ -73,6 +74,7 @@ public class StationServiceImpl implements StationService {
         for (int i = 0; i < cities.size(); i++) {
             //得到城市id
             Integer cityid = cities.get(i).getCityid();
+            //将得到的城市id存进城市实体类中
             station.setCityid(cityid);
         }
         //调用新增的方法
@@ -87,7 +89,6 @@ public class StationServiceImpl implements StationService {
 
     /**
      * 修改数据
-     *
      * @param station 实例对象
      * @return 实例对象
      */
@@ -103,6 +104,7 @@ public class StationServiceImpl implements StationService {
         for (int i = 0; i < cities.size(); i++) {
             //得到城市id
             Integer cityid = cities.get(i).getCityid();
+            //将得到的城市id存进城市实体类中
             station.setCityid(cityid);
         }
         //调用修改的方法
@@ -117,7 +119,6 @@ public class StationServiceImpl implements StationService {
 
     /**
      * 通过主键删除数据
-     *
      * @param stationids 主键
      * @return 删除成功
      */
