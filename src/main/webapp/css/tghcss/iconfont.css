@@ -1,23 +1,39 @@
+
+
 <style type="text/css">
 			#{margin: 0px;
 			padding: 0px;
 			}
-			
-			
-/* .city-picker-span {
-    width: 368px;
-    height: 48px;
-    line-height: 49px;
-} */
-
-
-
 #tou_yg2{
-	width: 130;
+	width: 130px;
 	height:130px ;
 	position: fixed;
-	top: 80px;
-	z-index: 2;
+	top: 80px;}
+	z#headcentre ul>li>div>dl {
+		width: 128px;
+		height: 218px;
+		letter-spacing: 2px;
+		margin-top: 15px;
+
+	}
+
+#headcentre ul>li>div>dl>dt {
+	width: 126px;
+	height: 45px;
+	background-color: #ffffff;
+	box-shadow: 0.2px 0.1px 0.2px 0.5px #dcdee5;
+	color: #000;
+	font-size: 14px;
+	text-align: center;
+	line-height: 45px;
+	font-weight: lighter;
+	font-family: 黑体;
+
+
+
+
+
+z-index: 2;
 }
 #tou_ygs2{
 	width:1140px;
@@ -186,7 +202,7 @@
 			#centerzuoyi2 {
 				width: 1140px;
 				height: 90px;
-				z-index: 1000px;
+				z-index: 1000;
 			}
 
 			#centerzuoyi2>hr {
@@ -531,32 +547,27 @@
 				margin: 0 auto;
 			}
 
-			#headcentre ul>li>div>dl {
-				width: 128px;
-				height: 218px;
-				letter-spacing: 2px;
-				margin-top: 15px;
-
-			}
-
-			#headcentre ul>li>div>dl>dt {
-				width: 126px;
-				height: 45px;
-				background-color: #ffffff;
-				box-shadow: 1.2px 0.1px 3.2px 0.5px #dcdee5;
-				color: #000;
-				font-size: 14px;
-				text-align: center;
-				line-height: 45px;
-				font-weight: lighter;
-				font-family: 黑体;
+#headcentre ul>li>div>dl>a{
+	text-decoration: none;
+}
+#headcentre ul>li>div>dl>a>dt {
+	width: 126px;
+	height: 45px;
+	background-color: #ffffff;
+	box-shadow: 1.2px 0.1px 3.2px 0.5px #dcdee5;
+	color: #000;
+	font-size: 14px;
+	text-align: center;
+	line-height: 45px;
+	font-weight: lighter;
+	font-family: 黑体;
 
 
 
 
-			}
+}
 
-			#headcentre ul>li>div>dl>dt:hover {
+#headcentre ul>li>div>dl>a>dt:hover {
 				cursor: #f18700;
 				color: orange;
 			}

@@ -23,12 +23,22 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    /**
+     * 得到省级名
+     * @param city 市级实体类
+     * @return 省级名称
+     */
     @ResponseBody
     @RequestMapping(value = "city_getProvinceName",produces = {("application/json;charset=utf-8")})
     public String getProvinceName(City city){
         return cityService.getProvinceName(city);
     }
 
+    /**
+     * 得到市级集合
+     * @param city 市级实体类
+     * @return 市级集合
+     */
     @ResponseBody
     @RequestMapping("city_getProvince")
     public List<City> getProvince(City city){
@@ -37,7 +47,6 @@ public class CityController {
 
     /**
      * 通过主键查询单条数据
-     *
      * @param id 主键
      * @return 单条数据
      */
