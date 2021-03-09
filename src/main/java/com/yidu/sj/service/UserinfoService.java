@@ -82,4 +82,11 @@ public interface UserinfoService {
      * @return 对象
      */
     Userinfo queryByName(String uname);
+
+    /**
+     * 通过实体作为筛选条件查询
+     * @param userinfo
+     * @return
+     */
+    List<Userinfo> queryAll(Userinfo userinfo);
 }

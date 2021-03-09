@@ -18,6 +18,12 @@
         where districtId = #{districtid}
     </select>
 
+    <select id="queryByCityid" resultMap="BaseResultMap">
+        select
+          districtId, provinceId, cityId, districtName
+        from ane.district
+        where cityid = #{cityid}
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select

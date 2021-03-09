@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Station)表服务实现类
@@ -86,5 +87,10 @@ public class LRStationServiceImpl implements StationService {
     @Override
     public List<Station> queryByArray(String[] array) {
         return stationDao.queryByArray(array);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryByPCId(Integer provinceid, Integer cityid,String stationname) {
+        return stationDao.queryByPCId(provinceid,cityid,stationname);
     }
 }
