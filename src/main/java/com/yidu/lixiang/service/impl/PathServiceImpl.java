@@ -31,6 +31,11 @@ public class PathServiceImpl implements PathService {
     @Autowired
     private Station station;
 
+    /**
+     * 查询出中转站
+     * @param cityName 市级名
+     * @return 中转站数组
+     */
     @Override
     public String[] queryStation(String cityName) {
         try {
@@ -56,6 +61,10 @@ public class PathServiceImpl implements PathService {
         }
     }
 
+    /**
+     * 查询所有
+     * @return 实体类
+     */
     @Override
     public List<StationMain> queryAll() {
         //申明集合用于存储实体类
@@ -108,7 +117,6 @@ public class PathServiceImpl implements PathService {
 
     /**
      * 通过ID查询单条数据
-     *
      * @param pathid 主键
      * @return 实例对象
      */
@@ -119,7 +127,6 @@ public class PathServiceImpl implements PathService {
 
     /**
      * 查询多条数据
-     *
      * @param offset 查询起始位置
      * @param limit 查询条数
      * @return 对象列表
@@ -167,16 +174,20 @@ public class PathServiceImpl implements PathService {
         path.setDestination(destinationId);
         //3、截取出经过的中转站
         String[] split = stationCenters.split("-");
-        //循环拿出经过的中转站
-        for (int i = 0; i < split.length; i++) {
-            //设置经过的每一个中转站
-            station.setStationname(split[i]);
-            //查询出终点中转站的所有信息
-            stations=stationDao.queryAll(station);
-            //得到终点中转站的id
-            Integer stationCenterId = stations.get(0).getStationid();
-            //拼接进中转站id中
-            stationIds+=stationCenterId+"-";
+        try {
+            //循环拿出经过的中转站
+            for (int i = 0; i < split.length; i++) {
+                //设置经过的每一个中转站
+                station.setStationname(split[i]);
+                //查询出终点中转站的所有信息
+                stations=stationDao.queryAll(station);
+                //得到终点中转站的id
+                Integer stationCenterId = stations.get(0).getStationid();
+                //拼接进中转站id中
+                stationIds+=stationCenterId+"-";
+            }
+        } catch (Exception e) {
+            return "新增失败！";
         }
         //将经过的中转站的id设置进线路实体类中
         path.setStationids(stationIds);
@@ -192,7 +203,6 @@ public class PathServiceImpl implements PathService {
 
     /**
      * 修改数据
-     *
      * @param path 实例对象
      * @return 实例对象
      */

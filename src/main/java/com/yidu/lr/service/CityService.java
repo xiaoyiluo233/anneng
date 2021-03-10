@@ -52,4 +52,5 @@ public interface CityService {
      */
     boolean deleteById(Integer cityid);
 
+    List<City> queryByProvinId(Integer provinid);
 }

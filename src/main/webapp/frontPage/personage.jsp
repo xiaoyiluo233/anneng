@@ -33,7 +33,9 @@
 				右上角头像g
 			-->
 			<div id="head">
-				<img id="log" src="../img/luoxiaoimg/luoxImg/logowhite.png" />
+				<a href="../index.jsp">
+					<img id="log" src="../img/luoxiaoimg/luoxImg/logowhite.png" />
+				</a>
 				<div id="hean-message">
 					<h5>本间芽衣子 </h5>
 					<img src="../img/luoxiaoimg/luoxImg/huhu.gif">

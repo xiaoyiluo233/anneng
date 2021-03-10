@@ -340,7 +340,7 @@
             $("#tid").val(data_obj[0].tid);
             $("#tnumber").val(data_obj[0].tnumber);
             for (var o=0;o<names.length;o++) {
-                $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
+                 $("#eid").append("<option value='"+eids[o]+"'>"+names[o]+"</option>");
             }
             $("#eid option[value='"+data_obj[0].eid+"']").attr('selected',true);
             $("#parcelid").val(data_obj[0].parcelid);

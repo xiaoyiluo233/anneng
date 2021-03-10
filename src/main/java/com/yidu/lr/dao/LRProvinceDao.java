@@ -67,4 +67,11 @@ public interface LRProvinceDao {
      */
     int deleteById(Integer provinceid);
 
+    /**
+     * 通过省名称查询省id
+     * @param provincename
+     * @return
+     */
+    Integer queryByProvinceName(String provincename);
+
 }

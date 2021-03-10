@@ -53,4 +53,18 @@ public interface ProvinceService {
      */
     boolean deleteById(Integer provinceid);
 
+    /**
+     * 通过对象作为筛选条件查询
+     * @param province
+     * @return 对象列表
+     */
+    List<Province> queryAll(Province province);
+
+    /**
+     * 通过省名称查询省id
+     * @param provincename
+     * @return
+     */
+    Integer queryByProvinceName(String provincename);
+
 }

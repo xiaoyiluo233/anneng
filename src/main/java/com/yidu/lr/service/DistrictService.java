@@ -53,4 +53,5 @@ public interface DistrictService {
      */
     boolean deleteById(Integer districtid);
 
+    List<District> queryByCityid(Integer cityid);
 }

@@ -38,6 +38,14 @@
                             <th>中转站名</th>
                             <th><span id="stationnames">123</span></th>
                         </tr>
+                        <tr>
+                            <th>中转站联系人</th>
+                            <th><span id="personss">123</span></th>
+                        </tr>
+                        <tr>
+                            <th>联系人电话</th>
+                            <th><span id="phoness">123</span></th>
+                        </tr>
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -102,6 +110,26 @@
 
                             <div class="col-sm-9">
                                 <input type="text"name="stationname"class="form-control" placeholder="中转站名" id="stationname">
+                            </div>
+                            <label class="err-info-modal"></label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label"for="persons">中转站联系人</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <input type="text"name="persons"class="form-control" placeholder="中转站联系人" id="persons">
+                            </div>
+                            <label class="err-info-modal"></label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                                <label class="control-label"for="phones">联系人电话</label>
+                            </div>
+
+                            <div class="col-sm-9">
+                                <input type="text"name="phones"class="form-control" placeholder="联系人电话" id="phones">
                             </div>
                             <label class="err-info-modal"></label>
                         </div>
@@ -259,6 +287,14 @@
                 title : '中转站名',
                 field : 'stationname',
                 sortable : true
+            }, {
+                title : '中转站联系人',
+                field : 'persons',
+                sortable : true
+            }, {
+                title : '联系人电话',
+                field : 'phones',
+                sortable : true
             },{
                 field: 'operate',
                 title: '操作',
@@ -328,6 +364,8 @@
                     $("#cityname option[value='"+data_obj[0].city.cityname+"']").attr('selected',true);
                     $("#stationid").val(data_obj[0].stationid);
                     $("#stationname").val(data_obj[0].stationname);
+                    $("#persons").val(data_obj[0].persons);
+                    $("#phones").val(data_obj[0].phones);
                     $("#addModal").modal({
                         keyboard: true
                     });
@@ -400,6 +438,8 @@
                 $("#cityname option[value='"+data_json[index].city.cityname+"']").attr('selected',true);
                 $("#stationid").val(data_json[index].stationid);
                 $("#stationname").val(data_json[index].stationname);
+                $("#persons").val(data_json[index].persons);
+                $("#phones").val(data_json[index].phones);
                 $("#addModalLabel").text("修改");
                 $("#addModal").modal({
                     keyboard: true
@@ -415,6 +455,8 @@
         $("#stationids").text(data_json[index].stationid);
         $("#citynames").text(data_json[index].city.cityname);
         $("#stationnames").text(data_json[index].stationname);
+        $("#personss").text(data_json[index].persons);
+        $("#phoness").text(data_json[index].phones);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }

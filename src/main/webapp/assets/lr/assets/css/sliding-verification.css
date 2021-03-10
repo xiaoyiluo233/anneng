@@ -1,0 +1,179 @@
+.ane-verifica {
+  user-select: none;
+}
+
+.login-model .ane-verifica {
+  user-select: none;
+  margin: 0 auto;
+}
+.ane-verifica-images {
+  position: relative;
+  width: 300px;
+  height: 150px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.login-model .ane-verifica-images {
+  position: relative;
+  width: 300px;
+  height:180px;
+  overflow: hidden;
+  background-color: #fff;
+}
+.ane-verifica-bg {
+  width: 100%;
+  height: 100%;
+}
+.ane-verifica-block {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+.ane-verifica-mask {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  font-size: 16px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease;
+  color: #fff;
+}
+.ane-verifica-mask:before {
+  content: " ";
+  display: inline-block;
+  height: 100%;
+  width: 1px;
+  vertical-align: middle;
+}
+.ane-verifica-mask.ane-verifica-faild {
+  background-color: #f7f9fa;
+  color: #45494c;
+}
+.ane-verifica-spin svg {
+  animation: ane-verifica-loading 0.6s infinite linear;
+}
+.ane-verifica-refreshing {
+  background-color: rgba(0, 0, 0, 0.46);
+}
+.ane-verifica-refresh {
+  position: absolute;
+  right: 4px;
+  top: 3px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  padding: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.ane-verifica-refresh:hover svg path {
+  fill: #fff;
+}
+.ane-verifica-refresh svg {
+  width: 100%;
+  height: 100%;
+}
+.ane-verifica-refresh svg path {
+  fill: rgba(255, 255, 255, 0.52);
+  transition: 0.3s fill;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.ane-verifica-bar {
+  position: relative;
+  background-color: #ede4dd;
+  border-radius: 20px;
+  margin-top: 10px;
+}
+.ane-verifica-bar-tips {
+  text-align: center;
+  color: #a7a3a0;
+  line-height: 40px;
+  height: 40px;
+  font-size: 14px;
+  border-radius: 2px;
+}
+.ane-verifica-bar-tips svg {
+  fill: currentcolor;
+  width: 15px;
+  margin-right: 5px;
+  margin-top: -2px;
+  vertical-align: middle;
+}
+.ane-verifica-bar-slider,
+.ane-verifica-bar-status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.ane-verifica-bar-slider {
+  width: 40px;
+  border-radius: 40px;
+  user-select: none;
+  outline: 0;
+  border: none;
+  background-color: #f5f2e9;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s;
+}
+.ane-verifica-bar-slider svg {
+  fill: #cac3bd;
+  width: 18px;
+}
+.ane-verifica-bar-status {
+  width: 1px;
+}
+.ane-verifica-bar-none .ane-verifica-bar-slider {
+  transition: left 0.8s, background-color 0.8s;
+}
+.ane-verifica-bar-none .ane-verifica-bar-status {
+  transition: all 0.8s;border-radius: 40px;
+}
+.ane-verifica-bar-none .ane-verifica-bar-slider svg {
+  transition: all 0.8s;
+}
+.ane-verifica-bar-moving .ane-verifica-bar-slider,
+.ane-verifica-bar-verifying .ane-verifica-bar-slider,
+.ane-verifica-bar-slider:hover {
+  background-color: #f18700;
+}
+.ane-verifica-bar-moving .ane-verifica-bar-slider svg,
+.ane-verifica-bar-verifying .ane-verifica-bar-slider svg,
+.ane-verifica-bar-slider:hover svg {
+  fill: #fff;
+}
+.ane-verifica-bar-moving .ane-verifica-bar-status,
+.ane-verifica-bar-verifying .ane-verifica-bar-status {
+  background-color: #ffe2c1;
+  border-radius:40px;
+}
+.ane-verifica-bar-fail .ane-verifica-bar-status,
+.ane-verifica-bar-fail .ane-verifica-bar-slider,
+.ane-verifica-bar-success .ane-verifica-bar-status,
+.ane-verifica-bar-success .ane-verifica-bar-slider {
+  display: none;
+}
+.ane-verifica-bar-fail .ane-verifica-bar-tips {
+  color: #dc3545;
+  background: #fae3e5;
+}
+.ane-verifica-bar-success .ane-verifica-bar-tips {
+  color: #28a745;
+  background: #afecbd;
+  border-radius: 40px;
+}
+@keyframes ane-verifica-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

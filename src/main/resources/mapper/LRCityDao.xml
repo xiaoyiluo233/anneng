@@ -22,6 +22,10 @@
     <select id="getCityIdByCityName" resultType="int">
         select cityId from city where cityName=#{cityname}
     </select>
+
+    <select id="queryByProvinceId" resultMap="BaseResultMap">
+        select * from city where provinceid=#{provinceid}
+    </select>
     <!-- 根据城市名查出城市id -->
     <select id="getProvince" resultMap="getProvinceMapper">
         SELECT * FROM city c1,province p1

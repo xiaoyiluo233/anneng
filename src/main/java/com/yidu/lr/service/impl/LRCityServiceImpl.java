@@ -77,4 +77,9 @@ public class LRCityServiceImpl implements CityService {
     public boolean deleteById(Integer cityid) {
         return this.cityDao.deleteById(cityid) > 0;
     }
+
+    @Override
+    public List<City> queryByProvinId(Integer provinid) {
+        return cityDao.queryByProvinceId(provinid);
+    }
 }

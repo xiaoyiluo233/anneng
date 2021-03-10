@@ -20,6 +20,11 @@ public class CityServiceImpl implements CityService {
     @Autowired
     private CityDao cityDao;
 
+    /**
+     * 得到省份名
+     * @param city 市级实体类
+     * @return 省份名
+     */
     @Override
     public String getProvinceName(City city){
         //申明变量用于返回值
@@ -36,6 +41,11 @@ public class CityServiceImpl implements CityService {
         return provincename;
     }
 
+    /**
+     * 得到市级
+     * @param city 市级表实体类
+     * @return 市级实体类
+     */
     @Override
     public List<City> getProvince(City city) {
         return cityDao.getProvince(city);
@@ -43,7 +53,6 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 通过ID查询单条数据
-     *
      * @param cityid 主键
      * @return 实例对象
      */
@@ -54,7 +63,6 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 查询多条数据
-     *
      * @param offset 查询起始位置
      * @param limit 查询条数
      * @return 对象列表
@@ -66,7 +74,6 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 新增数据
-     *
      * @param city 实例对象
      * @return 实例对象
      */
@@ -78,7 +85,6 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 修改数据
-     *
      * @param city 实例对象
      * @return 实例对象
      */
@@ -90,7 +96,6 @@ public class CityServiceImpl implements CityService {
 
     /**
      * 通过主键删除数据
-     *
      * @param cityid 主键
      * @return 是否成功
      */

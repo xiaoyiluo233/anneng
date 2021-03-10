@@ -25,18 +25,33 @@ public class TrucksController {
     @Autowired
     private TrucksServiceImpl trucksService;
 
+    /**
+     * 根据角色id查出该角色的员工id
+     * @param roleid 角色id
+     * @return 员工id数组
+     */
     @ResponseBody
     @RequestMapping("trucks_getEidsByRoleId")
     public int[] getEidsByRoleId(int roleid){
         return trucksService.getEidByRoleId(roleid);
     }
 
+    /**
+     * 根据角色id查出该角色的员工名
+     * @param roleid 角色id
+     * @return 员工名数组
+     */
     @ResponseBody
     @RequestMapping("trucks_getEnamesByRoleid")
     public String[] getEnamesByRoleid(int roleid){
         return trucksService.getEnameByRoleId(roleid);
     }
 
+    /**
+     * 根据车辆id删除指定的车辆
+     * @param tids 车辆id
+     * @return 删除成功
+     */
     @RequestMapping(value = "trucks_delete",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String delete(String tids){
@@ -45,6 +60,11 @@ public class TrucksController {
         return deleteById;
     }
 
+    /**
+     * 修改车辆信息
+     * @param trucks 车辆实体类
+     * @return 修改成功
+     */
     @ResponseBody
     @RequestMapping(value = "trucks_update",produces = {("application/json;charset=utf-8")})
     public String update(Trucks trucks){
@@ -53,6 +73,11 @@ public class TrucksController {
         return update;
     }
 
+    /**
+     * 新增车辆信息
+     * @param trucks 车辆实体类
+     * @return 新增成功
+     */
     @RequestMapping(value = "trucks_insert",produces = {("application/json;charset=utf-8")})
     @ResponseBody
     public String insert(Trucks trucks){
@@ -73,7 +98,6 @@ public class TrucksController {
 
     /**
      * 通过主键查询单条数据
-     *
      * @param id 主键
      * @return 单条数据
      */
