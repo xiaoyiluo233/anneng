@@ -1,6 +1,5 @@
 package com.yidu.tgh.controller;
 import com.yidu.entity.Goods;
-import com.yidu.tgh.service.GoodsService;
 import com.yidu.tgh.service.impl.GoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +24,40 @@ public class GoodsController {
     private GoodsServiceImpl goodsService;
 
     /**
+     * 查询所有物流信息
+     * @return getNames
+     */
+    @RequestMapping("goods_getNames")
+    @ResponseBody
+    public List<HashMap<String, Object>> getNames(){
+         return goodsService.getNames();
+    }
+
+    /**
+     * 得到仓库id
+     * @return getWids
+     */
+    @RequestMapping("goods_getWids")
+    @ResponseBody
+    public int[] getWids(){
+        //返回仓库id
+        return goodsService.getWids();
+    }
+
+    /**
+     * 得到所有仓库名
+     * @return getWnames
+     */
+    @RequestMapping("goods_getWnames")
+    @ResponseBody
+    public String[] getWnames(){
+        //返回仓库名
+        return goodsService.getWnames();
+    }
+    /**
      * 查询所有物流
      *
-     * @param goods 员工
+     * @param goods 物流
      * @return 实例对象
      */
 
@@ -44,6 +74,12 @@ public class GoodsController {
         //返回mv
         return mv;
     }
+
+    /**
+     * 新增物流
+     * @param goods
+     * @return mv
+     */
     @RequestMapping("inserts")
     public ModelAndView inserts(Goods goods){
         //创建一个对象
@@ -92,8 +128,9 @@ public class GoodsController {
     @RequestMapping(value = "goods_update",produces={("application/json;charset-utf-8")})
     @ResponseBody
     public String update(Goods goods){
-        System.out.println("goods = " + goods);
+        //调用修改的方法
         String update=goodsService.update(goods);
+        //返回修改
         return update;
     }
 
@@ -106,7 +143,9 @@ public class GoodsController {
     @RequestMapping(value = "goods_insert")
     @ResponseBody
     public String insert(Goods goods){
+        //调用新增的方法
         String insert=goodsService.insert(goods);
+        //返回新增
         return insert;
     }
 
