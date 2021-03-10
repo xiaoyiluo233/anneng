@@ -80,4 +80,12 @@ public interface EmployeeDao {
      * @return 员工集合
      */
     List<Employee> selectEmpByRoleId(Integer roleid);
+
+    /**
+     * 根据员工id修改新密码
+     * @param eid 员工id
+     * @param newPass 新密码
+     * @return 修改行数
+     */
+    int editPassByEid(Integer eid,String newPass);
 }

@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 /**
- * (Userinfo)实体类
+ * 用户实体类
  *
- * @author makejava
+ * @author sj
  * @since 2021-01-08 09:12:56
  */
 @Data

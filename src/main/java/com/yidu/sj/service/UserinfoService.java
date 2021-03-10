@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * (Userinfo)表服务接口
+ * 用户表服务接口
  *
  * @author makejava
  * @since 2021-01-08 09:12:56
@@ -82,4 +82,11 @@ public interface UserinfoService {
      * @return 对象
      */
     Userinfo queryByName(String uname);
+
+    /**
+     * 通过实体作为筛选条件查询
+     * @param userinfo
+     * @return
+     */
+    List<Userinfo> queryAll(Userinfo userinfo);
 }

@@ -24,6 +24,10 @@ public class TrucksServiceImpl implements TrucksService {
     @Autowired
     private EmployeeDao employeeDao;
 
+    /**
+     * 查出所有的车牌号
+     * @return 车牌号数组
+     */
     @Override
     public String[] getTnumber(Trucks truck) {
         //查出车辆的所有信息
@@ -40,6 +44,11 @@ public class TrucksServiceImpl implements TrucksService {
         return tnumbers;
     }
 
+    /**
+     * 根据角色id查出员工id
+     * @param roleid 角色id
+     * @return 员工id数组
+     */
     @Override
     public int[] getEidByRoleId(int roleid) {
         //根据角色id查出员工信息
@@ -58,6 +67,11 @@ public class TrucksServiceImpl implements TrucksService {
         return eids;
     }
 
+    /**
+     * 根据角色id查出员工姓名
+     * @param roleid 角色id
+     * @return 员工姓名数组
+     */
     @Override
     public String[] getEnameByRoleId(int roleid) {
         //根据角色id查出员工信息
@@ -96,7 +110,6 @@ public class TrucksServiceImpl implements TrucksService {
 
     /**
      * 通过ID查询单条数据
-     *
      * @param tid 主键
      * @return 实例对象
      */
@@ -125,7 +138,6 @@ public class TrucksServiceImpl implements TrucksService {
 
     /**
      * 新增数据
-     *
      * @param trucks 实例对象
      * @return 实例对象
      */

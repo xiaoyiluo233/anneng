@@ -80,7 +80,21 @@
             var oldPass=$("#oldPass").val();
             $.ajax({
                type:"post",
+                url:"../../emp_editPass",
+                data:"oldPass="+oldPass+"&newPass="+newPass,
+                success:function (msg) {
+                   if (msg=="ok"){
+                       swal("修改成功,请重新登录!","","success").then(function () {
+                           window.parent.location.href="../../bg_login.html";
+                       });
+                   }else {
+                       swal("旧密码错误", "", "error").then(function () {
+                           $("#oldPass").val("");
+                           $("#oldPass").focus();
+                       });
+                   }
 
+                }
             });
         }
     });

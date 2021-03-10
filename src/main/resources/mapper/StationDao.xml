@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yidu.lixiang.dao.StationDao">
-
+    <!-- 结果集合 -->
     <resultMap id="BaseResultMap" type="com.yidu.entity.Station">
         <!--@Table station-->
         <result property="stationid" column="stationId" jdbcType="INTEGER"/>
         <result property="cityid" column="cityId" jdbcType="INTEGER"/>
         <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+        <result property="persons" column="persons" jdbcType="VARCHAR"/>
+        <result property="phones" column="phones" jdbcType="VARCHAR"/>
     </resultMap>
     <!-- 中转站与市级表的一对一关系映射 -->
     <resultMap id="stationAndCityMapper" type="com.yidu.entity.Station">
         <result property="stationid" column="stationId" jdbcType="INTEGER"/>
         <result property="cityid" column="cityId" jdbcType="INTEGER"/>
         <result property="stationname" column="stationName" jdbcType="VARCHAR"/>
+        <result property="persons" column="persons" jdbcType="VARCHAR"/>
+        <result property="phones" column="phones" jdbcType="VARCHAR"/>
         <association property="city" javaType="com.yidu.entity.City">
             <result property="cityid" column="cityId" jdbcType="INTEGER"/>
             <result property="provinceid" column="provinceId" jdbcType="INTEGER"/>
             <result property="cityname" column="cityName" jdbcType="VARCHAR"/>
         </association>
     </resultMap>
-    
+    <!-- 统计行数的sql -->
     <select id="count" resultType="int">
         select count(1) from station
         <where>
@@ -32,9 +36,16 @@
             <if test="stationname != null and stationname != ''">
                 and stationName = #{stationname}
             </if>
+            <if test="persons != null and persons != ''">
+                and persons = #{persons}
+            </if>
+            <if test="phones != null and phones != ''">
+                and phones = #{phones}
+            </if>
         </where>
     </select>
 
+    <!-- 查出中转站所对应的城市 -->
     <select id="stationAndCity" resultMap="stationAndCityMapper">
         SELECT * FROM station s1,city c1
         <where>
@@ -45,7 +56,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          stationId, cityId, stationName
+          *
         from ane.station
         where stationId = #{stationid}
     </select>
@@ -61,7 +72,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          stationId, cityId, stationName
+          *
         from ane.station
         <where>
             <if test="stationid != null">
@@ -73,13 +84,19 @@
             <if test="stationname != null and stationname != ''">
                 and stationName = #{stationname}
             </if>
+            <if test="persons != null and persons != ''">
+                and persons = #{persons}
+            </if>
+            <if test="phones != null and phones != ''">
+                and phones = #{phones}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="stationid" useGeneratedKeys="true">
-        insert into ane.station(cityId, stationName)
-        values (#{cityid}, #{stationname})
+        insert into ane.station(cityId, stationName, persons, phones)
+        values (#{cityid}, #{stationname}, #{persons}, #{phones})
     </insert>
 
     <!--通过主键修改数据-->
@@ -91,6 +108,12 @@
             </if>
             <if test="stationname != null and stationname != ''">
                 stationName = #{stationname},
+            </if>
+            <if test="persons != null and persons != ''">
+                persons = #{persons},
+            </if>
+            <if test="phones != null and phones != ''">
+                phones = #{phones},
             </if>
         </set>
         where stationId = #{stationid}

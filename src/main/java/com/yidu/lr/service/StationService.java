@@ -1,7 +1,10 @@
 package com.yidu.lr.service;
 
 import com.yidu.entity.Station;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Station)表服务接口
@@ -60,4 +63,6 @@ public interface StationService {
     List<Station> queryAll(Station station);
 
     List<Station> queryByArray(String[] array);
+
+    List<Map<String, Object>> queryByPCId(Integer provinceid,Integer cityid,String stationname);
 }

@@ -78,4 +78,9 @@ public class LRDistrictServiceImpl implements DistrictService {
     public boolean deleteById(Integer districtid) {
         return this.districtDao.deleteById(districtid) > 0;
     }
+
+    @Override
+    public List<District> queryByCityid(Integer cityid) {
+        return districtDao.queryByCityid(cityid);
+    }
 }

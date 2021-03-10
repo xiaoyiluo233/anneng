@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Station)表数据库访问层
@@ -68,4 +69,6 @@ public interface LRStationDao {
     int deleteById(Integer stationid);
 
     List<Station> queryByArray(String[] array);
+
+    List<Map<String, Object>> queryByPCId(@Param("provinceid") Integer provinceid,@Param("cityid")Integer cityid,@Param("stationname")String stationname);
 }

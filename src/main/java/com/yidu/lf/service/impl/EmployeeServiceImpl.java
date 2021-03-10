@@ -208,4 +208,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         //返回集合
         return employeeList;
     }
+
+    /**
+     * 根据员工id修改新密码
+     * @param eid 员工id
+     * @param newPass 新密码
+     * @return 修改结果
+     */
+    public String editPassByEid(Integer eid, String newPass) {
+        int result = this.employeeDao.editPassByEid(eid, newPass);
+        if (result>0){
+            return "ok";
+        }else {
+            return "no";
+        }
+
+    }
 }

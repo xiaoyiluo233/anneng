@@ -20,6 +20,11 @@ public class DistrictServiceImpl implements DistrictService {
     @Autowired
     private DistrictDao districtDao;
 
+    /**
+     * 得到所有的区级集合
+     * @param district 县级表实体类
+     * @return 区级集合
+     */
     @Override
     public List<District> getCity(District district) {
         return districtDao.getCity(district);
