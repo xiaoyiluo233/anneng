@@ -18,13 +18,6 @@ public class Warehouse implements Serializable {
     private Integer wid;
     
     private String wname;
-    
-    private String oid;
-    
-    private String times;
-    
-    private Integer state;
-
 
     public Integer getWid() {
         return wid;
@@ -40,30 +33,6 @@ public class Warehouse implements Serializable {
 
     public void setWname(String wname) {
         this.wname = wname;
-    }
-
-    public String getOid() {
-        return oid;
-    }
-
-    public void setOid(String oid) {
-        this.oid = oid;
-    }
-
-    public String getTimes() {
-        return times;
-    }
-
-    public void setTimes(String times) {
-        this.times = times;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
     }
 
 }
