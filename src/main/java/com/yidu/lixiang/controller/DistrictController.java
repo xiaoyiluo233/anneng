@@ -23,6 +23,10 @@ public class DistrictController {
     @Autowired
     private DistrictService districtService;
 
+    /**
+     * 得到区级集合
+     * @return 区级集合
+     */
     @ResponseBody
     @RequestMapping("district_getCity")
     public List<District> getCity(){
@@ -31,7 +35,6 @@ public class DistrictController {
 
     /**
      * 通过主键查询单条数据
-     *
      * @param id 主键
      * @return 单条数据
      */

@@ -20,6 +20,10 @@ public class Station implements Serializable {
     
     private String stationname;
 
+    private String persons;
+
+    private String phones;
+
     private City city;
 
     public City getCity() {
@@ -36,7 +40,25 @@ public class Station implements Serializable {
                 "stationid=" + stationid +
                 ", cityid=" + cityid +
                 ", stationname='" + stationname + '\'' +
+                ", persons='" + persons + '\'' +
+                ", phones='" + phones + '\'' +
                 '}';
+    }
+
+    public String getPersons() {
+        return persons;
+    }
+
+    public void setPersons(String persons) {
+        this.persons = persons;
+    }
+
+    public String getPhones() {
+        return phones;
+    }
+
+    public void setPhones(String phones) {
+        this.phones = phones;
     }
 
     public Integer getStationid() {

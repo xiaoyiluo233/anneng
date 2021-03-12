@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>头部</title>
+		<link rel="stylesheet" href="iconfont.css"/>
+		<script type="text/javascript" src="jquery-3.4.1.min.js" ></script>
+		<style>
+			*{
+				margin: 0px;
+				padding: 0px;
+			}
+			#top{
+				position: fixed;
+				width: 100%;
+				background-color: #f4f4f4;
+				height: 82px;
+				font-size: 1.25rem;
+				z-index: 10000;
+			}
+			#top>#top_center{
+				width: 1140px;
+				height: 70px;
+				margin: 0 auto;
+				flex-wrap: nowrap;
+				display: flex;
+				padding: .5rem 1rem;
+			}
+			#top_center .logo{
+				padding-top: 12px;
+			}
+			.top_container{
+				width: 666px;
+				height: 100%;
+				display: flex !important;
+				align-items: center;
+				flex-basis: auto;
+				flex-grow: 1;
+			}
+			.top_ul{
+				display: flex;
+				list-style: none;
+				align-items: center;
+				height: 35px;
+				flex-direction: row;
+				margin-left: auto !important;
+				font-size: 16px;
+			}
+			.top_dropdown{
+				position: relative;
+			}
+			.top_link{
+				padding: 12px 12px;
+				font-size: 15px;
+				font-weight: 400;
+				letter-spacing: 1px;
+				color: #000;
+				display: block;
+			}
+			.top_link{
+				cursor: pointer;
+			}
+			.top_link:hover{
+				color: #f68b1e;
+				border-top: 3px solid #f68b1e;
+			}
+			.top_items:last-child{
+				margin-left: 17px;
+			}
+			#top_right{
+				margin-left: 25px;
+				display: flex !important;
+				width: 259px;
+				height: 100%;
+				align-items: center;
+				flex-direction: row;
+			}
+			.top_all{
+				align-items: center;
+				height: 35px;
+				display: flex;
+			}
+			.top_first{
+				position: relative;
+			}
+			.top_second{
+				position: relative;
+			}
+			.first_a{
+				padding: 12px 12px;
+				font-size: 15px;
+				font-weight: 400;
+				letter-spacing: 1px;
+				color: #000;
+			}
+			.top_more{
+				padding-right: 5px;
+			}
+			.iconfont{
+				font-size: 13px;
+			}
+			.iconfont>span{
+				font-size: 15px;
+			}
+			.dropdown-menu{
+				position: absolute;
+				background: white;
+				top: 100%;
+				left: 50%;
+				transform: translate(-50%, 0);
+				z-index: 1000;
+				display: none;
+				float: left;
+				width: 8rem;
+				padding: .2rem 0;
+				margin-top: 0.5rem;
+				font-size: 15px;
+				color: #212529;
+				text-align: left;
+				vertical-align: middle;
+				list-style: none;
+				background-color: #fff;
+				background-clip: padding-box;
+				border: 1px solid rgba(0, 0, 0, .1);
+				border-radius: .25rem;
+			}
+			.dropdown-menu a{
+				text-decoration: none;
+				border-top: none;
+				color: #000;
+				font-size: 14px;
+				padding: 10px;
+				display: flex;
+				justify-content: center;
+			}
+			.dropdown-menu a:hover{
+				color: #f68b1e;
+			}
+			.dropdown-menu li{
+				border-bottom: #f1f1f1 1px solid;
+			}
+			.dropdown-menu li:last-child{
+				border-bottom: none;
+			}
+			.first_a{
+				list-style: none;
+			}
+			/*.first_a>.dropdown-menus{
+				color: white;
+				background: #8F8F8F;
+			}*/
+		</style>
+	</head>
+	<body>
+		<div class="top_top"></div>
+		<div id="top">
+			<div id="top_center">
+				<a href="tailAfter.html" >
+					<img src="img/wtimg/gym-logo.png" class="logo"/>
+				</a>
+				<div class="top_container">
+					<ul class="top_ul">
+						<li class="top_items">
+							<a class="top_link">首页</a>
+						</li>
+						<li class="top_items top_dropdown">
+							<a class="top_link">自助服务</a>
+							<ul class="dropdown-menu">
+								<li><a href="javaScript:;">我要查件</a></li>
+								<li><a href="javaScript:;">我要寄件</a></li>
+								<li><a href="javaScript:;">网点查询</a></li>
+								<li><a href="javaScript:;">运费时效</a></li>
+								<li><a href="javaScript:;">收寄标准</a></li>
+							</ul>
+						</li>
+						<li class="top_items top_dropdown">
+							<a class="top_link">产品服务</a>
+							<ul class="dropdown-menu">
+								<li><a href="javaScript:;">MiNi电商系列</a></li>
+								<li><a href="javaScript:;">精准零担快运</a></li>
+								<li><a href="javaScript:;">定时达</a></li>
+								<li><a href="javaScript:;">安心达</a></li>
+								<li><a href="javaScript:;">普惠达</a></li>
+								<li><a href="javaScript:;">增值服务</a></li>
+							</ul> 
+						</li>
+						<li class="top_items top_dropdown">
+							<a class="top_link">加盟合作</a>
+							<ul class="dropdown-menu">
+								<li><a href="javaScript:;">招商加盟</a></li>
+								<li><a href="javaScript:;">大客户合作</a></li>
+							</ul>
+						</li>
+						<li class="top_items top_dropdown">
+							<a class="top_link">走进安能</a>
+							<ul class="dropdown-menu">
+								<li><a href="javaScript:;">公司简介</a></li>
+								<li><a href="javaScript:;">安能动态</a></li>
+								<li><a href="javaScript:;">企业文化</a></li>
+								<li><a href="javaScript:;">社会责任</a></li>
+								<li><a href="javaScript:;">人才招聘</a></li>
+								<li><a href="javaScript:;">联系我们</a></li>
+							</ul>
+						</li>
+						<li class="top_items top_dropdown">
+							<a class="top_link">帮助与支持</a>
+							<ul class="dropdown-menu">
+								<li><a href="javaScript:;">服务与支持</a></li>
+								<li><a href="javaScript:;">运输</a></li>
+								<li><a href="javaScript:;">保价</a></li>
+								<li><a href="javaScript:;">包装</a></li>
+								<li><a href="javaScript:;">理赔</a></li>
+								<li><a href="javaScript:;">开放平台</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div id="top_right">
+					<div class="top_all">
+						<div class="top_first">
+							<a class="first_a top_more top_link">
+								<i class="iconfont icon-yuangong">
+									<span>快速登录/注册</span>
+								</i>
+							</a>
+							<ul class="dropdown-menu dropdown-menus" style="color: #FFFFFF;background: #8F8F8F;">
+								<li><a href="javaScript:;">会员中心</a></li>
+								<li><a href="javaScript:;">退出账号</a></li>
+							</ul>
+						</div>
+						<div class="top_second">
+							<a class="first_a top_more top_link">
+								<i class="iconfont icon-diannao">
+									<span>员工专区</span>
+								</i>
+							</a>
+							<ul class="dropdown-menu dropdown-menus" style="color: white;background: #8F8F8F;">
+								<li><a href="javaScript:;">OA登录</a></li>
+								<li><a href="javaScript:;">企业邮箱</a></li>
+								<li><a href="javaScript:;">网点信息门户</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="width: 100%;height: 500px;background: #f4f4f4;"></div>
+		<div style="width: 100%;height: 500px;background: pink;"></div>
+	</body>
+	<script>
+		var result=false;
+		$(window).scroll(function() {
+			var scrollHeight=$(document).scrollTop();
+			if(scrollHeight>0){
+				$("#top").css("background","white");
+			}else{
+				$("#top").css("background","#f4f4f4");
+			}
+		});
+		$(".top_link").mouseover(function(){
+			result=$(this).hasClass('first_a');
+			if(result==false){
+				$(".top_link").siblings().finish();
+				$(this).siblings('ul').fadeIn("slow");
+			}else{
+				$(".top_link").click(function(){
+					$(this).siblings('ul').show();
+				});
+			}
+			
+		});
+		$('.top_link').mouseout(function() {
+			result=$(this).hasClass('first_a');
+			if(result==false){
+				$(this).siblings('ul').fadeOut("slow");
+			}else{
+				$(".top_link").click(function(){
+					$(this).siblings('ul').hide();
+				});
+			}
+			
+		});
+	</script>
+</html>

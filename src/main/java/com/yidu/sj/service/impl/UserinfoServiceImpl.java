@@ -4,6 +4,8 @@ import com.yidu.sj.entity.Userinfo;
 import com.yidu.sj.dao.UserinfoDao;
 import com.yidu.sj.service.UserinfoService;
 import com.zhenzi.sms.ZhenziSmsClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +28,9 @@ public class UserinfoServiceImpl implements UserinfoService {
      */
     @Resource
     private UserinfoDao userinfoDao;
+
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     /**
      * 通过ID查询单条数据
@@ -206,5 +211,15 @@ public class UserinfoServiceImpl implements UserinfoService {
     @Override
     public Userinfo queryByName(String uname) {
         return userinfoDao.queryByName(uname);
+    }
+    
+    /**
+     * 通过实体作为筛选条件查询
+     * @param userinfo
+     * @return
+     */
+    @Override
+    public List<Userinfo> queryAll(Userinfo userinfo) {
+        return userinfoDao.queryAll(userinfo);
     }
 }

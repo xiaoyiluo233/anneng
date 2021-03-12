@@ -16,6 +16,12 @@
         where provinceId = #{provinceid}
     </select>
 
+    <select id="queryByProvinceName" resultType="int">
+        select
+          provinceId, provinceName
+        from ane.province
+        where provincename = #{provincename}
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select

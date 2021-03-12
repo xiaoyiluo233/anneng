@@ -81,4 +81,10 @@ public interface LRCityDao {
      */
     int deleteById(Integer cityid);
 
+    /**
+     * 通过城市id作为筛选条件查询
+     * @param provinceid
+     * @return 对象列表
+     */
+    List<City> queryByProvinceId(Integer provinceid);
 }

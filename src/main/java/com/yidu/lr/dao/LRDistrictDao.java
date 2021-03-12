@@ -67,4 +67,11 @@ public interface LRDistrictDao {
      */
     int deleteById(Integer districtid);
 
+    /**
+     * 通过省id作为筛选条件查询地区信息
+     * @param cityid
+     * @return 对象列表
+     */
+    List<District> queryByCityid(Integer cityid);
+
 }

@@ -77,4 +77,14 @@ public class LRProvinceServiceImpl implements ProvinceService {
     public boolean deleteById(Integer provinceid) {
         return this.provinceDao.deleteById(provinceid) > 0;
     }
+
+    @Override
+    public List<Province> queryAll(Province province) {
+        return provinceDao.queryAll(province);
+    }
+
+    @Override
+    public Integer queryByProvinceName(String provincename) {
+        return provinceDao.queryByProvinceName(provincename);
+    }
 }
