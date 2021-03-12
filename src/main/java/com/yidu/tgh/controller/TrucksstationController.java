@@ -34,6 +34,7 @@ public class TrucksstationController {
 
     }
 
+
     /**
      * 修改
      * @param trucksstation
@@ -50,7 +51,6 @@ public class TrucksstationController {
     @RequestMapping(value="trucksstationService_insert")
     @ResponseBody
     public String insert(Trucksstation trucksstation) {
-        //System.out.println("trucksstation = " + trucksstation);
         //调用新增的方法
         String insert=trucksstationService.insert(trucksstation);
         //返回新增
