@@ -167,6 +167,8 @@
 <script type="text/javascript">
     var eids=[];
     var names=[];
+    var wids=[];
+    var wnames=[];
     function getEname(){
         $.ajax({
             type:"post",
@@ -193,15 +195,24 @@
             }
         });
         $.ajax({
+            type:"post",
+            url:"../../goods_getWnames",
+            dataType: "json",
+            success: function (msg){
+                var string=''+msg+'';
+                wnames = string.split(',');
+                $("#wname").children().remove();
+            }
+        });
+        $.ajax({
             type: "post",       //请求类型
-            url: "../../trucks_getEidsByRoleId",     //url
-            data: "roleid=2",     // 收集表单中的数据
+            url: "../../goods_getWids",     //url
             dataType: "json",    //参数返回类型
             success: function (msg){
                 var string=''+msg+'';
-                eids = string.split(',');
-                for (var p=0;p<names.length;p++) {
-                    $("#ename").append("<option value='"+eids[p]+"'>"+names[p]+"</option>");
+                wids = string.split(',');
+                for (var p=0;p<wids.length;p++) {
+                    $("#wname").append("<option value='"+wids[p]+"'>"+wnames[p]+"</option>");
                 }
             }
         });
@@ -351,7 +362,7 @@
 
     // 当点击【修改】按钮后，把模态框弹出来
     $("#btn_edit").on("click",function (){
-        url="station_update";
+        url="wareRecord_update";
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
         var data_obj = JSON.parse(data);
@@ -360,36 +371,23 @@
         }else if(data_obj==0){
             swal("请选择一行");
         }else{
-            $.ajax({
-                type: "post",       //请求类型
-                url: "../../city_getProvinceName",     //url
-                data: "cityname="+data_obj[0].city.cityname,     // 收集表单中的数据
-                dataType: "text",    //参数返回类型
-                success: function (msg){
-                    $("#province option[value='"+msg+"']").attr('selected',true);
-                    $("#cityname").children().not(":eq(0)").remove();
-                    var num3=$("#province").children("option:selected").index();
-                    var bcity=citys[num3-1];
-                    for (var o=0;o<bcity.length;o++) {
-                        $("#cityname").append("<option value='"+bcity[o]+"'>"+bcity[o]+"</option>");
-                    }
-                    $("#cityname option[value='"+data_obj[0].city.cityname+"']").attr('selected',true);
-                    $("#stationid").val(data_obj[0].stationid);
-                    $("#stationname").val(data_obj[0].stationname);
-                    $("#persons").val(data_obj[0].persons);
-                    $("#phones").val(data_obj[0].phones);
-                    $("#addModal").modal({
-                        keyboard: true
-                    });
-                }
+            clearForm("#add_form_modal");// 清除表单上一次的输入数据
+            getEname();
+            $("#wrid").val(data_obj[0].wrid);
+            $("#wname option[value='"+data_obj[0].wname+"']").attr('selected',true);
+            $("#eid option[value='"+data_obj[0].eid+"']").attr('selected',true);
+            $("#oid").val(data_obj[0].oid);
+            $("#times").val(data_obj[0].times);
+            $("#state").val(data_obj[0].state);
+            $("#addModal").modal({
+                keyboard: true
             });
-            //$('#addModal').modal('show')
         }
     });
 
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
-        url="station_insert";
+        url="wareRecord_insert";
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
         getEname();
         $("#addModalLabel").text("新增");
@@ -427,7 +425,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
-        url="station_update";
+        url="wareRecord_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         // {#var data_json2 = eval("(" + data+ ")"); #}
@@ -435,30 +433,16 @@
         //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
         //alert(data_json[0]);
         //根据index找到对应行数据，填充数据到修改模态框
-        $.ajax({
-            type: "post",       //请求类型
-            url: "../../city_getProvinceName",     //url
-            data: "cityname="+data_json[index].city.cityname,     // 收集表单中的数据
-            dataType: "text",    //参数返回类型
-            success: function (msg){
-                getEname();
-                $("#province option[value='"+msg+"']").attr('selected',true);
-                $("#cityname").children().not(":eq(0)").remove();
-                var num3=$("#province").children("option:selected").index();
-                var bcity=citys[num3-1];
-                for (var o=0;o<bcity.length;o++) {
-                    $("#cityname").append("<option value='"+bcity[o]+"'>"+bcity[o]+"</option>");
-                }
-                $("#cityname option[value='"+data_json[index].city.cityname+"']").attr('selected',true);
-                $("#stationid").val(data_json[index].stationid);
-                $("#stationname").val(data_json[index].stationname);
-                $("#persons").val(data_json[index].persons);
-                $("#phones").val(data_json[index].phones);
-                $("#addModalLabel").text("修改");
-                $("#addModal").modal({
-                    keyboard: true
-                });
-            }
+        clearForm("#add_form_modal");// 清除表单上一次的输入数据
+        getEname();
+        $("#wrid").val(data_json[index].wrid);
+        $("#wname option[value='"+data_json[index].wname+"']").attr('selected',true);
+        $("#eid option[value='"+data_json[index].eid+"']").attr('selected',true);
+        $("#oid").val(data_json[index].oid);
+        $("#times").val(data_json[index].times);
+        $("#state").val(data_json[index].state);
+        $("#addModal").modal({
+            keyboard: true
         });
     }
 

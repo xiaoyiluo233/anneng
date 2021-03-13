@@ -39,14 +39,14 @@ public interface WarerecordService {
      * @param warerecord 实例对象
      * @return 实例对象
      */
-    Warerecord insert(Warerecord warerecord);
+    String insert(Warerecord warerecord);
 
     /**
      * 修改数据
      * @param warerecord 实例对象
      * @return 实例对象
      */
-    Warerecord update(Warerecord warerecord);
+    String update(Warerecord warerecord);
 
     /**
      * 通过主键删除数据

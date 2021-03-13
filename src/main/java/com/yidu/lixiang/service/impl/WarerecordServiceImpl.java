@@ -6,6 +6,8 @@ import com.yidu.lixiang.service.WarerecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,9 +60,21 @@ public class WarerecordServiceImpl implements WarerecordService {
      * @return 实例对象
      */
     @Override
-    public Warerecord insert(Warerecord warerecord) {
-        this.warerecordDao.insert(warerecord);
-        return warerecord;
+    public String insert(Warerecord warerecord) {
+        //创建时间格式类
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //得到时间
+        String format = sdf.format(new Date());
+        //设置到实体类中
+        warerecord.setTimes(format);
+        //调用新增的方法
+        int insert = this.warerecordDao.insert(warerecord);
+        //判断新增是否成功
+        if (insert>0){
+            return "新增成功！";
+        }else {
+            return "新增失败！";
+        }
     }
 
     /**
@@ -69,9 +83,21 @@ public class WarerecordServiceImpl implements WarerecordService {
      * @return 实例对象
      */
     @Override
-    public Warerecord update(Warerecord warerecord) {
-        this.warerecordDao.update(warerecord);
-        return this.queryById(warerecord.getWrid());
+    public String update(Warerecord warerecord) {
+        //创建时间格式类
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //得到时间
+        String format = sdf.format(new Date());
+        //设置到实体类中
+        warerecord.setTimes(format);
+        //调用修改的方法
+        int update = this.warerecordDao.update(warerecord);
+        //判断修改是否成功
+        if (update>0){
+            return "修改成功！";
+        }else {
+            return "修改失败！";
+        }
     }
 
     /**
