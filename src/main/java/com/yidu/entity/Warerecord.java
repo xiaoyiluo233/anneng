@@ -26,6 +26,17 @@ public class Warerecord implements Serializable {
     
     private Integer state;
 
+    @Override
+    public String toString() {
+        return "Warerecord{" +
+                "wrid=" + wrid +
+                ", wid=" + wid +
+                ", oid=" + oid +
+                ", eid=" + eid +
+                ", times='" + times + '\'' +
+                ", state=" + state +
+                '}';
+    }
 
     public Integer getWrid() {
         return wrid;

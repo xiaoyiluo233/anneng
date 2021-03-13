@@ -62,7 +62,7 @@ public class WarerecordServiceImpl implements WarerecordService {
     @Override
     public String insert(Warerecord warerecord) {
         //创建时间格式类
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //得到时间
         String format = sdf.format(new Date());
         //设置到实体类中
@@ -85,7 +85,7 @@ public class WarerecordServiceImpl implements WarerecordService {
     @Override
     public String update(Warerecord warerecord) {
         //创建时间格式类
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //得到时间
         String format = sdf.format(new Date());
         //设置到实体类中
@@ -102,11 +102,33 @@ public class WarerecordServiceImpl implements WarerecordService {
 
     /**
      * 通过主键删除数据
-     * @param wrid 主键
-     * @return 是否成功
+     * @param wrids 主键字符串
+     * @return 删除成功
      */
     @Override
-    public boolean deleteById(Integer wrid) {
-        return this.warerecordDao.deleteById(wrid) > 0;
+    public String deleteById(String wrids) {
+        //将字符串切割为数组
+        String[] array = wrids.split(",");
+        //申明变量用于记录删除成功的次数
+        int sum=0;
+        //循环取出id
+        for (int i = 0; i < array.length; i++) {
+            //得到id并转成int
+            int parseInt = Integer.parseInt(array[i]);
+            //调用删除的方法
+            int deleteById = warerecordDao.deleteById(parseInt);
+            //判断是否删除成功
+            if (deleteById>0){
+                //成功则sum++
+                sum++;
+            }
+        }
+        //判断sum是否与数组的长度相同
+        if (sum==array.length){
+            return "删除成功！";
+        }else {
+            return "删除失败！";
+        }
+
     }
 }

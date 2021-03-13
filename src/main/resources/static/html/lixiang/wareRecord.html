@@ -128,7 +128,7 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <input type="text"name="times"class="form-control" placeholder="处理时间" id="times">
+                                <input type="text" disabled="disabled" name="times"class="form-control" placeholder="处理时间" id="times">
                             </div>
                             <label class="err-info-modal"></label>
                         </div>
@@ -194,6 +194,8 @@
                 }
             }
         });
+    }
+    function getWnames(){
         $.ajax({
             type:"post",
             url:"../../goods_getWnames",
@@ -354,7 +356,7 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.stationid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.wrid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
@@ -373,9 +375,10 @@
         }else{
             clearForm("#add_form_modal");// 清除表单上一次的输入数据
             getEname();
+            getWnames();
             $("#wrid").val(data_obj[0].wrid);
-            $("#wname option[value='"+data_obj[0].wname+"']").attr('selected',true);
-            $("#eid option[value='"+data_obj[0].eid+"']").attr('selected',true);
+            $("#wname").val(data_obj[0].wname);
+            $("#eid").val(data_obj[0].eid);
             $("#oid").val(data_obj[0].oid);
             $("#times").val(data_obj[0].times);
             $("#state").val(data_obj[0].state);
@@ -390,6 +393,7 @@
         url="wareRecord_insert";
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
         getEname();
+        getWnames();
         $("#addModalLabel").text("新增");
         $("#addModal").modal({
             keyboard: true
@@ -404,10 +408,12 @@
 
     // 当点击【保存】按钮后，将表单中的数据提交到后台
     $("#btn_add_submit").on("click",function (){
+        var datas=$("#add_form_modal").serialize()+"&wid="+$("#wname").val()+"&eid="+$("#ename").val()+"&state="+$("#state").val();
+        //alert(datas);
         $.ajax({
             type: "post",       //请求类型
             url: "../../"+url,     //url
-            data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
+            data: datas,     // 收集表单中的数据
             dataType: "text",    //参数返回类型
             success: function (msg){
                 swal("结果:", msg, "success");
@@ -435,9 +441,10 @@
         //根据index找到对应行数据，填充数据到修改模态框
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
         getEname();
+        getWnames();
         $("#wrid").val(data_json[index].wrid);
-        $("#wname option[value='"+data_json[index].wname+"']").attr('selected',true);
-        $("#eid option[value='"+data_json[index].eid+"']").attr('selected',true);
+        $("#wname").val(data_json[index].wname);
+        $("#eid").val(data_json[index].eid);
         $("#oid").val(data_json[index].oid);
         $("#times").val(data_json[index].times);
         $("#state").val(data_json[index].state);
@@ -478,8 +485,8 @@
             if (willDelete) {
                 $.ajax({
                     type: "post",       //请求类型
-                    url: "../../station_delete",     //url
-                    data: "stationids="+id,     // 收集表单中的数据
+                    url: "../../wareRecord_delete",     //url
+                    data: "ids="+id,     // 收集表单中的数据
                     dataType: "text",    //参数返回类型
                     success: function (obj){
                         swal("OK！您的数据已被删除！", {
@@ -498,10 +505,10 @@
 
     // 当点击【删除】按钮后，拼接选中的id
     $("#btn_delete").on("click",function (){
-        url="station_delete";
+        url="wareRecord_delete";
         //选中的ids
         var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-            return row.stationid
+            return row.wrid
         })
         if(ids==""){
             swal("至少选中一行");
@@ -519,7 +526,7 @@
                     $.ajax({
                         type: "post",       //请求类型
                         url: "../../"+url,     //url
-                        data: "stationids="+ids,     // 收集表单中的数据
+                        data: "ids="+ids,     // 收集表单中的数据
                         dataType: "text",    //参数返回类型
                         success: function (obj){
                             swal("OK！您的数据已被删除！", {

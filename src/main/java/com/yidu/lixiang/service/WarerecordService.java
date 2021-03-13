@@ -50,9 +50,9 @@ public interface WarerecordService {
 
     /**
      * 通过主键删除数据
-     * @param wrid 主键
-     * @return 是否成功
+     * @param wrids 主键字符串
+     * @return 删除成功
      */
-    boolean deleteById(Integer wrid);
+    String deleteById(String wrids);
 
 }

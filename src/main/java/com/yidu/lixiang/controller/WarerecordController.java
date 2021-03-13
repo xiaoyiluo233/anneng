@@ -24,6 +24,12 @@ public class WarerecordController {
     @Autowired
     private WarerecordService warerecordService;
 
+    @ResponseBody
+    @RequestMapping(value = "wareRecord_delete",produces = {("application/json;charset=utf-8")})
+    public String delete(String ids){
+        return warerecordService.deleteById(ids);
+    }
+
     /**
      * 新增数据
      * @param warerecord 仓库记录表实体类

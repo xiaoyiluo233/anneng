@@ -44,7 +44,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          wid, wname, oid, times, state
+          wid, wname
         from ane.warehouse
         <where>
             <if test="wid != null">
