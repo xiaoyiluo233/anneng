@@ -1,16 +1,11 @@
-package com.yidu.entity;/**
- * @description:
- * @author:lixiang
- * @date: 2020/12/31 16:28
- * @vesion:1.0
- */
+package com.yidu.entity;
 
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
 /**
- *@description:
+ *@description: 具体的中转站
  *@author:lixiang
  *@date: 2020/12/31 16:28
  *@vesion:1.0
