@@ -28,7 +28,6 @@ public class EmplogController {
      *
      * @param offset 查询起始位置
      * @param pageNumber 查询条数
-     * @param name 查询值
      * @return 对象列表
      */
     @ResponseBody

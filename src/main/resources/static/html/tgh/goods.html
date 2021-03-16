@@ -102,11 +102,14 @@
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="wid">仓库表</label>
+                            <label class="control-label"for="wname">仓库表</label>
+                            <select class="form-control" style="width: 180px;margin-top: -23px; margin-left: 151px"  id="wname" name="wname">
+                                <option value="0">请选择仓库</option>
+                            </select>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="wid"class="form-control" placeholder="员工id" id="wid">
+
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
@@ -121,11 +124,12 @@
                         </div>
 
                         <div class="col-sm-3">
-                            <label class="control-label" for="times">当前时间</label>
+                            <label class="control-label" for="times" style="margin-top: 10px">当前时间</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="times"class="form-control" placeholder="当前时间不能更改" id="times"readonly>
+                            <input type="text"name="times"class="form-control" style="margin-top: 12px" placeholder="当前时间不能更改" id="times"readonly>
+
                         </div>
                     </div>
 
@@ -150,6 +154,33 @@
 </div>
 </body>
 <script type="text/javascript">
+    var wids=[];
+    var wnames=[];
+    function getWarehouse(){
+        $.ajax({
+            type:"post",
+            url:"../../goods_getWnames",
+            dataType: "json",
+            success: function (msg){
+                var string=''+msg+'';
+                wnames = string.split(',');
+                $("#wname").children().remove();
+            }
+        });
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../goods_getWids",     //url
+            dataType: "json",    //参数返回类型
+            success: function (msg){
+                var string=''+msg+'';
+                wids = string.split(',');
+                for (var p=0;p<wnames.length;p++) {
+                    $("#wname").append("<option value='"+wids[p]+"'>"+wnames[p]+"</option>");
+                }
+            }
+        });
+    }
+
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
@@ -166,7 +197,7 @@
     var url="";
     $(document).ready(function () {
         $table.bootstrapTable({
-            url:"../../goods_queryAll",   //请求地址
+            url:"../../goods_getNames",   //请求地址
             height: tableHeight(),//高度调整
             //cardView:true,//卡视图
             search: true,//是否搜索
@@ -288,6 +319,7 @@
     // 当点击【修改】按钮后，把模态框弹出来
 
     $("#btn_edit").on("click",function (){
+        getWarehouse();
         url="goods_update";
         //选中的数据
         var data = JSON.stringify($table.bootstrapTable('getSelections'));
@@ -328,6 +360,7 @@
         });
         //$('#addModal').modal('show')
         clearForm("#add_form_modal");// 清除表单上一次的输入数据
+        getWarehouse();
     });
 
     // helper: 重置表单
@@ -337,10 +370,12 @@
 
     // 当点击【保存】按钮后，将表单中的数据提交到后台
     $("#btn_add_submit").on("click",function (){
+        var aa=$('#wname option:selected').val();
+
         $.ajax({
             type: "post",
             url: "../../"+url,     //url
-            data:$("#add_form_modal").serializeArray(),
+            data:$("#add_form_modal").serialize()+"&wid="+aa,
             dataType: "text",    //参数返回类型
             success:function (msg) {
                 swal("结果：",msg,"success")
@@ -348,7 +383,7 @@
             }
         });
     });
-        $.ajax({
+       /* $.ajax({
             type: "post",       //请求类型
             url: "../../"+url,     //url
             data: $("#add_form_modal").serializeArray(),     // 收集表单中的数据
@@ -357,7 +392,7 @@
                 alert(msg);     //返回信息
                 $table.bootstrapTable('refresh');    //刷新表格
             }
-        });
+        });*/
 
 
     /**
@@ -369,6 +404,7 @@
      */
     // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
     function EditViewById(row, index){
+        getWarehouse();
         url="goods_update";
         var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
@@ -453,6 +489,8 @@
             });
         }
     });
+
+
 
 </script>
 </html>

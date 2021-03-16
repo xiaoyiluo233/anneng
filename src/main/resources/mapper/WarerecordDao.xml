@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.lixiang.dao.WarerecordDao">
+    <!-- 结果集合 -->
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Warerecord">
+        <!--@Table warerecord-->
+        <result property="wrid" column="wrid" jdbcType="INTEGER"/>
+        <result property="wid" column="wid" jdbcType="INTEGER"/>
+        <result property="oid" column="oid" jdbcType="INTEGER"/>
+        <result property="eid" column="eid" jdbcType="INTEGER"/>
+        <result property="times" column="times" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!-- 连表查询出员工名、仓库名以及仓库记录表的基本数据 -->
+    <select id="getMainData" resultType="HashMap">
+        SELECT
+            w1.`wrid`,w2.`wname`,w1.`oid`,e1.`ename`,w1.`times`,w1.`state`
+        FROM warerecord w1,employee e1,warehouse w2
+        WHERE w1.`eid`=e1.`eid` AND w1.`wid`=w2.`wid`
+    </select>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          wrid, wid, oid, eid, times, state
+        from ane.warerecord
+        where wrid = #{wrid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          wrid, wid, oid, eid, times, state
+        from ane.warerecord
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          wrid, wid, oid, eid, times, state
+        from ane.warerecord
+        <where>
+            <if test="wrid != null">
+                and wrid = #{wrid}
+            </if>
+            <if test="wid != null">
+                and wid = #{wid}
+            </if>
+            <if test="oid != null">
+                and oid = #{oid}
+            </if>
+            <if test="eid != null">
+                and eid = #{eid}
+            </if>
+            <if test="times != null and times != ''">
+                and times = #{times}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="wrid" useGeneratedKeys="true">
+        insert into ane.warerecord(wid, oid, eid, times, state)
+        values (#{wid}, #{oid}, #{eid}, #{times}, #{state})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.warerecord
+        <set>
+            <if test="wid != null">
+                wid = #{wid},
+            </if>
+            <if test="oid != null">
+                oid = #{oid},
+            </if>
+            <if test="eid != null">
+                eid = #{eid},
+            </if>
+            <if test="times != null and times != ''">
+                times = #{times},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+        </set>
+        where wrid = #{wrid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.warerecord where wrid = #{wrid}
+    </delete>
+
+</mapper>

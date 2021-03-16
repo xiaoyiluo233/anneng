@@ -6,9 +6,6 @@
         <!--@Table warehouse-->
         <result property="wid" column="wid" jdbcType="INTEGER"/>
         <result property="wname" column="wname" jdbcType="VARCHAR"/>
-        <result property="oid" column="oid" jdbcType="VARCHAR"/>
-        <result property="times" column="times" jdbcType="VARCHAR"/>
-        <result property="state" column="state" jdbcType="INTEGER"/>
     </resultMap>
 
     <!--统计行数-->
@@ -26,7 +23,7 @@
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          wid, wname, oid, times, state
+          wid, wname
         from ane.warehouse
         where wid = #{wid}
     </select>
@@ -34,7 +31,7 @@
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
-          wid, wname, oid, times, state
+          wid, wname
         from ane.warehouse
         <where>
             <if test="name!=null and name!=''">
@@ -47,7 +44,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          wid, wname, oid, times, state
+          wid, wname
         from ane.warehouse
         <where>
             <if test="wid != null">
@@ -56,22 +53,13 @@
             <if test="wname != null and wname != ''">
                 and wname = #{wname}
             </if>
-            <if test="oid != null and oid != ''">
-                and oid = #{oid}
-            </if>
-            <if test="times != null and times != ''">
-                and times = #{times}
-            </if>
-            <if test="state != null">
-                and state = #{state}
-            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="wid" useGeneratedKeys="true">
-        insert into ane.warehouse(wname, oid, times, state)
-        values (#{wname}, #{oid}, #{times}, #{state})
+        insert into ane.warehouse(wname)
+        values (#{wname})
     </insert>
 
     <!--通过主键修改数据-->
@@ -80,15 +68,6 @@
         <set>
             <if test="wname != null and wname != ''">
                 wname = #{wname},
-            </if>
-            <if test="oid != null and oid != ''">
-                oid = #{oid},
-            </if>
-            <if test="times != null and times != ''">
-                times = #{times},
-            </if>
-            <if test="state != null">
-                state = #{state},
             </if>
         </set>
         where wid = #{wid}
