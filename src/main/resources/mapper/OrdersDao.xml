@@ -11,6 +11,7 @@
         <result property="barcode" column="barcode" jdbcType="VARCHAR"/>
         <result property="payment" column="payMent" jdbcType="INTEGER"/>
         <result property="conditions" column="conditions" jdbcType="INTEGER"/>
+        <result property="otype" column="otype" jdbcType="INTEGER"/>
         <collection property="prices" column="priceid" javaType="com.yidu.entity.Prices">
             <result property="priceid" column="priceid" javaType="INTEGER"/>
             <result property="pvalue" column="pvalue" jdbcType="VARCHAR"/>
@@ -45,7 +46,7 @@
      <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
-          oid, pid, priceid, shipping, barcode, payMent
+          oid, pid, priceid, shipping, barcode, payMent,conditions,otype
         from ane.orders
         where oid = #{oid}
     </select>
@@ -71,7 +72,7 @@
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select
-          oid, pid, priceid, shipping, barcode, payMent,conditions
+          oid, pid, priceid, shipping, barcode, payMent,conditions,otype
         from ane.orders
         <where>
             <if test="oid != null">
@@ -95,13 +96,16 @@
             <if test="conditions != null">
                 and conditions = #{conditions}
             </if>
+            <if test="otype != null">
+                and otype = #{otype}
+            </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="insert" keyProperty="oid" useGeneratedKeys="true">
-        insert into ane.orders(pid, priceid, shipping, barcode, payMent,conditions)
-        values (#{pid}, #{priceid}, #{shipping}, #{barcode}, #{payment},#{conditions})
+        insert into ane.orders(pid, priceid, shipping, barcode, payMent,conditions,otype)
+        values (#{pid}, #{priceid}, #{shipping}, #{barcode}, #{payment},#{conditions},#{otype})
     </insert>
 
     <!--通过主键修改数据-->
@@ -125,6 +129,9 @@
             </if>
             <if test="conditions != null">
                 conditions = #{conditions},
+            </if>
+            <if test="otype != null">
+                and otype = #{otype}
             </if>
         </set>
         where oid = #{oid}
