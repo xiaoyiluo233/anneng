@@ -26,9 +26,17 @@ public class Orders implements Serializable {
     
     private Integer payment;
     private Integer conditions;
-
+    private Integer otype;
     private Prices prices;
     private Product product;
+
+    public Integer getOtype() {
+        return otype;
+    }
+
+    public void setOtype(Integer otype) {
+        this.otype = otype;
+    }
 
     public Prices getPrices() {
         return prices;
