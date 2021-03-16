@@ -10,7 +10,7 @@ spring:
     name: test
     url: jdbc:mysql://127.0.0.1:3306/ane?serverTimezone=Hongkong
     username: root
-    password: 123
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
   redis:
     database: 0
