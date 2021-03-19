@@ -35,6 +35,17 @@ public class Emplog implements Serializable {
                 '}';
     }
 
+    public Emplog() {
+    }
+
+    public Emplog(Integer elid, Integer eid, Integer type, String message, String times) {
+        this.elid = elid;
+        this.eid = eid;
+        this.type = type;
+        this.message = message;
+        this.times = times;
+    }
+
     public Integer getElid() {
         return elid;
     }
