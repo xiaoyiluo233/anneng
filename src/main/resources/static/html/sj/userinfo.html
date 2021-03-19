@@ -139,8 +139,8 @@
                         <th><span id="uaddresss">无</span></th>
                     </tr>
                     <tr>
-                        <th>出生日期</th>
-                        <th><span id="imgUrls">无</span></th>
+                        <th>头像</th>
+                        <th><img src="../../myFile/" style="width: 80px" id="imgUrls"/></th>
                     </tr>
                 </table>
             </div>
@@ -251,7 +251,7 @@
 
                         <div class="col-sm-9">
                             <div class ="file-loading">
-                                <input id="input-b8" name="file" multiple type="file">
+                                <input id="input-b8"  name="file" multiple type="file">
                             </div>
                         </div>
                     </div>
@@ -422,6 +422,9 @@
                 title : '头像',
                 field : 'imageUrl',
                 sortable : true,
+                formatter:function (value, row, index) {
+                   return "<img src='../../myFile/"+value+"' style='width: 20px'/>"
+                }
             },{
                 field: 'operate',
                 title: '操作',
@@ -516,7 +519,7 @@
         $("#companynames").text(data_json[index].companyname);
         $("#usexs").text(data_json[index].usex);
         $("#birthdays").text(data_json[index].birthday);
-        $("#imgUrls").text(data_json[index].imageUrl);
+        $("#imgUrls").attr("src","../../myFile/"+data_json[index].imageUrl);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -564,6 +567,35 @@
         $('#addModal').modal('show')
     });
 
+    // 当点击【修改】按钮后，把模态框弹出来
+    $("#btn_edit").on("click",function (){
+        url="update";
+        //选中的数据
+        var data = JSON.stringify($table.bootstrapTable('getSelections'));
+        var data_obj = JSON.parse(data);
+        if(data_obj.length>1){
+            swal("信息", "目前不支持编辑多行数据！");
+        }else if(data_obj==0){
+            swal("信息", "请选择一行！");
+        }else{
+            //根据index找到对应行数据，填充数据到修改模态框
+            $("#uid").val(data_obj[0].uid);
+            $("#uname").val(data_obj[0].uname);
+            $("#uemail").val(data_obj[0].uemail);
+            $("#upassword").val(data_obj[0].upassword);
+            $("#companyname").val(data_obj[0].companyname);
+            $("#usex").val(data_obj[0].usex);
+            $("#birthday").val(data_obj[0].birthday);
+            $("#uaddress").val(data_obj[0].uaddress);
+            $("#imageUrl").val("../../myFile"+data_obj[0].imageUrl);
+            // $("#state").val(data_json[index].state);
+            $("#addModalLabel").text("修改");
+            $("#addModal").modal({
+                keyboard: true
+            });
+            //$('#addModal').modal('show')
+        }
+    });
 
     // 当点击【删除】按钮后，拼接选中的id
     $("#btn_delete").on("click",function (){
