@@ -48,18 +48,6 @@
                         <th>仓库名</th>
                         <th><span id="wname">admin</span></th>
                     </tr>
-                    <tr>
-                        <th>订单ID</th>
-                        <th><span id="oid">admin</span></th>
-                    </tr>
-                    <tr>
-                        <th>入库/出库时间</th>
-                        <th><span id="times">admin</span></th>
-                    </tr>
-                    <tr>
-                        <th>状态</th>
-                        <th><span id="state">admin</span></th>
-                    </tr>
                 </table>
             </div>
             <div class="modal-footer">
@@ -96,31 +84,6 @@
                         <div class="col-sm-9">
                             <input type="text" name="wname"class="form-control" placeholder="请输入仓库名" id="wnames">
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label class="control-label"for="oid">订单ID</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" name="oid"class="form-control" placeholder="请输入订单ID" id="oids">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label class="control-label"for="times">入库/出库时间</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="text" name="times"class="form-control" placeholder="请输入入库/出库时间" id="timess">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label class="control-label"for="state">状态</label>
-                        </div>
-                        <select class="form-control" style="width: 180px;margin-left: 164px" id="states" name="state">
-                            <option value="1">入库</option>
-                            <option value="2">出库</option>
-                        </select>
                     </div>
                 </form>
 
@@ -222,32 +185,6 @@
                 title: '仓库名',
                 field: 'wname',
                 sortable: true
-            },{
-                title: '订单号ID',
-                field: 'oid',
-                sortable: true
-            },{
-                title: '入库/出库时间',
-                field: 'times',
-                sortable: true
-            },{
-                title: '状态',
-                field: 'state',
-                sortable: true,
-                formatter:function (value, row, index) {
-                    if (value==1){
-                        return "入库";
-                    }else {
-                        return "出库";
-                    }
-                }
-            },{
-                field: 'operate',
-                title: '操作',
-                width: 120,
-                align: 'center',
-                // valign: 'middle',
-                formatter: actionFormatter,//对本列数据做格式化
             }],
             onClickRow: function (row, $element) {
                 //$element是当前tr的jquery对象
@@ -308,9 +245,6 @@
         //根据index找到对应行数据，填充数据到修改模态框
         $("#wids").val(data_json[index].wid);
         $("#wnames").val(data_json[index].wname);
-        $("#oids").val(data_json[index].oid);
-        $("#timess").val(data_json[index].times);
-        $("#states").val(data_json[index].state);
         $("#addModalLabel").text("修改");
         //弹出修改模态框，非新增模态框
         $('#addModal').modal('show')
@@ -322,9 +256,6 @@
         var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
         $("#wid").text(data_json[index].wid);
         $("#wname").text(data_json[index].wname);
-        $("#oid").text(data_json[index].oid);
-        $("#times").text(data_json[index].times);
-        $("#state").text(data_json[index].state);
         //弹出修改模态框，非新增模态框
         $('#lookModal').modal('show')
     }
@@ -395,9 +326,6 @@
         }else{
             $("#wids").val(data_obj[0].wid);
             $("#wnames").val(data_obj[0].wname);
-            $("#oids").val(data_obj[0].oid);
-            $("#timess").val(data_obj[0].times);
-            $("#states").val(data_obj[0].state);
             $("#addModal").modal({
                 keyboard: true
             });

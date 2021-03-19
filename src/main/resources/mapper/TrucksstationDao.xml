@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.tgh.dao.TrucksstationDao">
+
+    <resultMap id="BaseResultMap" type="com.yidu.entity.Trucksstation">
+        <!--@Table trucksstation-->
+        <result property="tsid" column="tsid" jdbcType="INTEGER"/>
+        <result property="tid" column="tid" jdbcType="INTEGER"/>
+        <result property="nowstation" column="nowStation" jdbcType="INTEGER"/>
+        <result property="nextstation" column="nextStation" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getName" resultType="HashMap">
+        SELECT t1.tsid,t2.tnumber,s1.stationName nowStation,s2.stationName nextStation FROM trucksStation t1
+        LEFT JOIN station s1 ON t1.nowStation=s1.stationId
+        LEFT JOIN station s2 ON t1.nextStation=s2.stationId
+        LEFT JOIN trucks t2 ON t1.tid=t2.tid;
+    </select>
+
+    <select id="count" resultType="int">
+        select count(1) from ane.trucksstation
+        <where>
+            <if test="tnumbers != null and tnumbers != ''">
+                and tnumber like '%${tnumbers}%'
+            </if>
+
+        </where>
+    </select>
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          tsid, tid, nowStation,nextStation
+        from ane.trucksstation
+        where tsid = #{tsid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          tsid, tid, nowStation, nextStation
+        from ane.trucksstation
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+           nextStation
+        from ane.trucksstation
+        <where>
+            <if test="tsid != null">
+                and tsid = #{tsid}
+            </if>
+            <if test="tid != null">
+                and tid = #{tid}
+            </if>
+            <if test="nowstation != null">
+                and nowStation = #{nowstation}
+            </if>
+            <if test="nextstation != null">
+                and nextStation = #{nextstation}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="tsid" useGeneratedKeys="true">
+        insert into ane.trucksstation(tid, nowStation, nextStation)
+        values (#{tid}, #{nowstation}, #{nextstation})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.trucksstation
+        <set>
+            <if test="tid != null">
+                tid = #{tid},
+            </if>
+            <if test="nowstation != null">
+                nowStation = #{nowstation},
+            </if>
+            <if test="nextstation != null">
+                nextStation = #{nextstation},
+            </if>
+        </set>
+        where tsid = #{tsid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.trucksstation where tsid = #{tsid}
+    </delete>
+
+</mapper>

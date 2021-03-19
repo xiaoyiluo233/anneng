@@ -184,6 +184,9 @@
             $(this).children('ul').hide();
         });
     })
+    function chax() {
+        window.location.href="frontPage/tghHtml/index4.html?num="+$("#searchOrderNumber").val();
+    }
 </script>
 <a name="one"></a>
 <div style="height: 70%;"></div>
@@ -193,7 +196,7 @@
         <p>运单号查询</p>
         <div class="orderNumber">
             <input type="text" name="searchOrderNumber" id="searchOrderNumber" placeholder="最多可查询10条，以英文逗号、空格或回车键隔开" />
-            <span><img src="img/LFimg/favicon-16x16.png"/>查询</span>
+            <span onclick="chax()"><img src="img/LFimg/favicon-16x16.png"/>查询</span>
         </div>
     </div>
     <div id="switch">

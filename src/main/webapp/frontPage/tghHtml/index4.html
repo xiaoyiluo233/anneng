@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>订单信息-</title>
+
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!--可无视-->
@@ -231,7 +231,7 @@
 				<div id="biaodan6">
 					<div id="biaodan7">
 						<br />
-						<span style="color: #6c757d; font-size: 17px;">&nbsp;&nbsp;您的订单号：ANE0320201230000228</span>
+						<span style="color: #6c757d; font-size: 17px;">&nbsp;&nbsp;您的订单号：</span><span class="order_oid" style="color: #6c757d; font-size: 17px;">ANE0320201230000228</span>
 					</div>
 					<div id="biaodan8">
 						&nbsp;&nbsp;<i class="iconfont" style="color: #cccccc; font-size: 44px; line-height: 150px;">&#xe676;</i>
@@ -256,7 +256,7 @@
 
 					<div id="biaodan12">
 						<br />
-						<span style="color: #6c757d; font-size: 17px;">&nbsp;&nbsp;&nbsp;订单详情：ANE0320201230000228</span>
+						<span style="color: #6c757d; font-size: 17px;">&nbsp;&nbsp;&nbsp;订单详情：<span class="order_oid" style="color: #6c757d; font-size: 17px;">ANE0320201230000228</span></span>
 
 					</div>
 					<div id="biaodan13">
@@ -306,7 +306,7 @@
 								<span style="font-size: 16px;">送货方式：送货上门不上楼</span>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 16px; border: none;">付款方式：现金</span>
+								&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 16px; border: none;">付款方式：<span id="order_payMent" style="font-size: 16px; border: none;">现金</span></span>
 							</div>
 							
 								
@@ -428,6 +428,34 @@
 		<script src="../../js/tghjs/num-alignment.js"></script>
 	</body>
 	<script>
+		//获取url中的参数
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+			if (r != null) return unescape(r[2]); return null; //返回参数值
+		}
+
+
+
+
+		$(function () {
+			var num = getUrlParam('num');
+			$.get("../../orders_selectOne","id="+num,function (data) {
+				//alert(data.oid);
+				$(".order_oid").text(data.oid);
+				if(data.payment==1){
+					$("#order_payMent").text("线上支付");
+				}else if(data.payment==2){
+					$("#order_payMent").text("货到付款");
+				}else if(data.payment==3){
+					$("#order_payMent").text("现金");
+				}
+
+			},"json");
+
+		});
+
+
 		//显示二维码
 		$("#headcentre>ul>li:eq(1)").hover(
 			function() { //进

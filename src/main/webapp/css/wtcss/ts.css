@@ -71,7 +71,7 @@
 	padding: 24px;
 }
 #head1 dl dt:hover{
-	height: 80px;
+	height: 40px;
 	cursor:pointer;
 	color: #F18700;
 	border-top: #F18700 0.1px solid;
@@ -160,20 +160,20 @@
 	margin: 0 auto;
 }
 #tou_yg{
-	width: 100%;
+	width: 200px;
 	height:130px ;
 	position: fixed;
 	top: 80px;
 	z-index: 2;
 }
 #tou_ygs{
-	width:1140px;
+	width:200px;
 	height: 130px;
 	margin: 0 auto;
 	z-index: 2;
 }
 #yg{
-	margin-left: 1010px;
+	margin-left: 1194px;
 	background-color: #8f8f8f;
 	border-radius: 5px;
 	width: 128px;
@@ -777,19 +777,19 @@
 	list-style-type: none ;
 }
 #tou_hy{
-	width: 100%;
+	width: 200px;
 	height:130px ;
 	position: fixed;
 	top: 80px;
 	z-index: 2;
 }
 #tou_hys{
-	width:1140px;
+	width:200px;
 	height: 130px;
 	margin: 0 auto;
 }
 #hy{
-	margin-left: 838px;
+	margin-left: 1028px;
 	background-color: #8f8f8f;
 	border-radius: 5px;
 	width: 128px;

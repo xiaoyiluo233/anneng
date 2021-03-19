@@ -102,7 +102,7 @@
 					<div id="dingdan" style="background-color: #ffffff; width: 800px; height: 160px; margin: 20px;">
 					<div style="width: 760px; height: 40px; margin: 20px; border: solid 1px #cccccc;border-top: none; border-left: none; border-right: none;">
 						<img src="../img/luoxiaoimg/luoxImg/dingdan.png" style="width: 20px;height: 20px;float: left;" />
-						<span style="float: left;"> 订单号: </span>
+						<span style="float: left;">订单号: <span id="ddh" >100 </span></span>
 						</div>
 						<div style=" float: left;margin-left: 20px;">
 							<img src="../img/luoxiaoimg/luoxImg/ji.png" />
@@ -116,7 +116,7 @@
 							 	
 						</div>
 						<div style=" float: left;margin: 20px;">
-							<span style="color: #f18700;">订单状态：已撤销</span>							 	
+							<span style="color: #f18700;">订单状态：<span id="ddzt" style="color: #f18700;">已撤销</span></span>
 						</div>
 					</div>
 					
@@ -183,7 +183,7 @@
 				<center></center>
 				<h4 style="float: left;margin-left: 215px; margin-top: 16px; color: #f5911e;">修改姓名</h4>
 			</div>
-			<div style="height: 112px;width: 499px;  background-color: white;border: solid 1px black;border-left: none;border-right: none; ">
+			<div style="height: 112px;width: 499px;  background-color: white;border: solid 1px #000000;border-left: none;border-right: none; ">
 				<div id="xx" style="width:180px;height:180px;">
 					<input id="updatename" style="height: 50px; width: 369px; text-align:center; margin-left: 60px;margin-top: 30px; background-color: #f7f7f7;border: none;" type="text" />
 				</div>
@@ -285,6 +285,26 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+		//获取url中的参数
+		function getUrlParam(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+			var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+			if (r != null) return unescape(r[2]); return null; //返回参数值
+		}
+
+		$(function () {
+			var num = getUrlParam('num');
+			$.get("../orders_selectOne","id="+num,function (data) {
+				//alert(data.oid);
+				$("#ddh").text(data.oid);
+				if(data.payment==1){
+					$("#ddzt").text("正在派件");
+				}else if(data.payment==2){
+					$("#ddzt").text("已撤销");
+				}
+			},"json");
+
+		});
 		function changess(){
 			/*alert($(".name").text());
 			alert($("#updatename").val());*/

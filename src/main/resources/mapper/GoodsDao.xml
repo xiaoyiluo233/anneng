@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidu.tgh.dao.GoodsDao">
+
+    <resultMap id="BaseResultMaps" type="com.yidu.entity.Goods">
+        <!--@Table goods-->
+        <result property="taid" column="taid" jdbcType="INTEGER"/>
+        <result property="orderid" column="orderId" jdbcType="INTEGER"/>
+        <result property="wid" column="wid" jdbcType="INTEGER"/>
+        <result property="tavalue" column="taValue" jdbcType="OTHER"/>
+        <result property="times" column="times" jdbcType="TIMESTAMP"/>
+       <!-- <collection property="product" column="pid" javaType="com.yidu.entity.warehouse">
+
+            <result property="wid" column="oid" jdbcType="wid"/>
+            <result property="wname" column="wname" javaType="INTEGER"/>
+            <result property="oid" column="oid" javaType="INTEGER"/>
+            <result property="times" column="times" jdbcType="INTEGER"/>
+            <result property="state" column="state" jdbcType="VARCHAR"/>
+
+
+        </collection>-->
+
+    </resultMap>
+
+    <!--统计行数-->
+    <select id="count" resultType="int">
+        select count(1) from ane.goods
+        <where>
+            <if test="tnumbers != null and tnumbers != ''">
+                and tnumber like '%${tnumbers}%'
+            </if>
+        </where>
+
+
+    </select>
+
+    <!--/*连表查询*/-->
+
+    <select id="getNames" resultType="HashMap">
+
+
+        SELECT * FROM  goods g1,warehouse w1
+        WHERE g1.wid=w1.wid
+    </select>
+
+
+    <!--/*连表查询所有*/-->
+
+<!--    <select id="selects" resultType="BaseResultMaps">
+
+      SELECT g1.taid,g1.taValue,w1.wid,g1.taValue,g1.times FROM  goods g1,orders o1,warehouse w1 WHERE
+g1.orderId = o1.oid AND g1.wid=w1.wid;
+    </select>-->
+
+    <select id="selects" resultMap="BaseResultMaps">
+        select
+          taid, orderid, wid, tavalue, times
+        from ane.goods
+        where orderId=#{orderid}
+    </select>
+
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMaps">
+        select
+          taid, orderId, wid, taValue, times
+        from ane.goods
+        where taid = #{taid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMaps">
+        select
+          taid, orderId, wid, taValue,times
+        from ane.goods
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMaps">
+        select
+          taid, orderId, wid, taValue, times
+        from ane.goods
+        <where>
+            <if test="taid != null">
+                and taid = #{taid}
+            </if>
+            <if test="orderid != null">
+                and orderId = #{orderid}
+            </if>
+            <if test="wid != null">
+                and wid = #{wid}
+            </if>
+            <if test="tavalue != null">
+                and taValue = #{tavalue}
+            </if>
+            <if test="times != null">
+                and times = #{times}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="taid" useGeneratedKeys="true">
+        insert into ane.goods(orderId, wid, taValue, times)
+        values (#{orderid}, #{wid}, #{tavalue}, #{times})
+    </insert>
+
+    <!--新增所有列-->
+    <insert id="inserts" keyProperty="taid" useGeneratedKeys="true">
+        insert into ane.goods(orderId, wid, taValue, times)
+        values (#{orderid}, #{wid}, #{tavalue}, #{times})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update ane.goods
+        <set>
+            <if test="orderid != null">
+                orderId = #{orderid},
+            </if>
+            <if test="wid != null">
+                wid = #{wid},
+            </if>
+            <if test="tavalue != null">
+                taValue = #{tavalue},
+            </if>
+            <if test="times != null">
+                times = #{times},
+            </if>
+        </set>
+        where taid = #{taid}
+    </update>
+
+    <!--通过主键修改数据-->
+    <update id="updates">
+        update ane.goods
+        <set>
+            <if test="orderid != null">
+                orderId = #{orderid},
+            </if>
+            <if test="wid != null">
+                wid = #{wid},
+            </if>
+            <if test="tavalue != null">
+                taValue = #{tavalue},
+            </if>
+            <if test="times != null">
+                times = #{times},
+            </if>
+        </set>
+        where taid = #{taid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from ane.goods where taid = #{taid}
+    </delete>
+
+</mapper>

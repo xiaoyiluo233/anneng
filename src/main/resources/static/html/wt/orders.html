@@ -55,6 +55,10 @@
                         <th><span id="conditionss">123</span></th>
                     </tr>
                     <tr>
+                        <th>订单类型</th>
+                        <th><span id="otypes">123</span></th>
+                    </tr>
+                    <tr>
                         <th>货品详情</th>
                         <th><span id="pvalues">123</span></th>
                     </tr>
@@ -166,6 +170,7 @@
                         <select class="form-control" style="width: 180px;margin-left: 164px" id="payMent" name="payment">
                             <option value="1">线上支付</option>
                             <option value="2">货到付款</option>
+                            <option value="3">现金</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -175,6 +180,15 @@
                         <select class="form-control" style="width: 180px;margin-left: 164px" id="conditions" name="conditions">
                             <option value="1">有效</option>
                             <option value="2">无效</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label" for="otype">订单状态</label>
+                        </div>
+                        <select class="form-control" style="width: 180px;margin-left: 164px" id="otype" name="otype">
+                            <option value="1">寄件订单</option>
+                            <option value="2">收件订单</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -359,6 +373,17 @@
                     }
                 }
             },{
+                title: '订单类型',
+                field: 'otype',
+                sortable: true,
+                formatter: function (value, row, index) {
+                    if (value == 1) {
+                        return '寄件订单';
+                    } else if (value == 2) {
+                        return '收件订单';
+                    }
+                }
+            },{
                 title: '货品详情',
                 field: 'product.pvalue',
                 sortable: true
@@ -456,7 +481,7 @@
             $("#barcode").val(data_obj[0].barcode);
             $("#payMent").val(data_obj[0].payment);
             $("#conditions").val(data_obj[0].conditions);
-
+            $("#otype").val(data_obj[0].otype);
             $("#addModal").modal({
                 keyboard: true
             });
@@ -546,6 +571,7 @@
         $("#barcode").val(data_json[index].barcode);
         $("#payMent").val(data_json[index].payment);
         $("#conditions").val(data_json[index].conditions);
+        $("#otype").val(data_json[index].otype);
         $("#uid").val(data_json[index].uid);
         $("#pvalue").val(data_json[index].pvalue);
         $("#price").val(data_json[index].price);
@@ -579,6 +605,11 @@
             $("#conditionss").text('有效');
         } else if (data_json[index].state == 2) {
             $("#conditionss").text('无效');
+        }
+        if (data_json[index].state == 1) {
+            $("#otypes").text('寄件订单');
+        } else if (data_json[index].state == 2) {
+            $("#otypes").text('收件订单');
         }
         $("#uids").val(data_json[index].uid);
         $("#pvalues").val(data_json[index].pvalue);
