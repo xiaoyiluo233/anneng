@@ -93,4 +93,9 @@ public class LRStationServiceImpl implements StationService {
     public List<Map<String, Object>> queryByPCId(Integer provinceid, Integer cityid,String stationname) {
         return stationDao.queryByPCId(provinceid,cityid,stationname);
     }
+
+    @Override
+    public Station selectLikeName(Integer cityid,String stationname) {
+        return stationDao.selectLikeName(cityid,stationname);
+    }
 }

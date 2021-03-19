@@ -52,9 +52,8 @@ public class LRParcelServiceImpl implements ParcelService {
      * @return 实例对象
      */
     @Override
-    public Parcel insert(Parcel parcel) {
-        this.parcelDao.insert(parcel);
-        return parcel;
+    public int insert(Parcel parcel) {
+        return parcelDao.insert(parcel);
     }
 
     /**
@@ -94,4 +93,10 @@ public class LRParcelServiceImpl implements ParcelService {
     public List<ParcelStationVo> selectConnect() {
         return parcelDao.selectConnect();
     }
+
+    @Override
+    public Parcel queryIdMax() {
+        return parcelDao.queryIdMax();
+    }
+
 }

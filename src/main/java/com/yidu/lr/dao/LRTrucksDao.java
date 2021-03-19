@@ -3,6 +3,8 @@ package com.yidu.lr.dao;
 import com.yidu.entity.Trucks;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ import java.util.List;
  * @author makejava
  * @since 2021-02-22 09:19:37
  */
+@Repository
 @Mapper
 public interface LRTrucksDao {
 
@@ -64,4 +67,5 @@ public interface LRTrucksDao {
      */
     int deleteById(Integer tid);
 
+    Trucks queryByParcelid(Integer parcelid);
 }

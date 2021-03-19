@@ -24,6 +24,11 @@
     <script src="../../assets/dist/bootstrap-table.js"></script>
     <script src="../../assets/dist/locale/bootstrap-table-zh-CN.js"></script>
     <script src="../../assets/dist/extensions/export/bootstrap-table-export.min.js"></script>
+    <script src="../../js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../js/moment-with-locales.js"></script>
+    <script src="../../js/demo.js"></script>
+    <script src="../../js/jeDate-test.css"></script>
+    <script src="../../js/jedate.css"></script>
 </head>
 <body>
 <!--<div class="toolbar">-->
@@ -79,10 +84,10 @@
 <!--</div>-->
 <!-- 头部工具栏 -->
 <div id="toolbar" class="btn-group">
-    <button id="btn_add" type="button" class="btn btn-default" disabled="disabled">
+    <button id="btn_add" type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
     </button>
-    <button id="btn_edit" type="button" class="btn btn-default" disabled="disabled">
+    <button id="btn_edit" type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
     </button>
     <button id="btn_delete" type="button" class="btn btn-default">
@@ -104,31 +109,31 @@
                 <table class="table">
                     <tr>
                         <th>id</th>
-                        <th><span id="routeid">1</span></th>
+                        <th><span id="routeids">1</span></th>
                     </tr>
                     <tr>
-                        <th>货车</th>
-                        <th><span id="tnumber">admin</span></th>
+                        <th>货车名称</th>
+                        <th><span id="tnumbers">admin</span></th>
                     </tr>
                     <tr>
                         <th>起点</th>
-                        <th><span id="start">无</span></th>
+                        <th><span id="starts">无</span></th>
                     </tr>
                     <tr>
                         <th>途径点</th>
-                        <th><span id="pass">无</span></th>
+                        <th><span id="passs">无</span></th>
                     </tr>
                     <tr>
                         <th>终点</th>
-                        <th><span id="end">无</span></th>
+                        <th><span id="ends">无</span></th>
                     </tr>
                     <tr>
                         <th>出发时间</th>
-                        <th><span id="startTime">无</span></th>
+                        <th><span id="startTimes">无</span></th>
                     </tr>
                     <tr>
                         <th>到达时间</th>
-                        <th><span id="endTime">无</span></th>
+                        <th><span id="endTimes">无</span></th>
                     </tr>
                     <div id="container"></div>
                     <div id="panel" style="display: none"></div>
@@ -154,45 +159,62 @@
                 <form id="add_form_modal"class="form-horizontal">
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="uid">id</label>
+                            <label class="control-label"for="routeid">id</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="uid"class="form-control"id="uid" placeholder="id自动生成" readonly>
+                            <input type="text"name="routeid"class="form-control"id="routeid" placeholder="id自动生成" readonly>
                         </div>
                         <label class="err-info-modal"></label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="uname">名称</label>
+                            <label class="control-label"for="tnumber">货车名称</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="uname"class="form-control" placeholder="名称" id="uname">
+                            <select class="form-control"  id="tnumber" name="tid">
+                            </select>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="upass">密码</label>
+                            <label class="control-label"for="pathid">线路</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="upass"class="form-control" placeholder="密码" id="upass">
+                            <select class="form-control"  id="pathid" name="pathid">
+                            </select>
                         </div>
-                        <label class="err-info-modal"></label>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-3">
-                            <label class="control-label"for="headimg">图片</label>
+                            <label class="control-label"for="startTime">出发时间</label>
                         </div>
 
                         <div class="col-sm-9">
-                            <input type="text"name="headimg"class="form-control" placeholder="图片" id="headimg">
+                            <div class="jeitem">
+                                <label class="jelabel">年月日时分秒选择</label>
+                                <div class="jeinpbox"><input type="text" class="jeinput" id="test04" placeholder="YYYY-MM-DD hh:mm:ss"></div>
+                            </div>
+                            <input type="date"name="starttime" class="form-control" placeholder="出发时间" id="startTime">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label"for="endTime">到达时间</label>
+                        </div>
+
+                        <div class="col-sm-9">
+                            <input type="date"name="arrivetime" class="form-control" placeholder="到达时间" id="endTime">
+                        </div>
+                    </div>
+
+
 
                 </form>
 
@@ -236,12 +258,14 @@
 </div>
 </body>
 <script type="text/javascript">
+    var arrname=new Array();
     //根据窗口调整表格高度
     $(window).resize(function() {
         $('#mytable').bootstrapTable('resetView', {
             height: tableHeight()
         })
     })
+
     //表格选择器
     $table= $("#mytable");
     //新增修改url
@@ -249,6 +273,16 @@
 
     //页面加载事件
     $(document).ready(function () {
+        $.get("../../route/selectAllTrucks",null,function (data) {
+            $.each(data,function (index,item) {
+                $("#tnumber").append("<option value='"+item.tid+"'>"+item.tnumber+"</option>");
+            })
+        },"json");
+        $.get("../../route/selectAllPath",null,function (data) {
+            $.each(data,function (index,item) {
+                $("#pathid").append("<option value='"+item.pathId+"'>"+item.startstationName+"----"+item.endstationName+"</option>");
+            })
+        },"json");
         $table.bootstrapTable({
             url:"../../route/selectAll",   //请求地址
             height: tableHeight(),//高度调整
@@ -330,7 +364,7 @@
                 field : 'startTime',
                 sortable : true,
                 formatter:function (value, row, index) {
-                    if(value==null){
+                    if(value==null || value==""){
                         return "未出发";
                     }
                     return value;
@@ -340,7 +374,7 @@
                 field : 'arriveTime',
                 sortable : true,
                 formatter:function (value, row, index) {
-                    if(value==null){
+                    if(value==null || value==""){
                         return "未到达";
                     }
                     return value;
@@ -380,6 +414,7 @@
             var data = JSON.stringify(row);
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.routeId+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
@@ -395,7 +430,27 @@
         return $(window).height() - 50;
     }
 
-
+    // getData方法获取全部页面数据后，将data转为json对象，使用index当前行号作为下标获取对应数据
+    function EditViewById(row, index){
+        url="update";
+        var data = JSON.stringify($table.bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        // {#var data_json2 = eval("(" + data+ ")"); #}
+        //console.log(data_json);
+        //由于data2已经是对象了，alert不能显示对象只能显示为[object Object],需要控制台打印
+        //alert(data_json[0]);
+        //根据index找到对应行数据，填充数据到修改模态框
+        $("#routeid").val(data_json[index].routeId);
+        $("#tnumber").val(data_json[index].tid);
+        $("#pathid").val(data_json[index].pathid);
+        $("#start").val(data_json[index].startstationName);
+        $("#end").val(data_json[index].endstationName);
+        $("#startTime").val(data_json[index].startTime);
+        $("#endTime").val(data_json[index].arriveTime);
+        $("#addModalLabel").text("修改");
+        //弹出修改模态框，非新增模态框
+        $('#addModal').modal('show');
+    }
 
     function LookViewById(row, index){
 
@@ -409,34 +464,34 @@
         bb[0]=persons1;
 
         $.get("../../route/selectByIdStation","id="+data_json[index].stationIds,function (obj) {
-            $("#pass").text("");
+            $("#passs").text("");
             $.each(obj,function (index,item) {
                 console.log(index);
                 var persons = new Object();
                 persons.keyword=item.stationname;
                 bb[index+1]=persons;
-                $("#pass").append(item.stationname+"    ");
+                $("#passs").append(item.stationname+"    ");
             });
             var persons2 = new Object();
             persons2.keyword=data_json[index].endstationName;
             bb[bb.length]=persons2;
         },"json");
 
-        $("#routeid").text(data_json[index].routeId);
-        $("#tnumber").text(data_json[index].tnumber);
-        $("#start").text(data_json[index].startstationName);
-        $("#end").text(data_json[index].endstationName);
+        $("#routeids").text(data_json[index].routeId);
+        $("#tnumbers").text(data_json[index].tid);
+        $("#starts").text(data_json[index].startstationName);
+        $("#ends").text(data_json[index].endstationName);
 
 
         if(data_json[index].startTime==null){
-            $("#startTime").text("暂无时间");
+            $("#startTimes").text("暂无时间");
         }else{
-            $("#startTime").text(data_json[index].startTime);
+            $("#startTimes").text(data_json[index].startTime);
         }
         if(data_json[index].arriveTime==null){
-            $("#endTime").text("暂无时间");
+            $("#endTimes").text("暂无时间");
         } else {
-            $("#endTime").text(data_json[index].arriveTime);
+            $("#endTimes").text(data_json[index].arriveTime);
         }
         for (var i = 0; i <bb.length ; i++) {
             console.log(bb[i]);
@@ -494,6 +549,48 @@
         });
     }
 
+    // helper: 重置表单
+    function clearForm(form) {
+        $(form)[0].reset();
+    }
+    // 当点击【修改】按钮后，把模态框弹出来
+    $("#btn_edit").on("click",function (){
+        url="update";
+        //选中的数据
+        var data = JSON.stringify($table.bootstrapTable('getSelections'));
+        var data_obj = JSON.parse(data);
+        if(data_obj.length>1){
+            swal("信息", "目前不支持编辑多行数据！");
+        }else if(data_obj==0){
+            swal("信息", "请选择一行！");
+        }else{
+            $("#routeid").val(data_obj[0].routeId);
+            $("#tnumber").val(data_obj[0].tid);
+            $("#pathid").val(data_obj[0].pathid);
+            $("#start").val(data_obj[0].startstationName);
+            $("#end").val(data_obj[0].endstationName);
+            $("#startTime").val(data_obj[0].startTime);
+            $("#endTime").val(data_obj[0].arriveTime);
+            $("#addModalLabel").text("修改");
+            $("#addModal").modal({
+                keyboard: true
+            });
+            //$('#addModal').modal('show')
+        }
+    });
+
+    // 当点击【新增】按钮后，把模态框弹出来
+    $("#btn_add").on("click",function (){
+        url="insert";
+        $("#addModalLabel").text("新增");
+        $("#add_form_modal")[0].reset();
+        //clearForm("#add_form_modal");// 清除表单上一次的输入数据
+        $("#addModal").modal({
+            keyboard: true
+        });
+        //$('#addModal').modal('show')
+
+    });
 
     // 当点击【删除】按钮后，拼接选中的id
     $("#btn_delete").on("click",function (){
@@ -526,7 +623,25 @@
             });
         }
     });
+    // 当点击【保存】按钮后，将表单中的数据提交到后台
+    $("#btn_add_submit").on("click",function (){
+        alert($("#add_form_modal").serialize());
 
+        $.ajax({
+            type: "post",       //请求类型
+            url: "../../route/"+url,     //url
+            data: $("#add_form_modal").serialize(),     // 收集表单中的数据
+            dataType: "json",    //参数返回类型
+            success: function (obj){
+                if(url=="insert"){
+                    swal("信息", "数据添加成功！");
+                }else{
+                    swal("信息", "数据修改成功！");
+                }
+                $table.bootstrapTable('refresh');    //刷新表格
+            }
+        });
+    });
 
 
 

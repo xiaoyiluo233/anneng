@@ -18,6 +18,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * @Author lr
+ * @Date 2020/3/1 21:26
+ * @Description 支付控制层
+ */
 @Controller
 @RequestMapping(value="/Alipay")
 public class AlipayController {
@@ -37,7 +42,7 @@ public class AlipayController {
      */
     @ResponseBody
     @RequestMapping(value = "/PayPage")
-    public String  payController (HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String  payController (String order,String money,String name,HttpServletRequest request, HttpServletResponse response) throws IOException {
         //获得初始化的AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.APP_ID, AlipayConfig.APP_PRIVATE_KEY, "json", AlipayConfig.CHARSET, AlipayConfig.ALIPAY_PUBLIC_KEY, AlipayConfig.sign_type);
 
@@ -46,21 +51,12 @@ public class AlipayController {
         alipayRequest.setReturnUrl(AlipayConfig.return_url);
         alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
-        //商户订单号，商户网站订单系统中唯一订单号，必填
-
-        String out_trade_no = request.getParameter("Order");
-        //付款金额，必填  ShopName
-        String total_amount = request.getParameter("Money");
-        //订单名称，必填
-        String subject = request.getParameter("Name");
-        //商品描述，可空
-        String body =request.getParameter("购物测试");
         // 该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。
         String timeout_express = "1c";
-        alipayRequest.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\","
-                + "\"total_amount\":\"" + total_amount + "\","
-                + "\"subject\":\"" + subject + "\","
-                + "\"body\":\"" + body + "\","
+        alipayRequest.setBizContent("{\"out_trade_no\":\"" + order + "\","
+                + "\"total_amount\":\"" + money + "\","
+                + "\"subject\":\"" + name + "\","
+                + "\"body\":\"" + null + "\","
                 + "\"timeout_express\":\""+ timeout_express +"\","
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
         //请求

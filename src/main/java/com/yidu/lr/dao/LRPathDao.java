@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Path)表数据库访问层
@@ -66,5 +67,12 @@ public interface LRPathDao {
      * @return 影响行数
      */
     int deleteById(Integer pathid);
+    /**
+     * 根据线路id查询
+     * @param pathid
+     * @return
+     */
+     Path queryByPathId(Integer pathid);
 
+     List<Map<String,Object>> queryByStartEnd();
 }

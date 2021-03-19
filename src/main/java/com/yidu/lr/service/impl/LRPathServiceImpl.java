@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Path)表服务实现类
@@ -81,5 +82,20 @@ public class LRPathServiceImpl implements PathService {
     @Override
     public List<Path> queryAll(Path path) {
         return pathDao.queryAll(path);
+    }
+
+    @Override
+    public Path queryByPathId(Integer pathid) {
+        return pathDao.queryByPathId(pathid);
+    }
+
+    @Override
+    public List<Path> queryByAll(Path path) {
+        return pathDao.queryAll(path);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryByStartEnd() {
+        return pathDao.queryByStartEnd();
     }
 }

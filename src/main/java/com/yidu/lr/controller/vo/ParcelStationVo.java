@@ -15,4 +15,6 @@ public class ParcelStationVo {
     private int upCityId;
     private String nextStationName;
     private String upStationName;
+    private int tid;
+    private String tnumber;
 }

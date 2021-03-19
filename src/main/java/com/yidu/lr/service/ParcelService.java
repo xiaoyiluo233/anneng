@@ -37,7 +37,7 @@ public interface ParcelService {
      * @param parcel 实例对象
      * @return 实例对象
      */
-    Parcel insert(Parcel parcel);
+    int insert(Parcel parcel);
 
     /**
      * 修改数据
@@ -66,4 +66,6 @@ public interface ParcelService {
     List<Map<String,Object>> OidFindIn(String[] OidStrArray);
 
     List<ParcelStationVo> selectConnect();
+
+    Parcel queryIdMax();
 }

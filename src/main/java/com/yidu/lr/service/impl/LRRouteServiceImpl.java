@@ -1,5 +1,6 @@
 package com.yidu.lr.service.impl;
 
+import com.yidu.entity.Path;
 import com.yidu.entity.Route;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 import com.yidu.lr.dao.LRRouteDao;
@@ -87,5 +88,15 @@ public class LRRouteServiceImpl implements RouteService {
     @Override
     public List<Route> queryAll(Route route) {
         return routeDao.queryAll(route);
+    }
+
+    @Override
+    public Route queryByPathId(Integer pathid) {
+        return routeDao.queryByPathId(pathid);
+    }
+
+    @Override
+    public Route queryAllByTid(Integer tid) {
+        return routeDao.queryAllByTid(tid);
     }
 }

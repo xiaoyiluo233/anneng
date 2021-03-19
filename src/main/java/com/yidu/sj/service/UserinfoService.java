@@ -36,8 +36,10 @@ public interface UserinfoService {
      * @param userinfo 实例对象
      * @return 实例对象
      */
-    String insert(HttpServletRequest request,Userinfo userinfo,String yzm);
+    String register(HttpServletRequest request,Userinfo userinfo,String yzm);
 
+
+    boolean insert(Userinfo userinfo);
     /**
      * 修改数据
      *
@@ -52,7 +54,7 @@ public interface UserinfoService {
      * @param uid 主键
      * @return 是否成功
      */
-    boolean deleteById(Integer uid);
+    boolean deleteById(String uid);
 
     /**
      * 创建验证码

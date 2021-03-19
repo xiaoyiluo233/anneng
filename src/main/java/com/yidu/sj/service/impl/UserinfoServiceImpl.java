@@ -5,6 +5,7 @@ import com.yidu.sj.dao.UserinfoDao;
 import com.yidu.sj.service.UserinfoService;
 import com.zhenzi.sms.ZhenziSmsClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,11 @@ public class UserinfoServiceImpl implements UserinfoService {
         return this.userinfoDao.queryAllByLimit(offset, limit);
     }
 
+    @Override
+    public boolean insert(Userinfo userinfo) {
+        return userinfoDao.insert(userinfo)>0;
+    }
+
     /**
      * 新增数据
      *
@@ -62,7 +68,7 @@ public class UserinfoServiceImpl implements UserinfoService {
      * @return 实例对象
      */
     @Override
-    public String insert(HttpServletRequest request,Userinfo userinfo,String yzm) {
+    public String register(HttpServletRequest request,Userinfo userinfo,String yzm) {
         String code = String.valueOf(request.getSession().getAttribute("code"));
         if(code.equals(yzm)){
             int insert = this.userinfoDao.insert(userinfo);
@@ -94,8 +100,19 @@ public class UserinfoServiceImpl implements UserinfoService {
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer uid) {
-        return this.userinfoDao.deleteById(uid) > 0;
+    public boolean deleteById(String uid) {
+        //截取id字符串
+        String[] split = uid.split(",");
+        //循环数组
+        for (int i = 0; i <split.length ; i++) {
+            //删除数据
+            int delete = userinfoDao.deleteById(Integer.parseInt(split[i]));
+            //等于零返回假
+            if(delete==0){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -167,6 +184,10 @@ public class UserinfoServiceImpl implements UserinfoService {
         if(login!=null){
             //用户信息存入session
             request.getSession().setAttribute("user",login);
+            //创建redis set集合
+            SetOperations<String, String> set = redisTemplate.opsForSet();
+            //保存用户信息到redis
+            set.add("user",login.toString());
             //返回登录成功信息
             return "登录成功";
         }

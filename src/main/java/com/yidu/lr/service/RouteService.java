@@ -1,5 +1,6 @@
 package com.yidu.lr.service;
 
+import com.yidu.entity.Path;
 import com.yidu.entity.Route;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 
@@ -65,4 +66,13 @@ public interface RouteService {
      * @return 对象列表
      */
     List<Route> queryAll(Route route);
+
+    /**
+     * 根据线路id查询
+     * @param pathid
+     * @return
+     */
+    Route queryByPathId(Integer pathid);
+
+    Route queryAllByTid(Integer tid);
 }
