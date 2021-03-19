@@ -3,12 +3,14 @@ package com.yidu.lr.controller;
 
 import com.yidu.entity.*;
 import com.yidu.lr.service.impl.*;
+import com.yidu.ly.service.impl.WarehouseServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -50,6 +52,9 @@ public class MergePackageController {
     @Autowired
     private LRTrucksServiceImpl trucksService;
 
+    @Autowired
+    private WarehouseServiceImpl warehouseService;
+
 
     //货物服务对象
     @Autowired
@@ -63,6 +68,9 @@ public class MergePackageController {
 
     @Autowired
     District mydistrict;
+
+    @Autowired
+    Warehouse warehouse;
 
 
     //区信息暂存集合
@@ -170,13 +178,8 @@ public class MergePackageController {
                 Parcel parcel1 = parcelService.queryById(parcelid);
                 //去除区多余信息
                 String str = youdistrict.getDistrictname().replace("区", "");
-                System.out.println("str = " + str);
-                System.out.println("station.getStationname() = " + station.getStationname());
-                System.out.println("判断："+station.getStationname().contains(str));
                 //判断中转站字符串名字是否包含收件人区名字
                 if(station.getStationname().contains(str)){
-                    System.out.println("parcel1.getOid() = " + parcel1.getOid());
-                    System.out.println("split1[i] = " + split1[i]);
                     //截去订单号
                     String replace = parcel1.getOid().replace(split1[i] + "-", "");
                     if(replace==null || replace.equals("")){
@@ -185,8 +188,28 @@ public class MergePackageController {
                     //设置到包裹对象
                     parcel1.setOid(replace);
                     System.out.println("parcel1 = " + parcel1);
+                    Warehouse warehouse1 = warehouseService.queryByWname(str);
+                    warehouse.setOid(split1[i] + "-");
+                 
+
+
+                    SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss z");
+                    Date date = new Date(System.currentTimeMillis());
+                    System.out.println(warehouse1);
+                    if(warehouse1!=null){
+                        warehouse1.setOid(warehouse1.getOid()+split1[i] + "-");
+                        warehouse1.setTimes(formatter.format(date));
+                        warehouse1.setState(1);
+                        warehouseService.update(warehouse1);
+                    }else {
+                        warehouse.setWname(str);
+                        warehouse.setTimes(formatter.format(date));
+                        warehouse.setState(1);
+                        warehouseService.insert(this.warehouse);
+                    }
                     //修改包裹表
                     parcelService.update(parcel1);
+
                 }
             }
 

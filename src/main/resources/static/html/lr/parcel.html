@@ -566,7 +566,7 @@
         }
 
        $.post("../../merge/MergePackage","parcelid="+id,function (data) {
-          alert(data);
+           $table.bootstrapTable('refresh');    //刷新表格
        },"json");
     }
 
@@ -677,7 +677,7 @@
             }
 
             $.post("../../merge/MergePackage","parcelid="+ids,function (data) {
-                alert(data);
+                $table.bootstrapTable('refresh');    //刷新表格
             },"json");
         }
 

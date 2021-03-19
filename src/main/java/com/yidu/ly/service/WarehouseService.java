@@ -55,4 +55,5 @@ public interface WarehouseService {
      */
     String deleteById(Integer wid);
 
+    Warehouse queryByWname(String wname);
 }
