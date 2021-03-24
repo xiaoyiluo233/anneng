@@ -69,6 +69,11 @@ public interface WarehouseDao {
      */
     int deleteById(Integer wid);
 
+    /**
+     * 通过仓库名查询单条数据
+     * @param wname 仓库名
+     * @return 返回结果
+     */
     Warehouse queryByWname(String wname);
 
 }

@@ -121,6 +121,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public Warehouse queryByWname(String wname) {
+        //返回根据仓库名查询的数据
         return warehouseDao.queryByWname(wname);
     }
 
