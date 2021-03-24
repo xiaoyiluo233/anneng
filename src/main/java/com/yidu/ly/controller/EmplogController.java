@@ -59,9 +59,13 @@ public class EmplogController {
     @ResponseBody
     @RequestMapping(value = "emplog-delete",produces = {("application/json;charset=utf-8")})
     public String delete(String id){
+        //切割id并接收
         String ids[]=id.split(",");
+        //循环切割后的id
         for (int i=0 ; i<ids.length ; i++){
+            //将取出的id转成int类型
             int elid=Integer.parseInt(ids[i]);
+            //调用删除方法
             emplogService.deleteById(elid);
         }
         //返回结果
