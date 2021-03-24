@@ -73,4 +73,6 @@ public interface LRParcelDao {
     List<Map<String,Object>> OidFindIn(String[] OidStrArray);
 
     List<ParcelStationVo> selectConnect();
+
+    Parcel queryIdMax();
 }

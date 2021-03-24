@@ -2,6 +2,7 @@ package com.yidu.lr.service;
 
 import com.yidu.entity.Path;
 import java.util.List;
+import java.util.Map;
 
 /**
  * (Path)表服务接口
@@ -59,5 +60,17 @@ public interface PathService {
      * @return 对象列表
      */
     List<Path> queryAll(Path path);
+
+    /**
+     * 根据线路id查询
+     * @param pathid
+     * @return
+     */
+    Path queryByPathId(Integer pathid);
+
+    List<Path> queryByAll(Path path);
+
+    List<Map<String,Object>> queryByStartEnd();
+
 
 }

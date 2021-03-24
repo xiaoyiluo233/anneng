@@ -27,6 +27,13 @@
         limit #{offset}, #{limit}
     </select>
 
+    <select id="queryByParcelid" resultMap="BaseResultMap">
+        select
+          tid, tnumber, eid, parcelId, state
+        from ane.trucks
+        where parcelId=#{parcelid}
+    </select>
+
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
         select

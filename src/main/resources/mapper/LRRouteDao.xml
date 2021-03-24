@@ -11,13 +11,25 @@
         <result property="arrivetime" column="arriveTime" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <sql id="sql">routeid,tnumber,s1.stationName startstationName,stationIds,s2.stationName endstationName,startTime,arriveTime</sql>
+    <sql id="sql">routeid,t.tid,tnumber,p.pathid,s1.stationId startId,s1.stationName startstationName,stationIds,s2.stationId endId,s2.stationName endstationName,startTime,arriveTime</sql>
     <select id="selectAll" resultType="com.yidu.lr.controller.vo.RouteTrucksPathVo">
        SELECT <include refid="sql"></include> FROM route r
               LEFT JOIN trucks t ON r.`tid`=t.`tid`
               LEFT JOIN path p ON r.`pathId`=p.`pathId`
               LEFT JOIN station s1 ON p.`startStation`=s1.`stationId`
               LEFT JOIN station s2 ON p.`destination`=s2.`stationId`;
+    </select>
+    <select id="queryByPathId" resultMap="BaseResultMap">
+        select
+          routeId, tid, pathId, startTime, arriveTime
+        from ane.route
+        where pathId = #{pathid}
+    </select>
+    <select id="queryAllByTid" resultMap="BaseResultMap">
+        select
+          routeId, tid, pathId, startTime, arriveTime
+        from ane.route
+        where tid = #{tid}
     </select>
 
     <!--查询单个-->

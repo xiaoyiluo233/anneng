@@ -77,4 +77,15 @@ public class LRTrucksServiceImpl implements TrucksService {
     public boolean deleteById(Integer tid) {
         return this.trucksDao.deleteById(tid) > 0;
     }
+
+    @Override
+    public Trucks queryByParcelid(Integer parcelid) {
+        return trucksDao.queryByParcelid(parcelid);
+    }
+
+    @Override
+    public List<Trucks> queryAll(Trucks trucks) {
+        return trucksDao.queryAll(trucks);
+    }
+
 }

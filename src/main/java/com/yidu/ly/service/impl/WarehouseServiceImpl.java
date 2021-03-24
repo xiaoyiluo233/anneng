@@ -119,4 +119,9 @@ public class WarehouseServiceImpl implements WarehouseService {
         return one;
     }
 
+    @Override
+    public Warehouse queryByWname(String wname) {
+        return warehouseDao.queryByWname(wname);
+    }
+
 }

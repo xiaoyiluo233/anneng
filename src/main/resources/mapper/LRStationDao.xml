@@ -19,6 +19,12 @@
         from ane.station
         where stationId = #{stationid}
     </select>
+    <select id="selectLikeName" resultMap="BaseResultMap">
+        select
+          stationId, cityId, stationName,persons,phones
+        from ane.station
+        where  cityId=#{cityid} AND stationName LIKE '%${stationname}%'
+    </select>
      <select id="queryByPCId" resultType="map">
          SELECT * FROM station s
              INNER JOIN city c ON s.cityId=c.cityId

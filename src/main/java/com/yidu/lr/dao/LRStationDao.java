@@ -71,4 +71,6 @@ public interface LRStationDao {
     List<Station> queryByArray(String[] array);
 
     List<Map<String, Object>> queryByPCId(@Param("provinceid") Integer provinceid,@Param("cityid")Integer cityid,@Param("stationname")String stationname);
+
+    Station selectLikeName(@Param("cityid")Integer cityid,@Param("stationname")String stationname);
 }

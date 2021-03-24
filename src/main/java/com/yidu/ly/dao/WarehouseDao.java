@@ -69,4 +69,6 @@ public interface WarehouseDao {
      */
     int deleteById(Integer wid);
 
+    Warehouse queryByWname(String wname);
+
 }

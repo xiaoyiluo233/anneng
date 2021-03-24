@@ -1,5 +1,6 @@
 package com.yidu.lr.dao;
 
+import com.yidu.entity.Path;
 import com.yidu.entity.Route;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -73,5 +74,14 @@ public interface LRRouteDao {
      * @return 影响行数
      */
     int deleteById(Integer routeid);
+
+    /**
+     * 根据线路id查询
+     * @param pathid
+     * @return
+     */
+    Route queryByPathId(Integer pathid);
+
+    Route queryAllByTid(Integer tid);
 
 }

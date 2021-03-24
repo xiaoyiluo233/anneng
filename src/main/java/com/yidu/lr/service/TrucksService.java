@@ -52,4 +52,8 @@ public interface TrucksService {
      */
     boolean deleteById(Integer tid);
 
+    Trucks queryByParcelid(Integer parcelid);
+
+    List<Trucks> queryAll(Trucks trucks);
+
 }

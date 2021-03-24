@@ -1,15 +1,21 @@
 package com.yidu.lr.controller;
 
+import com.yidu.entity.Path;
 import com.yidu.entity.Route;
 import com.yidu.entity.Station;
+import com.yidu.entity.Trucks;
 import com.yidu.lr.controller.vo.RouteTrucksPathVo;
 import com.yidu.lr.service.RouteService;
 import com.yidu.lr.service.StationService;
+import com.yidu.lr.service.impl.LRPathServiceImpl;
+import com.yidu.lr.service.impl.LRTrucksServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Array;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 路由表控制层
@@ -26,6 +32,12 @@ public class RouteController {
     //中转站服务对象
     @Resource
     private StationService stationService;
+
+    @Autowired
+    private LRTrucksServiceImpl trucksService;
+
+    @Autowired
+    private LRPathServiceImpl pathService;
 
     /**
      * 连表查询所有路由信息
@@ -65,6 +77,36 @@ public class RouteController {
         //返回信息
         return true;
     }
+
+    @PostMapping("insert")
+    public boolean insert(Route route){
+        System.out.println("route = " + route);
+        //新增
+        routeService.insert(route);
+        //返回信息
+        return true;
+    }
+
+    @PostMapping("update")
+    public boolean update(Route route){
+        System.out.println("route = " + route);
+        //新增
+        routeService.update(route);
+        //返回信息
+        return true;
+    }
+
+    @GetMapping("selectAllTrucks")
+    public List<Trucks> selectAllTrucks(){
+        //返回对象列表
+        return trucksService.queryAll(null);
+    }
+
+    @RequestMapping("selectAllPath")
+    public List<Map<String, Object>> selectAllPath(){
+        return pathService.queryByStartEnd();
+    }
+
 
 
 }

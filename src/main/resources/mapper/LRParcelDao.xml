@@ -9,7 +9,7 @@
         <result property="nextstation" column="nextStation" jdbcType="INTEGER"/>
         <result property="upstation" column="upStation" jdbcType="INTEGER"/>
     </resultMap>
-    <sql id="sqlProperty">parcelId,oId, nextStation,upStation,state,s1.stationId nextStationId,s2.stationId upStationId,s1.cityId nextCityId,s2.cityId upCityId,s1.stationName nextStationName,s2.stationName upStationName</sql>
+    <sql id="sqlProperty">p1.parcelId,oId, nextStation,upStation,p1.state,s1.stationId nextStationId,s2.stationId upStationId,s1.cityId nextCityId,s2.cityId upCityId,s1.stationName nextStationName,s2.stationName upStationName,t.tnumber,t.tid</sql>
     <!--查询单个-->
     <select id="queryById" resultMap="BaseResultMap">
         select
@@ -18,6 +18,9 @@
         where parcelId = #{parcelid}
     </select>
 
+    <select id="queryIdMax" resultMap="BaseResultMap">
+        SELECT * FROM parcel ORDER BY parcelid DESC LIMIT 1;
+    </select>
     <!--查询指定行数据-->
     <select id="queryAllByLimit" resultMap="BaseResultMap">
         select
@@ -31,6 +34,7 @@
         FROM parcel p1
         LEFT JOIN station s1 ON p1.nextStation=s1.stationId
         LEFT JOIN station s2 ON p1.upStation=s2.stationId
+        LEFT JOIN trucks t ON p1.parcelId=t.parcelId
     </select>
     <!--通过实体作为筛选条件查询-->
     <select id="queryAll" resultMap="BaseResultMap">
@@ -62,7 +66,7 @@
         </foreach>
     </select>
     <!--新增所有列-->
-    <insert id="insert" keyProperty="parcelid" useGeneratedKeys="true">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="parcelid"  keyColumn="id">
         insert into ane.parcel(oid, nextStation, upStation,state)
         values (#{oid}, #{nextstation}, #{upstation},#{state})
     </insert>

@@ -89,6 +89,9 @@
     <button id="btn_delete" type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
     </button>
+    <button id="btn_merge" type="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>合包
+    </button>
 </div>
 <table id="mytable"></table>
 <!-- Modal -->
@@ -110,6 +113,10 @@
                     <tr>
                         <th>订单号</th>
                         <th><span id="oids">admin</span></th>
+                    </tr>
+                    <tr>
+                        <th>车辆名称</th>
+                        <th><span id="tnumbers"></span></th>
                     </tr>
                     <tr>
                         <th>上个中转站</th>
@@ -165,7 +172,15 @@
 
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <label class="control-label">车辆</label>
+                        </div>
+                        <div class="col-sm-9">
+                            <select class="form-control"  id="tnumber" name="tnumber">
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-3">
                             <label class="control-label">下个中转站</label>
@@ -276,6 +291,7 @@
     $table= $("#mytable");
     //新增修改url
     var url="";
+    var kuboolean=false;
 
     //页面加载事件
     $(document).ready(function () {
@@ -361,6 +377,10 @@
                 //     return "<span>"+str+"</span>";
                 // }
             }, {
+                title : '车辆名称',
+                field : 'tnumber',
+                sortable : true ,
+            }, {
                 title : '下一个中转站',
                 field : 'nextStationName',
                 sortable : true ,
@@ -434,7 +454,8 @@
             var result = "";
             result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"LookViewById('" + row + "', '" + id + "')\" title='查看'><span class='glyphicon glyphicon-search'></span></a>";
             result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"EditViewById('" + row + "','" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
-            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.parcelid+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"MergeById('" + row.parcelId+ "')\" title='入库'><span class='glyphicon glyphicon-retweet'></span></a>";
+            result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"DeleteByIds('" + row.parcelId+ "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
             return result;
 
         }
@@ -474,6 +495,7 @@
             $("#oid [type=checkbox][value='"+arr[i]+"']").attr("checked", true);
         }
         $("#nextstation").val(data_json[index].nextStationId);
+        $("#tnumber").val(data_json[index].tnumber);
         $("#upstation").val(data_json[index].upStationId);
         $("#state").val(data_json[index].state);
         // $("#state").val(data_json[index].state);
@@ -514,6 +536,7 @@
         });
         $("#parcelids").text(data_json[index].parcelid);
         $("#oids").text(data_json[index].oid);
+        $("#tnumbers").val(data_json[index].tnumber);
         if(data_json[index].nextStationName=="" ||data_json[index].nextStationName==null){
             $("#nextstations").text("(空)");
         }else {
@@ -535,6 +558,18 @@
         $('#lookModal').modal('show')
     }
 
+    function MergeById(id) {
+        if(kuboolean){
+            kuboolean=false;
+        }else {
+            kuboolean=true;
+        }
+
+       $.post("../../merge/MergePackage","parcelid="+id,function (data) {
+           $table.bootstrapTable('refresh');    //刷新表格
+       },"json");
+    }
+
     //当前列删除
     function DeleteByIds(id) {
         $('#deleteModal').modal('show');
@@ -542,13 +577,13 @@
             $.ajax({
                 type: "post",       //请求类型
                 url: "../../parcel/delete",     //url
-                data: "id="+id,     // 收集表单中的数据
+                data: "id=" + id,     // 收集表单中的数据
                 dataType: "json",    //参数返回类型
-                success: function (msg){
-                    if(msg){
-                        swal("信息","您的数据已被删除！");
-                    }else{
-                        swal("信息","系统繁忙，请稍后再试!");
+                success: function (msg) {
+                    if (msg) {
+                        swal("信息", "您的数据已被删除！");
+                    } else {
+                        swal("信息", "系统繁忙，请稍后再试!");
                     }
                     $('#deleteModal').modal('hide')
                     //返回信息
@@ -622,7 +657,32 @@
             //$('#addModal').modal('show')
         }
     });
+    // 当点击【删除】按钮后，拼接选中的id
+    $("#btn_merge").on("click",function (){
+        //选中的数据
+        var data = JSON.stringify($table.bootstrapTable('getSelections'));
+        var data_obj = JSON.parse(data);
+        //选中的ids
+        var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.parcelid
+        })
 
+        if(ids==""){
+            swal("信息", "至少选中一行！");
+        } else {
+            if(kuboolean){
+                kuboolean=false;
+            }else {
+                kuboolean=true;
+            }
+
+            $.post("../../merge/MergePackage","parcelid="+ids,function (data) {
+                $table.bootstrapTable('refresh');    //刷新表格
+            },"json");
+        }
+
+        alert(data_obj);
+    });
     // 当点击【新增】按钮后，把模态框弹出来
     $("#btn_add").on("click",function (){
         $("#oid [type=checkbox]").attr("checked", false);

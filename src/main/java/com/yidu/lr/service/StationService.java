@@ -65,4 +65,6 @@ public interface StationService {
     List<Station> queryByArray(String[] array);
 
     List<Map<String, Object>> queryByPCId(Integer provinceid,Integer cityid,String stationname);
+
+    Station selectLikeName(Integer cityid,String stationname);
 }
