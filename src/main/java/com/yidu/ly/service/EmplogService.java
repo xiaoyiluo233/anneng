@@ -39,6 +39,50 @@ public interface EmplogService {
     String insert(Emplog emplog);
 
     /**
+     * 根据员工id删除数据
+     * @param eid 员工id
+     * @return 是否成功
+     */
+    String deleteEid(Integer eid);
+
+    /**
+     * 修改数据
+     *
+     * @param eid 员工id
+     * @return 影响行数
+     */
+    String updateEid(Integer eid);
+
+    /**
+     * 修改数据
+     *
+     * @param type 操作类型
+     * @return 影响行数
+     */
+    String updateType(Integer type);
+
+    /**
+     * 根据操作类型删除
+     * @param type 操作类型
+     * @return 是否成功
+     */
+    String deleteType(Integer type);
+
+    /**
+     * 根据操作类型删除
+     * @param times 操作时间
+     * @return 影响行数
+     */
+    String deleteTimes(Integer times);
+
+    /**
+     * 根据操作类型删除
+     * @param message 操作信息
+     * @return 影响行数
+     */
+    String deleteMessage(Integer message);
+
+    /**
      * 修改数据
      *
      * @param emplog 实例对象

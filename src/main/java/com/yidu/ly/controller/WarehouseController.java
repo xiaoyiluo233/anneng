@@ -29,6 +29,7 @@ public class WarehouseController {
     @ResponseBody
     @RequestMapping(value = "warehouse-selectAll",produces = {("application/json;charset=utf-8")})
     public HashMap<String,Object> selectAll(Integer offset, Integer pageNumber, String name){
+        //调用分页查询的方法
         return warehouseService.queryAllByLimit(offset, pageNumber, name);
     }
 
@@ -41,6 +42,7 @@ public class WarehouseController {
     @ResponseBody
     @RequestMapping(value = "warehouse-update",produces = {("application/json;charset=utf-8")})
     public String update(Warehouse warehouse){
+        //调用修改的方法
         return warehouseService.update(warehouse);
     }
 
@@ -53,11 +55,16 @@ public class WarehouseController {
     @ResponseBody
     @RequestMapping(value = "warehouse-delete",produces = {("application/json;charset=utf-8")})
     public String delete(String id){
+        //切割id并接收
         String [] split=id.split(",");
+        //循环切割后的id
         for (int i = 0; i < split.length; i++) {
+            //将取出的id转成int类型
             int wid=Integer.parseInt(split[i]);
+            //调用删除方法
             warehouseService.deleteById(wid);
         }
+        //返回结果
         return "删除成功";
     }
 
@@ -70,6 +77,7 @@ public class WarehouseController {
     @ResponseBody
     @RequestMapping(value = "warehouse-insert",produces = {("application/json;charset=utf-8")})
     public String insert(Warehouse warehouse){
+        //调用新增的方法
         return warehouseService.insert(warehouse);
     }
 
@@ -82,6 +90,7 @@ public class WarehouseController {
     @ResponseBody
     @RequestMapping(value = "warehouse-selectOne",produces = {("application/json;charset=utf-8")})
     public Warehouse selectOne(Integer id) {
+        //调用主键查询的方法
         return warehouseService.queryById(id);
     }
 

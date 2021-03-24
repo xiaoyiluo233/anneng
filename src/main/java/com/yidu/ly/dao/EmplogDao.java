@@ -31,7 +31,7 @@ public interface EmplogDao {
      *
      * @param offset 查询起始位置
      * @param limit 查询条数
-     * @param name 查询值
+     * @param type 查询值
      * @return 对象列表
      */
     List<Emplog> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit, @Param("type") Integer type);
@@ -68,11 +68,58 @@ public interface EmplogDao {
     int update(Emplog emplog);
 
     /**
+     * 修改数据
+     *
+     * @param eid 员工id
+     * @return 影响行数
+     */
+    int updateEid(Integer eid);
+
+    /**
+     * 修改数据
+     *
+     * @param type 操作类型
+     * @return 影响行数
+     */
+    int updateType(Integer type);
+
+    /**
+     * 根据操作类型删除
+     * @param type 操作类型
+     * @return 影响行数
+     */
+    int deleteType(Integer type);
+
+    /**
+     * 根据操作类型删除
+     *
+     * @param message 操作信息
+     * @return 影响行数
+     */
+    int deleteMessage(Integer message);
+
+    /**
+     * 根据操作类型删除
+     *
+     * @param times 操作时间
+     * @return 影响行数
+     */
+    int deleteTimes(Integer times);
+
+    /**
      * 通过主键删除数据
      *
      * @param elid 主键
      * @return 影响行数
      */
     int deleteById(Integer elid);
+
+    /**
+     * 根据员工id删除数据
+     *
+     * @param eid 员工id
+     * @return 影响行数
+     */
+    int deleteEid(Integer eid);
 
 }

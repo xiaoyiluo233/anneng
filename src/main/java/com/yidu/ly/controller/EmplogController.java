@@ -33,6 +33,7 @@ public class EmplogController {
     @ResponseBody
     @RequestMapping(value = "emplog-selectAll",produces = {("application/json;charset=utf-8")})
     public HashMap<String,Object> selectAll(Integer offset, Integer pageNumber){
+        //调用分页查询的方法
         return emplogService.queryAllByLimit(offset, pageNumber, type);
     }
 
@@ -45,6 +46,7 @@ public class EmplogController {
     @ResponseBody
     @RequestMapping(value = "emplog-insert",produces = {("application/json;charset=utf-8")})
     public String insert(Emplog emplog){
+        //调用新增的方法
         return emplogService.insert(emplog);
     }
 
@@ -62,6 +64,7 @@ public class EmplogController {
             int elid=Integer.parseInt(ids[i]);
             emplogService.deleteById(elid);
         }
+        //返回结果
         return "删除成功";
     }
 
@@ -74,6 +77,7 @@ public class EmplogController {
     @ResponseBody
     @RequestMapping(value = "emplog-update",produces = {("application/json;charset=utf-8")})
     public String update(Emplog emplog){
+        //调用修改的方法
         return emplogService.update(emplog);
     }
 
@@ -86,6 +90,7 @@ public class EmplogController {
     @ResponseBody
     @RequestMapping(value = "emplog-selectOne",produces = {("application/json;charset=utf-8")})
     public Emplog selectOne(Integer id) {
+        //调用主键查询的方法
         return this.emplogService.queryById(id);
     }
 

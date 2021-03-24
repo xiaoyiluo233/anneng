@@ -29,6 +29,7 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public Warehouse queryById(Integer wid) {
+        //返回调用根据id查询的数据
         return this.warehouseDao.queryById(wid);
     }
 
@@ -42,9 +43,13 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public HashMap<String,Object> queryAllByLimit(int offset, int limit, String name) {
+        //创建map集合
         HashMap<String,Object> map=new HashMap<>();
+        //赋值集合调用分页查询
         map.put("rows",warehouseDao.queryAllByLimit(offset,limit,name));
+        //赋值总行数
         map.put("total",warehouseDao.count(name));
+        //返回集合
         return map;
     }
 
@@ -56,12 +61,17 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String insert(Warehouse warehouse) {
+        //申明结果集
         String one;
+        //判断是否新增成功
         if (warehouseDao.insert(warehouse)>0){
+            //则新增成功
             one="新增成功";
         }else {
+            //则新增失败
             one="新增失败";
         }
+        //返回结果
         return one;
     }
 
@@ -73,12 +83,17 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String update(Warehouse warehouse) {
+        //申明结果集
         String one;
+        //判断是否修改成功
         if (warehouseDao.update(warehouse)>0){
+            //则修改成功
             one="修改成功";
         }else {
+            //则修改失败
             one="修改失败";
         }
+        //返回结果
         return one;
     }
 
@@ -90,12 +105,17 @@ public class WarehouseServiceImpl implements WarehouseService {
      */
     @Override
     public String deleteById(Integer wid) {
+        //申明结果集
         String one;
+        //判断是否删除成功
         if (warehouseDao.deleteById(wid)>0){
+            //则删除成功
             one="删除成功";
         }else {
+            //则删除失败
             one="删除失败";
         }
+        //返回结果
         return one;
     }
 

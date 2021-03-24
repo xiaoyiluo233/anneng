@@ -94,9 +94,63 @@
         where elid = #{elid}
     </update>
 
+    <!--通过员工id修改数据-->
+    <update id="updateEid">
+        update ane.emplog
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="times != null and times != ''">
+                times = #{times},
+            </if>
+        </set>
+        where eid = #{eid}
+    </update>
+
+    <!--通过操作类型修改数据-->
+    <update id="updateType">
+        update ane.emplog
+        <set>
+            <if test="eid != eid">
+                eid = #{eid},
+            </if>
+            <if test="message != null and message != ''">
+                message = #{message},
+            </if>
+            <if test="times != null and times != ''">
+                times = #{times},
+            </if>
+        </set>
+        where type = #{type}
+    </update>
+
     <!--通过主键删除-->
     <delete id="deleteById">
         delete from ane.emplog where elid = #{elid}
+    </delete>
+
+    <!--通过员工id删除-->
+    <delete id="deleteEid">
+        delete from ane.emplog where eid = #{eid}
+    </delete>
+
+    <!--通过操作类型删除-->
+    <delete id="deleteType">
+        delete from ane.emplog where type = #{type}
+    </delete>
+
+    <!--通过操作信息删除-->
+    <delete id="deleteMessage">
+        delete from ane.emplog where message = #{message}
+    </delete>
+
+    <!--通过操作时间删除-->
+    <delete id="deleteTimes">
+        delete from ane.emplog where times = #{times}
     </delete>
 
 </mapper>
